@@ -93,16 +93,19 @@ namespace Orcus.Administration
             Current.Resources.MergedDictionaries.RemoveAt(Current.Resources.MergedDictionaries.Count - 4);
             Current.Resources.MergedDictionaries.RemoveAt(Current.Resources.MergedDictionaries.Count - 4);
 
+
+            MessageBox.Show("voidm.com");
+
             var licenseFile = new FileInfo(CommandLineArgs.Current.LicenseFilePath ?? "license.orcus");
             if (!licenseFile.Exists)
             {
-                Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                /*Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
                 var licenseWindow = new RegisterOrcusWindow();
                 if (licenseWindow.ShowDialog() != true)
-                    Environment.Exit(0);
+                    Environment.Exit(0);*/   
             }
-
-            var license = OrcusActivator.Parse(File.ReadAllText(licenseFile.FullName));
+            var license = OrcusActivator.Parse("");
+            // var license = OrcusActivator.Parse(File.ReadAllText(licenseFile.FullName));
             if (!license.IsValid)
             {
                 MessageBox.Show("Invalid license.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -23,6 +23,8 @@ namespace Orcus.Administration.Core
         {
             Languages = new List<LanguageInfo>
             {
+                new LanguageInfo(new Uri("/Resources/Languages/OrcusAdministration.zh-cn.xaml", UriKind.Relative),
+                    new CultureInfo("zh-CN")),
                 new LanguageInfo(new Uri("/Resources/Languages/OrcusAdministration.en-us.xaml", UriKind.Relative),
                     new CultureInfo("en")),
                 new LanguageInfo(new Uri("/Resources/Languages/OrcusAdministration.de-de.xaml", UriKind.Relative),
