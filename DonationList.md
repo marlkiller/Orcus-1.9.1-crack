@@ -1,0 +1,3 @@
+- [nikeee](https://github.com/nikeee) (Licensing System)
+- [VB-Paradise.de](https://www.vb-paradise.de/) (Learning place)
+- [AnguisCaptor](https://github.com/AnguisCaptor) (StreamLibrary, really friendly)

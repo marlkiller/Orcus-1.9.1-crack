@@ -1,0 +1,1257 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TurboJpegWrapper</name>
+    </assembly>
+    <members>
+        <member name="F:TurboJpegWrapper.NativeMethods.Kernel32">
+            <summary>
+            The name of the <c>kernel32</c> library
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.NativeMethods.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
+            </summary>
+            <param name="dllToLoad">
+            <para>
+            The name of the module. This can be either a library module (a <c>.dll</c> file) or an executable module (an <c>.exe</c> file).
+            The name specified is the file name of the module and is not related to the name stored in the library module itself,
+            as specified by the LIBRARY keyword in the module-definition (<c>.def</c>) file.
+            </para>
+            <para>
+            If the string specifies a full path, the function searches only that path for the module.
+            </para>
+            <para>
+            If the string specifies a relative path or a module name without a path, the function uses a standard search strategy
+            to find the module; for more information, see the Remarks.
+            </para>
+            <para>
+            If the function cannot find the module, the function fails. When specifying a path, be sure to use backslashes (<c>\</c>),
+            not forward slashes (<c>/</c>). For more information about paths, see Naming a File or Directory.
+            </para>
+            <para>
+            If the string specifies a module name without a path and the file name extension is omitted, the function appends the
+            default library extension <c>.dll</c> to the module name. To prevent the function from appending <c>.dll</c> to the module name,
+            include a trailing point character (<c>.</c>) in the module name string.
+            </para>
+            </param>
+            <returns>
+            If the function succeeds, the return value is a handle to the module.
+            If the function fails, the return value is <see cref="F:System.IntPtr.Zero"/>. To get extended error information, call
+            <see cref="M:System.Runtime.InteropServices.Marshal.GetLastWin32Error"/>.
+            </returns>
+            <seealso href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684175(v=vs.85).aspx"/>
+        </member>
+        <member name="T:TurboJpegWrapper.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.Properties.Resources.libturbojpeg_32">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.Properties.Resources.libturbojpeg_64">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.tjscalingfactor">
+            <summary>
+            Scaling factor
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjscalingfactor.num">
+            <summary>
+            Numerator
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjscalingfactor.denom">
+            <summary>
+            Denominator
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.tjtransform">
+            <summary>
+            Lossless transform
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjtransform.r">
+            <summary>
+            Cropping region
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjtransform.op">
+            <summary>
+            One of the <see cref="T:TurboJpegWrapper.TJTransformOperations"/> "transform operations"
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjtransform.options">
+            <summary>
+            The bitwise OR of one of more of the <see cref="T:TurboJpegWrapper.TJTransformOptions"/> "transform options"
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjtransform.data">
+            <summary>
+            Arbitrary data that can be accessed within the body of the callback function
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.tjtransform.customFilter">
+            <summary>
+            A callback function that can be used to modify the DCT coefficients
+            after they are losslessly transformed but before they are transcoded to a
+            new JPEG image.  This allows for custom filters or other transformations
+            to be applied in the frequency domain.
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.CustomFilter">
+            <summary>
+            A callback function that can be used to modify the DCT coefficients
+            after they are losslessly transformed but before they are transcoded to a
+            new JPEG image.  This allows for custom filters or other transformations
+            to be applied in the frequency domain.
+            </summary>
+            <param name="coeffs">
+            Pointer to an array of transformed DCT coefficients.  (NOTE
+            this pointer is not guaranteed to be valid once the callback returns, so
+            applications wishing to hand off the DCT coefficients to another function
+            or library should make a copy of them within the body of the callback.)
+            </param>
+            <param name="arrayRegion">
+            <see cref="T:TurboJpegWrapper.TJRegion"/> structure containing the width and height of
+            the array pointed to by <paramref name="coeffs"/> as well as its offset relative to
+            the component plane.  TurboJPEG implementations may choose to split each
+            component plane into multiple DCT coefficient arrays and call the callback
+            function once for each array.
+            </param>
+            <param name="planeRegion">
+            <see cref="T:TurboJpegWrapper.TJRegion"/> structure containing the width and height of
+            the component plane to which <paramref name="coeffs"/> belongs
+            </param>
+            <param name="componentIndex">
+            ID number of the component plane to which
+            <paramref name="coeffs"/> belongs (Y, Cb, and Cr have, respectively, ID's of 0, 1,
+            and 2 in typical JPEG images.)
+            </param>
+            <param name="transformIndex">
+            ID number of the transformed image to which
+            <paramref name="coeffs"/> belongs.  This is the same as the index of the transform
+            in the "transforms" array that was passed to <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/> 
+            </param>
+            <param name="transform">
+            A pointer to a <see cref="T:TurboJpegWrapper.tjtransform"/> structure that specifies the
+            parameters and/or cropping region for this transform
+            </param>
+            <returns>0 if the callback was successful, or -1 if an error occurred.</returns>
+            <remarks>
+            Original signature is:
+            <para><c>int customFilter(short *coeffs, tjregion arrayRegion, tjregion planeRegion, int componentIndex, int transformIndex, struct tjtransform * transform)</c></para> 
+            </remarks>
+        </member>
+        <member name="T:TurboJpegWrapper.TJColorSpaces">
+            <summary>
+            JPEG colorspaces
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJColorSpaces.TJCS_RGB">
+            <summary>
+            RGB colorspace.  When compressing the JPEG image, the R, G, and B
+            components in the source image are reordered into image planes, but no
+            colorspace conversion or subsampling is performed.  RGB JPEG images can be
+            decompressed to any of the extended RGB pixel formats or grayscale, but
+            they cannot be decompressed to YUV images.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJColorSpaces.TJCS_YCbCr">
+            <summary>
+            YCbCr colorspace.  YCbCr is not an absolute colorspace but rather a
+            mathematical transformation of RGB designed solely for storage and
+            transmission.  YCbCr images must be converted to RGB before they can
+            actually be displayed.  In the YCbCr colorspace, the Y (luminance)
+            component represents the black-and-white portion of the original image, and
+            the Cb and Cr (chrominance) components represent the color portion of the
+            original image.  Originally, the analog equivalent of this transformation
+            allowed the same signal to drive both black-and-white and color televisions,
+            but JPEG images use YCbCr primarily because it allows the color data to be
+            optionally subsampled for the purposes of reducing bandwidth or disk
+            space.  YCbCr is the most common JPEG colorspace, and YCbCr JPEG images
+            can be compressed from and decompressed to any of the extended RGB pixel
+            formats or grayscale, or they can be decompressed to YUV planar images. 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJColorSpaces.TJCS_GRAY">
+            <summary>
+            Grayscale colorspace.  The JPEG image retains only the luminance data (Y
+            component), and any color data from the source image is discarded.
+            Grayscale JPEG images can be compressed from and decompressed to any of
+            the extended RGB pixel formats or grayscale, or they can be decompressed
+            to YUV planar images. 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJColorSpaces.TJCS_CMYK">
+            <summary>
+            CMYK colorspace.  When compressing the JPEG image, the C, M, Y, and K
+            components in the source image are reordered into image planes, but no
+            colorspace conversion or subsampling is performed.  CMYK JPEG images can
+            only be decompressed to CMYK pixels.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJColorSpaces.TJCS_YCCK">
+            <summary>
+            YCCK colorspace.  YCCK (AKA "YCbCrK") is not an absolute colorspace but
+            rather a mathematical transformation of CMYK designed solely for storage
+            and transmission.  It is to CMYK as YCbCr is to RGB.  CMYK pixels can be
+            reversibly transformed into YCCK, and as with YCbCr, the chrominance
+            components in the YCCK pixels can be subsampled without incurring major
+            perceptual loss.  YCCK JPEG images can only be compressed from and
+            decompressed to CMYK pixels.
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJSubsamplingOptions">
+            <summary>
+            Chrominance subsampling options.
+            <para>
+            When pixels are converted from RGB to YCbCr (see #TJCS_YCbCr) or from CMYK
+            to YCCK (see #TJCS_YCCK) as part of the JPEG compression process, some of
+            the Cb and Cr (chrominance) components can be discarded or averaged together
+            to produce a smaller image with little perceptible loss of image clarity
+            (the human eye is more sensitive to small changes in brightness than to
+            small changes in color.)  This is called "chrominance subsampling".
+            </para>
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_444">
+            <summary>
+            4:4:4 chrominance subsampling (no chrominance subsampling).  The JPEG or * YUV image will contain one chrominance component for every pixel in the source image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_422">
+            <summary>
+            4:2:2 chrominance subsampling.  The JPEG or YUV image will contain one
+            chrominance component for every 2x1 block of pixels in the source image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_420">
+            <summary>
+            4:2:0 chrominance subsampling.  The JPEG or YUV image will contain one
+            chrominance component for every 2x2 block of pixels in the source image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_GRAY">
+            <summary>
+            Grayscale.  The JPEG or YUV image will contain no chrominance components.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_440">
+            <summary>
+            4:4:0 chrominance subsampling.  The JPEG or YUV image will contain one
+            chrominance component for every 1x2 block of pixels in the source image. 
+            </summary>
+            <remarks>4:4:0 subsampling is not fully accelerated in libjpeg-turbo.</remarks>
+        </member>
+        <member name="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_411">
+            <summary>
+            4:1:1 chrominance subsampling.  The JPEG or YUV image will contain one
+            chrominance component for every 4x1 block of pixels in the source image.
+            JPEG images compressed with 4:1:1 subsampling will be almost exactly the
+            same size as those compressed with 4:2:0 subsampling, and in the
+            aggregate, both subsampling methods produce approximately the same
+            perceptual quality.  However, 4:1:1 is better able to reproduce sharp
+            horizontal features.
+            </summary>
+            <remarks> 4:1:1 subsampling is not fully accelerated in libjpeg-turbo.</remarks>
+        </member>
+        <member name="T:TurboJpegWrapper.TJPixelFormats">
+            <summary>
+            Pixel formats
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_RGB">
+            <summary>
+            RGB pixel format.  The red, green, and blue components in the image are
+            stored in 3-byte pixels in the order R, G, B from lowest to highest byte
+            address within each pixel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_BGR">
+            <summary>
+            BGR pixel format.  The red, green, and blue components in the image are
+            stored in 3-byte pixels in the order B, G, R from lowest to highest byte
+            address within each pixel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_RGBX">
+            <summary>
+            RGBX pixel format.  The red, green, and blue components in the image are
+            stored in 4-byte pixels in the order R, G, B from lowest to highest byte
+            address within each pixel.  The X component is ignored when compressing
+            and undefined when decompressing. 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_BGRX">
+            <summary>
+            BGRX pixel format.  The red, green, and blue components in the image are
+            stored in 4-byte pixels in the order B, G, R from lowest to highest byte
+            address within each pixel.  The X component is ignored when compressing
+            and undefined when decompressing.
+             </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_XBGR">
+            <summary>
+            XBGR pixel format.  The red, green, and blue components in the image are
+            stored in 4-byte pixels in the order R, G, B from highest to lowest byte
+            address within each pixel.  The X component is ignored when compressing
+            and undefined when decompressing. 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_XRGB">
+            <summary>
+            XRGB pixel format.  The red, green, and blue components in the image are
+            stored in 4-byte pixels in the order B, G, R from highest to lowest byte
+            address within each pixel.  The X component is ignored when compressing
+            and undefined when decompressing.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_GRAY">
+            <summary>
+            Grayscale pixel format.  Each 1-byte pixel represents a luminance
+            (brightness) level from 0 to 255.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_RGBA">
+            <summary>
+            RGBA pixel format.  This is the same as <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_RGBX"/>, except that when
+            decompressing, the X component is guaranteed to be 0xFF, which can be
+            interpreted as an opaque alpha channel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_BGRA">
+            <summary>
+            BGRA pixel format.  This is the same as <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_BGRX"/>, except that when
+            decompressing, the X component is guaranteed to be 0xFF, which can be
+            interpreted as an opaque alpha channel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_ABGR">
+            <summary>
+            ABGR pixel format.  This is the same as <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_XBGR"/>, except that when
+            decompressing, the X component is guaranteed to be 0xFF, which can be
+            interpreted as an opaque alpha channel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_ARGB">
+            <summary>
+            ARGB pixel format.  This is the same as <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_XRGB"/>, except that when
+            decompressing, the X component is guaranteed to be 0xFF, which can be
+            interpreted as an opaque alpha channel.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJPixelFormats.TJPF_CMYK">
+            <summary>
+            CMYK pixel format.  Unlike RGB, which is an additive color model used
+            primarily for display, CMYK (Cyan/Magenta/Yellow/Key) is a subtractive
+            color model used primarily for printing.  In the CMYK color model, the
+            value of each color component typically corresponds to an amount of cyan,
+            magenta, yellow, or black ink that is applied to a white background.  In
+            order to convert between CMYK and RGB, it is necessary to use a color
+            management system (CMS.)  A CMS will attempt to map colors within the
+            printer's gamut to perceptually similar colors in the display's gamut and
+            vice versa, but the mapping is typically not 1:1 or reversible, nor can it
+            be defined with a simple formula.  Thus, such a conversion is out of scope
+            for a codec library.  However, the TurboJPEG API allows for compressing
+            CMYK pixels into a YCCK JPEG image (see #TJCS_YCCK) and decompressing YCCK
+            JPEG images into CMYK pixels. 
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJFlags">
+            <summary>
+            Flags for turbo jpeg
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.NONE">
+            <summary>
+            Flags not set
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.BOTTOMUP">
+            <summary>
+            The uncompressed source/destination image is stored in bottom-up (Windows, OpenGL) order, 
+            not top-down (X11) order.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.FASTUPSAMPLE">
+            <summary>
+            When decompressing an image that was compressed using chrominance subsampling, 
+            use the fastest chrominance upsampling algorithm available in the underlying codec.  
+            The default is to use smooth upsampling, which creates a smooth transition between 
+            neighboring chrominance components in order to reduce upsampling artifacts in the decompressed image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.NOREALLOC">
+            <summary>
+            Disable buffer (re)allocation.  If passed to <see cref="M:TurboJpegWrapper.TurboJpegImport.tjCompress2(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.IntPtr@,System.UInt64@,System.Int32,System.Int32,System.Int32)"/> or #tjTransform(), 
+            this flag will cause those functions to generate an error 
+            if the JPEG image buffer is invalid or too small rather than attempting to allocate or reallocate that buffer.  
+            This reproduces the behavior of earlier versions of TurboJPEG.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.FASTDCT">
+            <summary>
+            Use the fastest DCT/IDCT algorithm available in the underlying codec.  The
+            default if this flag is not specified is implementation-specific.  For
+            example, the implementation of TurboJPEG for libjpeg[-turbo] uses the fast
+            algorithm by default when compressing, because this has been shown to have
+            only a very slight effect on accuracy, but it uses the accurate algorithm
+            when decompressing, because this has been shown to have a larger effect. 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJFlags.ACCURATEDCT">
+            <summary>
+            Use the most accurate DCT/IDCT algorithm available in the underlying codec.
+            The default if this flag is not specified is implementation-specific.  For
+            example, the implementation of TurboJPEG for libjpeg[-turbo] uses the fast
+            algorithm by default when compressing, because this has been shown to have
+            only a very slight effect on accuracy, but it uses the accurate algorithm
+            when decompressing, because this has been shown to have a larger effect.
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJTransformOperations">
+            <summary>
+            Transform operations for <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/>
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_NONE">
+            <summary>
+             Do not transform the position of the image pixels
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_HFLIP">
+            <summary>
+            Flip (mirror) image horizontally.  This transform is imperfect if there
+            are any partial MCU blocks on the right edge (see <see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.)</summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_VFLIP">
+            <summary>
+            Flip (mirror) image vertically.  This transform is imperfect if there are
+            any partial MCU blocks on the bottom edge (see <see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.)
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_TRANSPOSE">
+            <summary>
+            Transpose image (flip/mirror along upper left to lower right axis.)  This
+            transform is always perfect.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_TRANSVERSE">
+            <summary>
+            Transverse transpose image (flip/mirror along upper right to lower left
+            axis.)  This transform is imperfect if there are any partial MCU blocks in
+            the image (see <see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.) 
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_ROT90">
+            <summary>
+            Rotate image clockwise by 90 degrees.  This transform is imperfect if
+            there are any partial MCU blocks on the bottom edge (<see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.)
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_ROT180">
+            <summary>
+            Rotate image 180 degrees.  This transform is imperfect if there are any
+            partial MCU blocks in the image (see <see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.)
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOperations.TJXOP_ROT270">
+            <summary>
+            Rotate image counter-clockwise by 90 degrees.  This transform is imperfect
+            if there are any partial MCU blocks on the right edge (see <see cref="F:TurboJpegWrapper.TJTransformOptions.PERFECT"/>.)
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJTransformOptions">
+            <summary>
+            Transformation options
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOptions.PERFECT">
+            <summary>
+            This option will cause <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/> to return an error if the transform is
+            not perfect.  Lossless transforms operate on MCU blocks, whose size depends
+            on the level of chrominance subsampling used  
+            If the image's width or height is not evenly divisible
+            by the MCU block size, then there will be partial MCU blocks on the right
+            and/or bottom edges.  It is not possible to move these partial MCU blocks to
+            the top or left of the image, so any transform that would require that is
+            "imperfect."  If this option is not specified, then any partial MCU blocks
+            that cannot be transformed will be left in place, which will create
+            odd-looking strips on the right or bottom edge of the image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOptions.TRIM">
+            <summary>
+            This option will cause <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/> to discard any partial MCU blocks that cannot be transformed.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOptions.CROP">
+            <summary>
+            This option will enable lossless cropping.  See <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/> for more information.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOptions.GRAY">
+            <summary>
+            This option will discard the color data in the input image and produce a grayscale output image.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TJTransformOptions.NOOUTPUT">
+            <summary>
+            This option will prevent <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)"/> from outputting a JPEG image for
+            this particular transform (this can be used in conjunction with a custom
+            filter to capture the transformed DCT coefficients without transcoding them.) 
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJDecompressor">
+            <summary>
+            Implements compression of RGB, CMYK, grayscale images to the jpeg format
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.#ctor">
+            <summary>
+            Creates new instance of <see cref="T:TurboJpegWrapper.TJDecompressor"/>
+            </summary>
+            <exception cref="T:TurboJpegWrapper.TJException">
+            Throws if internal compressor instance can not be created
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Decompress(System.IntPtr,System.UInt64,TurboJpegWrapper.TJPixelFormats,TurboJpegWrapper.TJFlags,System.Int32@,System.Int32@,System.Int32@)">
+            <summary>
+            Decompress a JPEG image to an RGB, grayscale, or CMYK image.
+            </summary>
+            <param name="jpegBuf">Pointer to a buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="jpegBufSize">Size of the JPEG image (in bytes)</param>
+            <param name="destPixelFormat">Pixel format of the destination image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats".)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <param name="width">Width of image in pixels</param>
+            <param name="height">Height of image in pixels</param>
+            <param name="stride">Bytes per line in the destination image</param>
+            <returns>Raw pixel data of specified format</returns>
+            <exception cref="T:TurboJpegWrapper.TJException">Throws if underlying decompress function failed</exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Decompress(System.Byte[],TurboJpegWrapper.TJPixelFormats,TurboJpegWrapper.TJFlags,System.Int32@,System.Int32@,System.Int32@)">
+            <summary>
+            Decompress a JPEG image to an RGB, grayscale, or CMYK image.
+            </summary>
+            <param name="jpegBuf">A buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="destPixelFormat">Pixel format of the destination image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats".)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <param name="width">Width of image in pixels</param>
+            <param name="height">Height of image in pixels</param>
+            <param name="stride">Bytes per line in the destination image</param>
+            <returns>Raw pixel data of specified format</returns>
+            <exception cref="T:TurboJpegWrapper.TJException">Throws if underlying decompress function failed</exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Decompress(System.IntPtr,System.UInt64,System.Drawing.Imaging.PixelFormat,TurboJpegWrapper.TJFlags)">
+            <summary>
+            Decompress a JPEG image to an RGB, grayscale, or CMYK image.
+            </summary>
+            <param name="jpegBuf">Pointer to a buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="jpegBufSize">Size of the JPEG image (in bytes)</param>
+            <param name="destPixelFormat">Pixel format of the destination image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats".)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <returns>Decompressed image of specified format</returns>
+            <exception cref="T:TurboJpegWrapper.TJException">Throws if underlying decompress function failed</exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+            <exception cref="T:System.NotSupportedException">Convertion to the requested pixel format can not be performed</exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Decompress(System.Byte[],System.Drawing.Imaging.PixelFormat,TurboJpegWrapper.TJFlags)">
+            <summary>
+            Decompress a JPEG image to an RGB, grayscale, or CMYK image.
+            </summary>
+            <param name="jpegBuf">A buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="destPixelFormat">Pixel format of the destination image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats".)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <returns>Decompressed image of specified format</returns>
+            <exception cref="T:TurboJpegWrapper.TJException">Throws if underlying decompress function failed</exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+            <exception cref="T:System.NotSupportedException">Convertion to the requested pixel format can not be performed</exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.GetImageInfo(System.IntPtr,System.UInt64,TurboJpegWrapper.TJPixelFormats,System.Int32@,System.Int32@,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieve information about a JPEG image without decompressing it.
+            </summary>
+            <param name="jpegBuf">
+            Pointer to a buffer containing a JPEG image.  This buffer is not modified.
+            </param>
+            <param name="jpegBufSize">
+            Size of the JPEG image (in bytes)
+            </param>
+            <param name="destPixelFormat">
+            The pixel format of the uncompressed image.
+            </param>
+            <param name="width">
+            Pointer to an integer variable that will receive the width (in pixels) of the JPEG image
+            </param>
+            <param name="height">
+            Pointer to an integer variable that will receive the height (in pixels) of the JPEG image
+            </param>
+            <param name="stride">
+            Pointer to an integer variable that will receive the stride (in bytes) of the JPEG image.
+            </param>
+            <param name="bufSize">
+            The size of a buffer that can receive the uncompressed JPEG image.
+            </param>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.GetBufferSize(System.Int32,System.Int32,TurboJpegWrapper.TJPixelFormats)">
+            <summary>
+            Given the size of an image, determines the size of a decompressed image.
+            </summary>
+            <param name="height">
+            The height of the image.
+            </param>
+            <param name="width">
+            The width of the image.
+            </param>
+            <param name="destPixelFormat">
+            The pixel format of the uncompressed image.
+            </param>
+            <returns>
+            The size of a buffer that can hold the uncompressed image.
+            </returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Dispose">
+            <summary>
+            Releases resources
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:TurboJpegWrapper.TJDecompressor.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJCompressor">
+            <summary>
+            Implements compression of RGB, CMYK, grayscale images to the jpeg format
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.#ctor">
+            <summary>
+            Creates new instance of <see cref="T:TurboJpegWrapper.TJCompressor"/>
+            </summary>
+            <exception cref="T:TurboJpegWrapper.TJException">
+            Throws if internal compressor instance can not be created
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.Compress(System.Drawing.Bitmap,TurboJpegWrapper.TJSubsamplingOptions,System.Int32,TurboJpegWrapper.TJFlags)">
+            <summary>
+            Compresses input image to the jpeg format with specified quality
+            </summary>
+            <param name="srcImage"> Source image to be converted </param>
+            <param name="subSamp">
+            The level of chrominance subsampling to be used when
+            generating the JPEG image (see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions"/> "Chrominance subsampling options".)
+            </param>
+            <param name="quality">The image quality of the generated JPEG image (1 = worst, 100 = best)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <remarks>Only <see cref="F:System.Drawing.Imaging.PixelFormat.Format24bppRgb"/>, <see cref="F:System.Drawing.Imaging.PixelFormat.Format32bppArgb"/>, <see cref="F:System.Drawing.Imaging.PixelFormat.Format8bppIndexed"/> pixel formats are supported</remarks>
+            <exception cref="T:TurboJpegWrapper.TJException"> Throws if compress function failed </exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+            <exception cref="T:System.NotSupportedException">
+            Some parameters' values are incompatible:
+            <list type="bullet">
+            <item><description>Subsampling not equals to <see cref="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_GRAY"/> and pixel format <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_GRAY"/></description></item>
+            </list>
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.Compress(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Drawing.Imaging.PixelFormat,TurboJpegWrapper.TJSubsamplingOptions,System.Int32,TurboJpegWrapper.TJFlags)">
+            <summary>
+            Compresses input image to the jpeg format with specified quality
+            </summary>
+            <param name="srcPtr">
+            Pointer to an image buffer containing RGB, grayscale, or CMYK pixels to be compressed.  
+            This buffer is not modified.
+            </param>
+            <param name="stride">
+            Bytes per line in the source image.  
+            Normally, this should be <c>width * BytesPerPixel</c> if the image is unpadded, 
+            or <c>TJPAD(width * BytesPerPixel</c> if each line of the image
+            is padded to the nearest 32-bit boundary, as is the case for Windows bitmaps.  
+            You can also be clever and use this parameter to skip lines, etc.
+            Setting this parameter to 0 is the equivalent of setting it to
+            <c>width * BytesPerPixel</c>.
+            </param>
+            <param name="width">Width (in pixels) of the source image</param>
+            <param name="height">Height (in pixels) of the source image</param>
+            <param name="pixelFormat">Pixel format of the source image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats")</param>
+            <param name="subSamp">
+            The level of chrominance subsampling to be used when
+            generating the JPEG image (see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions"/> "Chrominance subsampling options".)
+            </param>
+            <param name="quality">The image quality of the generated JPEG image (1 = worst, 100 = best)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <exception cref="T:TurboJpegWrapper.TJException"> Throws if compress function failed </exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+            <exception cref="T:System.NotSupportedException">
+            Some parameters' values are incompatible:
+            <list type="bullet">
+            <item><description>Subsampling not equals to <see cref="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_GRAY"/> and pixel format <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_GRAY"/></description></item>
+            </list>
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.Compress(System.Byte[],System.Int32,System.Int32,System.Int32,System.Drawing.Imaging.PixelFormat,TurboJpegWrapper.TJSubsamplingOptions,System.Int32,TurboJpegWrapper.TJFlags)">
+            <summary>
+            Compresses input image to the jpeg format with specified quality
+            </summary>
+            <param name="srcBuf">
+            Image buffer containing RGB, grayscale, or CMYK pixels to be compressed.  
+            This buffer is not modified.
+            </param>
+            <param name="stride">
+            Bytes per line in the source image.  
+            Normally, this should be <c>width * BytesPerPixel</c> if the image is unpadded, 
+            or <c>TJPAD(width * BytesPerPixel</c> if each line of the image
+            is padded to the nearest 32-bit boundary, as is the case for Windows bitmaps.  
+            You can also be clever and use this parameter to skip lines, etc.
+            Setting this parameter to 0 is the equivalent of setting it to
+            <c>width * BytesPerPixel</c>.
+            </param>
+            <param name="width">Width (in pixels) of the source image</param>
+            <param name="height">Height (in pixels) of the source image</param>
+            <param name="pixelFormat">Pixel format of the source image (see <see cref="T:System.Drawing.Imaging.PixelFormat"/> "Pixel formats")</param>
+            <param name="subSamp">
+            The level of chrominance subsampling to be used when
+            generating the JPEG image (see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions"/> "Chrominance subsampling options".)
+            </param>
+            <param name="quality">The image quality of the generated JPEG image (1 = worst, 100 = best)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <exception cref="T:TurboJpegWrapper.TJException">
+            Throws if compress function failed
+            </exception>
+            <exception cref="T:System.ObjectDisposedException">Object is disposed and can not be used anymore</exception>
+            <exception cref="T:System.NotSupportedException"> 
+            Some parameters' values are incompatible:
+            <list type="bullet">
+            <item><description>Subsampling not equals to <see cref="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_GRAY"/> and pixel format <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_GRAY"/></description></item>
+            </list>
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.Dispose">
+            <summary>
+            Releases resources
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJCompressor.CheckOptionsCompatibilityAndThrow(TurboJpegWrapper.TJSubsamplingOptions,TurboJpegWrapper.TJPixelFormats)">
+            <exception cref="T:System.NotSupportedException"> 
+            Some parameters' values are incompatible:
+            <list type="bullet">
+            <item><description>Subsampling not equals to <see cref="F:TurboJpegWrapper.TJSubsamplingOptions.TJSAMP_GRAY"/> and pixel format <see cref="F:TurboJpegWrapper.TJPixelFormats.TJPF_GRAY"/></description></item>
+            </list>
+            </exception>
+        </member>
+        <member name="T:TurboJpegWrapper.TJException">
+            <summary>
+            Exception thrown then internal error in the underlying turbo jpeg library is occured
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJException.#ctor(System.String)">
+            <summary>
+            Creates new instance of <see cref="T:TurboJpegWrapper.TJException"/>
+            </summary>
+            <param name="error">Error message from underlying turbo jpeg library</param>
+        </member>
+        <member name="T:TurboJpegWrapper.TJRegion">
+            <summary>
+            Cropping region
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJRegion.X">
+            <summary>
+            The left boundary of the cropping region.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJRegion.Y">
+            <summary>
+            The upper boundary of the cropping region.</summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJRegion.W">
+            <summary>
+            The width of the cropping region. Setting this to 0 is the equivalent of
+            setting it to the width of the source JPEG image - x.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJRegion.H">
+            <summary>
+            The height of the cropping region. Setting this to 0 is the equivalent of
+            setting it to the height of the source JPEG image - y.
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJRegion.Empty">
+            <summary>
+            Returns empty region which is interpreted as full image region
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJTransformDescription">
+            <summary>
+            Structure describing transformation of source image
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJTransformDescription.Operation">
+            <summary>
+            Transform operation
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJTransformDescription.Options">
+            <summary>
+            Transform options
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJTransformDescription.Region">
+            <summary>
+            Transform region
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJTransformDescription.CallbackData">
+            <summary>
+            Callback data
+            </summary>
+        </member>
+        <member name="P:TurboJpegWrapper.TJTransformDescription.CustomFilter">
+            <summary>
+            Custom filter delegate
+            </summary>
+        </member>
+        <member name="T:TurboJpegWrapper.TJTransformer">
+            <summary>
+            Class for loseless transform jpeg images
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.#ctor">
+            <summary>
+            Creates new instance of <see cref="T:TurboJpegWrapper.TJTransformer"/>
+            </summary>
+            <exception cref="T:TurboJpegWrapper.TJException">
+            Throws if internal compressor instance can not be created
+            </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.Transform(System.IntPtr,System.UInt64,TurboJpegWrapper.TJTransformDescription[],TurboJpegWrapper.TJFlags)">
+            <summary>Transforms input image into one or several destinations</summary>
+            <param name="jpegBuf">Pointer to a buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="jpegBufSize">Size of the JPEG image (in bytes)</param>
+            <param name="transforms">Array of transform descriptions to be applied to the source image </param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <returns>Array of transformed jpeg images</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="transforms"/> is <see langword="null" />.</exception>
+            <exception cref="T:System.ArgumentException">Transforms can not be empty</exception>
+            <exception cref="T:TurboJpegWrapper.TJException"> Throws if low level turbo jpeg function fails </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.CorrectRegionCoordinate(System.Int32,System.Int32)">
+            <summary>
+            Correct region coordinate to be evenly divisible by the MCU block dimension
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.Transform(System.Byte[],TurboJpegWrapper.TJTransformDescription[],TurboJpegWrapper.TJFlags)">
+            <summary>Transforms input image into one or several destinations</summary>
+            <param name="jpegBuf">A buffer containing the JPEG image to decompress. This buffer is not modified</param>
+            <param name="transforms">Array of transform descriptions to be applied to the source image </param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags"/> "flags"</param>
+            <returns>Array of transformed jpeg images</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="transforms"/> is <see langword="null" />.</exception>
+            <exception cref="T:System.ArgumentException">Transforms can not be empty</exception>
+            <exception cref="T:TurboJpegWrapper.TJException"> Throws if low level turbo jpeg function fails </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.Dispose">
+            <summary>
+            Releases resources
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:TurboJpegWrapper.TJTransformer.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.GetErrorAndThrow">
+            <summary>
+             Retrieves last error from underlying turbo-jpeg library and throws exception</summary>
+             <exception cref="T:TurboJpegWrapper.TJException"> Throws if low level turbo jpeg function fails </exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.ConvertPixelFormat(System.Drawing.Imaging.PixelFormat)">
+            <summary>
+            Converts pixel format from <see cref="T:System.Drawing.Imaging.PixelFormat"/> to <see cref="T:TurboJpegWrapper.TJPixelFormats"/>
+            </summary>
+            <param name="pixelFormat">Pixel format to convert</param>
+            <returns>Converted value of pixel format or exception if convertion is impossible</returns>
+            <exception cref="T:System.NotSupportedException">Convertion can not be performed</exception>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.GetPlatformName">
+            <summary>
+            Returns actual platform name depending on pointer size
+            </summary>
+            <returns>"x86" for 32 bit processes and "x64" for 64 bit processes</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.StructArrayToIntPtr``1(``0[])">
+            <summary>
+            Converts array of managed structures to the unmanaged pointer
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="structArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.CopyDataToPointer(System.Byte[],System.Boolean)">
+            <summary>
+            Copies data from array to unmanaged pointer
+            </summary>
+            <param name="data">Byte array for copy</param>
+            <param name="useComAllocation">If set to <c>true</c>, Com allocator will be used to allocate memory</param>
+            <returns></returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TJUtils.FreePtr(System.IntPtr,System.Boolean)">
+            <summary>
+            Frees unmanaged pointer using allocator
+            </summary>
+            <param name="ptr"></param>
+            <param name="isComAllocated">If set to <c>true</c>, Com allocator will be used to free memory</param>
+        </member>
+        <member name="F:TurboJpegWrapper.TurboJpegImport.PixelSizes">
+            <summary>
+                Pixel size (in bytes) for a given pixel format.
+            </summary>
+        </member>
+        <member name="F:TurboJpegWrapper.TurboJpegImport.MCUSizes">
+            <summary>
+                MCU block width (in pixels) for a given level of chrominance subsampling.
+                MCU block sizes:
+                <list type="bullet">
+                    <item>
+                        <description>8x8 for no subsampling or grayscale</description>
+                    </item>
+                    <item>
+                        <description>16x8 for 4:2:2</description>
+                    </item>
+                    <item>
+                        <description>8x16 for 4:4:0</description>
+                    </item>
+                    <item>
+                        <description>16x16 for 4:2:0</description>
+                    </item>
+                    <item>
+                        <description>32x8 for 4:1:1</description>
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.TJPAD(System.Int32)">
+            <summary>
+                This is port of TJPAD macros from turbojpeg.h
+                Pad the given width to the nearest 32-bit boundary
+            </summary>
+            <param name="width">Width</param>
+            <returns>Padded width</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.TJSCALED(System.Int32,TurboJpegWrapper.tjscalingfactor)">
+            <summary>
+                This is port of TJSCALED macros from turbojpeg.h
+                Compute the scaled value of <paramref name="dimension" /> using the given scaling factor.
+            </summary>
+            <param name="dimension">Dimension to scale</param>
+            <param name="scalingFactor">Scaling factor</param>
+            <returns></returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjInitCompress">
+            <summary>
+                Create a TurboJPEG compressor instance.
+            </summary>
+            <returns>
+                handle to the newly-created instance, or <see cref="F:System.IntPtr.Zero" />
+                if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)
+            </returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjCompress2(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.IntPtr@,System.UInt64@,System.Int32,System.Int32,System.Int32)">
+            <summary>
+                Compress an RGB, grayscale, or CMYK image into a JPEG image.
+            </summary>
+            <param name="handle">A handle to a TurboJPEG compressor or transformer instance</param>
+            <param name="srcBuf">
+                Pointer to an image buffer containing RGB, grayscale, or CMYK pixels to be compressed.
+                This buffer is not modified.
+            </param>
+            <param name="width">Width (in pixels) of the source image</param>
+            <param name="pitch">
+                Bytes per line in the source image.
+                Normally, this should be <c>width * tjPixelSize[pixelFormat]</c> if the image is unpadded,
+                or <c>TJPAD(width * tjPixelSize[pixelFormat])</c> if each line of the image
+                is padded to the nearest 32-bit boundary, as is the case for Windows bitmaps.
+                You can also be clever and use this parameter to skip lines, etc.
+                Setting this parameter to 0 is the equivalent of setting it to
+                <c>width * tjPixelSize[pixelFormat]</c>.
+            </param>
+            <param name="height">Height (in pixels) of the source image</param>
+            <param name="pixelFormat">Pixel format of the source image (see <see cref="T:TurboJpegWrapper.TJPixelFormats" /> "Pixel formats")</param>
+            <param name="jpegBuf">
+                Address of a pointer to an image buffer that will receive the JPEG image.
+                TurboJPEG has the ability to reallocate the JPEG buffer
+                to accommodate the size of the JPEG image.  Thus, you can choose to:
+                <list type="number">
+                    <item>
+                        <description>
+                            pre-allocate the JPEG buffer with an arbitrary size using <see cref="M:TurboJpegWrapper.TurboJpegImport.tjAlloc(System.Int32)" /> and let
+                            TurboJPEG grow the buffer as needed
+                        </description>
+                    </item>
+                    <item>
+                        <description>set <paramref name="jpegBuf" /> to NULL to tell TurboJPEG to allocate the buffer for you</description>
+                    </item>
+                    <item>
+                        <description>
+                            pre-allocate the buffer to a "worst case" size determined by calling <see cref="M:TurboJpegWrapper.TurboJpegImport.tjBufSize(System.Int32,System.Int32,System.Int32)" />.
+                            This should ensure that the buffer never has to be re-allocated (setting
+                            <see cref="F:TurboJpegWrapper.TJFlags.NOREALLOC" /> guarantees this.).
+                        </description>
+                    </item>
+                </list>
+                If you choose option 1, <paramref name="jpegSize" /> should be set to the size of your pre-allocated buffer.
+                In any case, unless you have set <see cref="F:TurboJpegWrapper.TJFlags.NOREALLOC" />,
+                you should always check <paramref name="jpegBuf" /> upon return from this function, as it may have changed.
+            </param>
+            <param name="jpegSize">
+                Pointer to an unsigned long variable that holds the size of the JPEG image buffer.
+                If <paramref name="jpegBuf" /> points to a pre-allocated buffer,
+                then <paramref name="jpegSize" /> should be set to the size of the buffer.
+                Upon return, <paramref name="jpegSize" /> will contain the size of the JPEG image (in bytes.)
+                If <paramref name="jpegBuf" /> points to a JPEG image buffer that is being
+                reused from a previous call to one of the JPEG compression functions,
+                then <paramref name="jpegSize" /> is ignored.
+            </param>
+            <param name="jpegSubsamp">
+                The level of chrominance subsampling to be used when
+                generating the JPEG image (see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions" /> "Chrominance subsampling options".)
+            </param>
+            <param name="jpegQual">The image quality of the generated JPEG image (1 = worst, 100 = best)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags" /> "flags"</param>
+            <returns>0 if successful, or -1 if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjBufSize(System.Int32,System.Int32,System.Int32)">
+            <summary>
+                The maximum size of the buffer (in bytes) required to hold a JPEG image with
+                the given parameters.  The number of bytes returned by this function is
+                larger than the size of the uncompressed source image.  The reason for this
+                is that the JPEG format uses 16-bit coefficients, and it is thus possible
+                for a very high-quality JPEG image with very high-frequency content to
+                expand rather than compress when converted to the JPEG format.  Such images
+                represent a very rare corner case, but since there is no way to predict the
+                size of a JPEG image prior to compression, the corner case has to be handled.
+            </summary>
+            <param name="width">Width (in pixels) of the image</param>
+            <param name="height">Height (in pixels) of the image</param>
+            <param name="jpegSubsamp">
+                The level of chrominance subsampling to be used when
+                generating the JPEG image(see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions" /> "Chrominance subsampling options".)
+            </param>
+            <returns>
+                The maximum size of the buffer (in bytes) required to hold the image,
+                or -1 if the arguments are out of bounds.
+            </returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjInitDecompress">
+            <summary>
+                Create a TurboJPEG decompressor instance.
+            </summary>
+            <returns>A handle to the newly-created instance, or NULL if an error occurred(see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjDecompressHeader(System.IntPtr,System.IntPtr,System.UInt64,System.Int32@,System.Int32@,System.Int32@,System.Int32@)">
+            <summary>
+                Retrieve information about a JPEG image without decompressing it.
+            </summary>
+            <param name="handle">A handle to a TurboJPEG decompressor or transformer instance</param>
+            <param name="jpegBuf">Pointer to a buffer containing a JPEG image.  This buffer is not modified.</param>
+            <param name="jpegSize">Size of the JPEG image (in bytes)</param>
+            <param name="width">Pointer to an integer variable that will receive the width (in pixels) of the JPEG image</param>
+            <param name="height">Pointer to an integer variable that will receive the height (in pixels) of the JPEG image</param>
+            <param name="jpegSubsamp">
+                Pointer to an integer variable that will receive the level of chrominance subsampling used
+                when the JPEG image was compressed (see <see cref="T:TurboJpegWrapper.TJSubsamplingOptions" /> "Chrominance subsampling options".)
+            </param>
+            <param name="jpegColorspace">
+                Pointer to an integer variable that will receive one of the JPEG colorspace constants,
+                indicating the colorspace of the JPEG image(see <see cref="T:TurboJpegWrapper.TJColorSpaces" /> "JPEG colorspaces".)
+            </param>
+            <returns>0 if successful, or -1 if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjGetScalingFactors(System.Int32@)">
+            <summary>
+                Returns a list of fractional scaling factors that the JPEG decompressor in this implementation of TurboJPEG
+                supports.
+            </summary>
+            <param name="numscalingfactors">Pointer to an integer variable that will receive the number of elements in the list</param>
+            <returns>
+                A pointer to a list of fractional scaling factors, or <see cref="F:System.IntPtr.Zero" /> if an error is encountered
+                (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)
+            </returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjDecompress(System.IntPtr,System.IntPtr,System.UInt64,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+                Decompress a JPEG image to an RGB, grayscale, or CMYK image.
+            </summary>
+            <param name="handle">A handle to a TurboJPEG decompressor or transformer instance</param>
+            <param name="jpegBuf">Pointer to a buffer containing the JPEG image to decompress. This buffer is not modified.</param>
+            <param name="jpegSize">Size of the JPEG image (in bytes)</param>
+            <param name="dstBuf">
+                Pointer to an image buffer that will receive the decompressed image.
+                This buffer should normally be <c> pitch * scaledHeight</c> bytes in size,
+                where <c>scaledHeight</c> can be determined by calling <see cref="M:TurboJpegWrapper.TurboJpegImport.TJSCALED(System.Int32,TurboJpegWrapper.tjscalingfactor)" /> with the JPEG image height and one
+                of the scaling factors returned by <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetScalingFactors(System.Int32@)" />.
+                The <paramref name="dstBuf" /> pointer may also be used to decompress into a specific region of a larger buffer.
+            </param>
+            <param name="width">
+                Desired width (in pixels) of the destination image.
+                If this is different than the width of the JPEG image being decompressed, then TurboJPEG will use scaling in the
+                JPEG decompressor to generate the largest possible image that will fit within the desired width.
+                If <paramref name="width" /> is set to 0, then only the height will be considered when determining the scaled image
+                size.
+            </param>
+            <param name="pitch">
+                Bytes per line in the destination image.  Normally, this is <c>scaledWidth* tjPixelSize[pixelFormat]</c> if the
+                decompressed image is unpadded, else <c>TJPAD(scaledWidth * tjPixelSize[pixelFormat])</c> if each line of the
+                decompressed image is padded to the nearest 32-bit boundary, as is the case for Windows bitmaps.
+                <remarks>
+                    Note: <c>scaledWidth</c> can be determined by calling <see cref="M:TurboJpegWrapper.TurboJpegImport.TJSCALED(System.Int32,TurboJpegWrapper.tjscalingfactor)" /> with the JPEG image width and one
+                    of the scaling factors returned by <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetScalingFactors(System.Int32@)" />
+                </remarks>
+                You can also be clever and use the pitch parameter to skip lines, etc.
+                Setting this parameter to 0 is the equivalent of setting it to <c>scaledWidth* tjPixelSize[pixelFormat]</c>.
+            </param>
+            <param name="height">
+                Desired height (in pixels) of the destination image.
+                If this is different than the height of the JPEG image being decompressed, then TurboJPEG will use scaling in the
+                JPEG decompressor to generate the largest possible image that will fit within the desired height.
+                If <paramref name="height" /> is set to 0, then only the width will be considered when determining the scaled image
+                size.
+            </param>
+            <param name="pixelFormat">Pixel format of the destination image (see <see cref="T:TurboJpegWrapper.TJPixelFormats" /> "Pixel formats".)</param>
+            <param name="flags">The bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags" /> "flags"</param>
+            <returns>0 if successful, or -1 if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjAlloc(System.Int32)">
+            <summary>
+                Allocate an image buffer for use with TurboJPEG.  You should always use
+                this function to allocate the JPEG destination buffer(s) for <see cref="M:TurboJpegWrapper.TurboJpegImport.tjCompress2(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.IntPtr@,System.UInt64@,System.Int32,System.Int32,System.Int32)" />
+                and <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)" /> unless you are disabling automatic buffer
+                (re)allocation (by setting <see cref="F:TurboJpegWrapper.TJFlags.NOREALLOC" />.)
+            </summary>
+            <param name="bytes">The number of bytes to allocate</param>
+            <returns>A pointer to a newly-allocated buffer with the specified number of bytes</returns>
+            <seealso cref="M:TurboJpegWrapper.TurboJpegImport.tjFree(System.IntPtr)" />
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjFree(System.IntPtr)">
+            <summary>
+                Free an image buffer previously allocated by TurboJPEG.  You should always
+                use this function to free JPEG destination buffer(s) that were automatically
+                (re)allocated by <see cref="M:TurboJpegWrapper.TurboJpegImport.tjCompress2(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.IntPtr@,System.UInt64@,System.Int32,System.Int32,System.Int32)" /> or <see cref="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)" /> or that were manually
+                allocated using <see cref="M:TurboJpegWrapper.TurboJpegImport.tjAlloc(System.Int32)" />.
+            </summary>
+            <param name="buffer">Address of the buffer to free</param>
+            <seealso cref="M:TurboJpegWrapper.TurboJpegImport.tjAlloc(System.Int32)" />
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjInitTransform">
+            <summary>
+                Create a new TurboJPEG transformer instance
+            </summary>
+            <returns>@return a handle to the newly-created instance, or NULL if an error occurred(see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjTransform(System.IntPtr,System.IntPtr,System.UInt64,System.Int32,System.IntPtr[],System.UInt64[],System.IntPtr,System.Int32)">
+            <summary>
+                Losslessly transform a JPEG image into another JPEG image.  Lossless
+                transforms work by moving the raw DCT coefficients from one JPEG image
+                structure to another without altering the values of the coefficients.  While
+                this is typically faster than decompressing the image, transforming it, and
+                re-compressing it, lossless transforms are not free.  Each lossless
+                transform requires reading and performing Huffman decoding on all of the
+                coefficients in the source image, regardless of the size of the destination
+                image.  Thus, this function provides a means of generating multiple
+                transformed images from the same source or  applying multiple
+                transformations simultaneously, in order to eliminate the need to read the
+                source coefficients multiple times.
+            </summary>
+            <param name="handle">A handle to a TurboJPEG transformer instance</param>
+            <param name="jpegBuf">
+                Pointer to a buffer containing the JPEG source image to transform.This buffer is not modified.
+            </param>
+            <param name="jpegSize">Size of the JPEG source image (in bytes)</param>
+            <param name="n">The number of transformed JPEG images to generate</param>
+            <param name="dstBufs">
+                Pointer to an array of n image buffers. <paramref name="dstBufs" />[i] will receive a JPEG image that has been
+                transformed using the parameters in <paramref name="transforms" />[i]
+                TurboJPEG has the ability to reallocate the JPEG buffer
+                to accommodate the size of the JPEG image.  Thus, you can choose to:
+                <list type="number">
+                    <item>
+                        <description>
+                            pre-allocate the JPEG buffer with an arbitrary size using <see cref="M:TurboJpegWrapper.TurboJpegImport.tjAlloc(System.Int32)" /> and let
+                            TurboJPEG grow the buffer as needed
+                        </description>
+                    </item>
+                    <item>
+                        <description>set <paramref name="dstBufs" />[i] to NULL to tell TurboJPEG to allocate the buffer for you</description>
+                    </item>
+                    <item>
+                        <description>
+                            pre-allocate the buffer to a "worst case" size determined by calling <see cref="M:TurboJpegWrapper.TurboJpegImport.tjBufSize(System.Int32,System.Int32,System.Int32)" />.
+                            This should ensure that the buffer never has to be re-allocated (setting
+                            <see cref="F:TurboJpegWrapper.TJFlags.NOREALLOC" /> guarantees this.).
+                        </description>
+                    </item>
+                </list>
+                If you choose option 1, <paramref name="dstSizes" />[i] should be set to the size of your pre-allocated buffer.
+                In any case, unless you have set <see cref="F:TurboJpegWrapper.TJFlags.NOREALLOC" />,
+                you should always check <paramref name="dstBufs" />[i] upon return from this function, as it may have changed.
+            </param>
+            <param name="dstSizes">
+                Pointer to an array of <paramref name="n" /> unsigned long variables that will
+                receive the actual sizes (in bytes) of each transformed JPEG image.
+                If <paramref name="dstBufs" />[i] points to a pre-allocated buffer,
+                then <paramref name="dstSizes" />[i] should be set to the size of the buffer.
+                Upon return, <paramref name="dstSizes" />[i] will contain the size of the JPEG image (in bytes.)
+            </param>
+            <param name="transforms">
+                Pointer to an array of <see cref="T:TurboJpegWrapper.tjtransform" /> structures, each of
+                which specifies the transform parameters and/or cropping region for the
+                corresponding transformed output image.
+            </param>
+            <param name="flags">flags the bitwise OR of one or more of the <see cref="T:TurboJpegWrapper.TJFlags" /> "flags"</param>
+            <returns>0 if successful, or -1 if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjDestroy(System.IntPtr)">
+            <summary>
+                Destroy a TurboJPEG compressor, decompressor, or transformer instance
+            </summary>
+            <param name="handle">a handle to a TurboJPEG compressor, decompressor or transformer instance</param>
+            <returns>0 if successful, or -1 if an error occurred (see <see cref="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr" />)</returns>
+        </member>
+        <member name="M:TurboJpegWrapper.TurboJpegImport.tjGetErrorStr">
+            <summary>
+                Returns a descriptive error message explaining why the last command failed
+            </summary>
+            <returns>A descriptive error message explaining why the last command failed</returns>
+        </member>
+    </members>
+</doc>

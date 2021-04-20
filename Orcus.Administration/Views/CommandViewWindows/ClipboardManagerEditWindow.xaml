@@ -1,0 +1,97 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CommandViewWindows.ClipboardManagerEditWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:clipboard="clr-namespace:Orcus.Shared.Commands.ClipboardManager;assembly=Orcus.Shared"
+    xmlns:clipboardManager="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.ClipboardManager;assembly=Orcus.Administration.ViewModels"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{StaticResource ChangeClipboard}"
+    Width="600"
+    d:DataContext="{d:DesignInstance clipboardManager:ClipboardManagerEditViewModel}"
+    extensions:WindowService.DialogResult="{Binding DialogResult}"
+    ResizeMode="NoResize"
+    ShowIconOnTitleBar="False"
+    ShowInTaskbar="False"
+    SizeToContent="Height"
+    Style="{StaticResource NormalWindow}"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="300" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="{DynamicResource DataFormat}" /><Run Text=":" />
+            </TextBlock>
+            <ComboBox
+                MinWidth="200"
+                Margin="10,0,0,0"
+                ItemsSource="{Binding Formats}"
+                SelectedItem="{Binding SelectedClipboardFormat}" />
+        </StackPanel>
+        <ContentControl Grid.Row="1" Content="{Binding ClipboardData}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type clipboard:StringClipboardData}">
+                    <TextBox
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        AcceptsReturn="True"
+                        AcceptsTab="True"
+                        Text="{Binding Text, Mode=TwoWay}" />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type clipboard:StringListClipboardData}">
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="True"
+                        CanUserDeleteRows="True"
+                        HeadersVisibility="None"
+                        ItemsSource="{Binding StringList}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Value}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type clipboard:ImageClipboardData}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding BitmapData, Converter={StaticResource ByteArrayToImageConverter}}" Stretch="Uniform" />
+                        <Button
+                            Grid.Row="2"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SelectImageCommand}"
+                            CommandParameter="{Binding}"
+                            Content="{DynamicResource ClickHereToSelectImage}" />
+                    </Grid>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+        <Grid Grid.Row="2" Background="{StaticResource GrayBrush10}">
+            <Button
+                MinWidth="75"
+                Margin="10"
+                HorizontalAlignment="Left"
+                Command="{Binding CancelCommand}"
+                Content="{DynamicResource Cancel}" />
+            <Button
+                MinWidth="150"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Command="{Binding ChangeCommand}"
+                Content="{DynamicResource ChangeClipboard}" />
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

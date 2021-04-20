@@ -1,0 +1,67 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.ClientMapWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      xmlns:worldMap="clr-namespace:Orcus.Administration.Controls.WorldMap"
+                      Title="{StaticResource WorldMap}"
+                      Width="1200"
+                      Height="720"
+                      d:DataContext="{d:DesignInstance viewModels:ClientMapViewModel}"
+                      Icon="/Resources/Images/VisualStudio/GeoLocation.ico"
+                      ResizeMode="CanResize"
+                      ShowInTaskbar="False"
+                      SizeToContent="Manual"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource GeoLocationIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <worldMap:WorldMapControl Markers="{Binding ClientLocations}" />
+        <TextBlock Margin="10"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Foreground="White"
+                   IsHitTestVisible="False"
+                   Opacity=".6">
+            <Run Text="Clients: " />
+            <Run Text="{Binding ClientLocations.Count, Mode=OneWay}" />
+        </TextBlock>
+        <CheckBox Margin="10,10,20,10"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  Content="Hide Offline Clients"
+                  Foreground="White"
+                  IsChecked="{Binding HideOfflineClients}"
+                  Opacity=".5" />
+        <Grid Background="{StaticResource WhiteBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ClientLocations}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="14"
+                           Foreground="{StaticResource BlackBrush}"
+                           Text="{StaticResource LoadingPositions}" />
+                <controls:MetroProgressBar Width="250"
+                                           Margin="0,5,0,0"
+                                           IsIndeterminate="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

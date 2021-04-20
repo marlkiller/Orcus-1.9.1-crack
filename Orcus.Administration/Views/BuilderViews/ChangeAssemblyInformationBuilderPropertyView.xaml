@@ -1,0 +1,109 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.ChangeAssemblyInformationBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:local="clr-namespace:Orcus.Administration.Views.BuilderViews"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            xmlns:controls="clr-namespace:Orcus.Administration.Controls"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:ChangeAssemblyInformationBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=AssemblyInformation}" Orientation="Vertical">
+        <CheckBox x:Name="ChangeAssemblyInformationCheckBox"
+                  Content="{StaticResource ChangeAssemblyInformation}"
+                  IsChecked="{Binding ChangeAssemblyInformation}" />
+        <StackPanel Margin="0,10,0,0"
+                    IsEnabled="{Binding ElementName=ChangeAssemblyInformationCheckBox,
+                                        Path=IsChecked}"
+                    Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Title}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyTitle}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Description}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyDescription}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Company}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyCompanyName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Product}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyProductName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Copyright}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyCopyright}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource Trademarks}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding AssemblyTrademarks}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource ProductVersion}" /><Run Text=":" />
+                </TextBlock>
+                <controls:VersionControl Grid.Column="1" SelectedVersion="{Binding AssemblyProductVersion}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{StaticResource FileVersion}" /><Run Text=":" />
+                </TextBlock>
+                <controls:VersionControl Grid.Column="1" SelectedVersion="{Binding AssemblyFileVersion}" />
+            </Grid>
+        </StackPanel>
+        <Button Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                  Path=LoadAssemblyInformationFromExistingFileCommand}"
+                Content="{StaticResource LoadFromFile}" />
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

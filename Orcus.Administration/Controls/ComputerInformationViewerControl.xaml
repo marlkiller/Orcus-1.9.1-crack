@@ -1,0 +1,758 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.ComputerInformationViewerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="3000"
+             d:DesignWidth="930.5"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="{DynamicResource LightColorBrush}" />
+        </Style>
+    </UserControl.Resources>
+    <VirtualizingStackPanel Margin="10,5,5,5"
+                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                  Path=ComputerInformation}"
+                            Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="{DynamicResource OperatingSystem}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Name}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.FriendlyName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource NtVersion}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.NtVersion}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Version}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Version}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource CodeName}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.InternalName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Architecture}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Architecture}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Platform}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Platform}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource SystemDirectory}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.SystemDirectory}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource BootMode}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.BootMode}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ClrVersion}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.ClrVersion}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource TotalPhysicalMemory}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.TotalPhysicalMemory,
+                                        Converter={StaticResource FormatBytesConverter}}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource SystemPageSize}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.SystemPageSize}" />
+            </Grid>
+            <TextBlock Margin="0,30,0,0"
+                       Style="{StaticResource HeaderText}"
+                       Text="{DynamicResource System}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Username}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.UserName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource UserDomainName}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.UserDomainName}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Owner}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Owner}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Workgroup}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Workgroup}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ProductKey}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.ProductKey}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource AdminPasswordStatus}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.AdminPasswordStatus}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Manufacturer}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Manufacturer}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Model}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SystemInformation.Model}" />
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="0,30,0,0" Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="Bios" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Name}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.Name}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Version}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.Version}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ProductId}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.ProductId}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Manufacturer}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.Manufacturer}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="Release date" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.ReleaseDate}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Language}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.Language}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource SupportedLanguages}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding BiosInformation.SupportedLanguages}" />
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="0,30,0,0" Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="{DynamicResource Hardware}" />
+            <TextBlock Margin="0,5,0,0"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="{DynamicResource Processor}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Name}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.Name}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Description}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.Description}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ClockSpeed}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.ClockSpeed}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Cores}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.Cores}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource LogicalProcessors}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.LogicalProcessors}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Architecture}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.Architecture}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource L2Cache}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.L2CacheSize}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource L3Cache}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.L3CacheSize}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ManufacturerId}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.ManufactureId}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource DeviceId}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.DeviceId}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ProcessorId}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.ProcessorId}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ProcessorType}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.ProcessorType}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource ExternalClockSpeed}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.ExternalClockSpeed}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Revision}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.ProcessorInfo.Revision}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="{DynamicResource Videocard}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Name}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.Name}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource DeviceId}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.DeviceId}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource VideoArchitecture}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.VideoArchitecture}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource VideoProcessor}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.VideoProcessor}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource VideoMemoryType}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.VideoMemoryType}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource VideoModeDescription}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.VideoModeDescription}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource MaxRefreshRate}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding HardwareInformation.VideoCardInfo.MaxRefreshRate}" />
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="0,30,0,0" Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="{DynamicResource Software}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource InstalledPrograms}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SoftwareInformation.InstalledPrograms}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource AntiVirus}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SoftwareInformation.AntiVirusPrograms}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Firewall}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding SoftwareInformation.Firewalls}" />
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="0,30,0,0" Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="{DynamicResource Network}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource MacAddress}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding NetworkInformation.MacAddress}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="{DynamicResource LocalAddresses}" />
+            <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding NetworkInformation.IpAddresses}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Foreground="{StaticResource BlackBrush}" Text="{Binding AddressFamily}" />
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding Value}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        <StackPanel Margin="0,30,0,0" Orientation="Vertical">
+            <TextBlock Style="{StaticResource HeaderText}" Text="{DynamicResource Drives}" />
+            <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding LogicalDrives}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,20" Orientation="Vertical">
+                            <TextBlock FontSize="13"
+                                       FontWeight="Bold"
+                                       Text="{Binding Name}" />
+                            <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="{DynamicResource DriveType}" /><Run Text=": " />
+                                </TextBlock>
+                                <TextBox Style="{StaticResource ValueText}" Text="{Binding DriveType}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="{DynamicResource Ready}" /><Run Text=": " />
+                                </TextBlock>
+                                <TextBox Style="{StaticResource ValueText}" Text="{Binding IsReady}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Vertical">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsReady}" Value="false">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource Label}" /><Run Text=": " />
+                                    </TextBlock>
+                                    <TextBox Style="{StaticResource ValueText}" Text="{Binding VolumeLabel}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource Format}" /><Run Text=": " />
+                                    </TextBlock>
+                                    <TextBox Style="{StaticResource ValueText}" Text="{Binding DriveFormat}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource Status}" /><Run Text=": " />
+                                    </TextBlock>
+                                    <TextBox Style="{StaticResource ValueText}" Text="{Binding RootDirectory}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource TotalSize}" /><Run Text=": " />
+                                    </TextBlock>
+                                    <TextBox Style="{StaticResource ValueText}" Text="{Binding TotalSize, Converter={StaticResource FormatBytesConverter}}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource FreeSpace}" /><Run Text=": " />
+                                    </TextBlock>
+                                    <TextBox Style="{StaticResource ValueText}" Text="{Binding AvailableFreeSpace, Converter={StaticResource FormatBytesConverter}}" />
+                                </StackPanel>
+                                <controls:MetroProgressBar Width="300"
+                                                           Margin="0,1,0,0"
+                                                           HorizontalAlignment="Left"
+                                                           Background="{DynamicResource AccentColorBrush}"
+                                                           Foreground="{StaticResource GrayBrush10}"
+                                                           Maximum="{Binding TotalSize}"
+                                                           Value="{Binding AvailableFreeSpace}">
+                                    <ProgressBar.LayoutTransform>
+                                        <RotateTransform Angle="180" CenterX=".5" CenterY=".5" />
+                                    </ProgressBar.LayoutTransform>
+                                </controls:MetroProgressBar>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </VirtualizingStackPanel>
+</UserControl>

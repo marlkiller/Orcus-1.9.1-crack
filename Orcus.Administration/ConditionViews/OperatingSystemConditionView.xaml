@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Orcus.Administration.ConditionViews.OperatingSystemConditionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:addCondition="clr-namespace:Orcus.Administration.ViewModels.AddCondition;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance addCondition:OperatingSystemConditionViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:OperatingSystemEnumConverter x:Key="OperatingSystemEnumConverter" />
+        <converter:OperatingSystemStringConverter x:Key="OperatingSystemStringConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <controls:RangeSlider x:Name="OperatingSystemRangeSlider"
+                              AutoToolTipPlacement="BottomRight"
+                              AutoToolTipTextConverter="{StaticResource OperatingSystemStringConverter}"
+                              ExtendedMode="True"
+                              IsMoveToPointEnabled="True"
+                              LowerValue="{Binding Condition.MinimumOsVersion,
+                                                   Converter={StaticResource OperatingSystemEnumConverter}}"
+                              Maximum="5"
+                              Minimum="1"
+                              MoveWholeRange="False"
+                              Orientation="Horizontal"
+                              SmallChange="1"
+                              TickFrequency="1"
+                              TickPlacement="BottomRight"
+                              UpperValue="{Binding Condition.MaximumOsVersion,
+                                                   Converter={StaticResource OperatingSystemEnumConverter}}" />
+        <TextBlock Margin="0,3,0,0" HorizontalAlignment="Center">
+            <Run Text="{Binding ElementName=OperatingSystemRangeSlider, Path=LowerValue, Converter={StaticResource OperatingSystemStringConverter}, Mode=OneWay}" />
+            <Run Text="{StaticResource To2}" />
+            <Run Text="{Binding ElementName=OperatingSystemRangeSlider, Path=UpperValue, Converter={StaticResource OperatingSystemStringConverter}, Mode=OneWay}" />
+        </TextBlock>
+    </StackPanel>
+</UserControl>

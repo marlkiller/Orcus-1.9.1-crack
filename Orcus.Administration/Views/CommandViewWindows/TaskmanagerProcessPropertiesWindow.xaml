@@ -1,0 +1,147 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.TaskmanagerProcessPropertiesWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:extensions1="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:taskmanager="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.Taskmanager;assembly=Orcus.Administration.ViewModels"
+                      Title="Application Properties"
+                      Width="650"
+                      d:DataContext="{d:DesignInstance taskmanager:ProcessPropertiesViewModel}"
+                      extensions1:WindowService.EscapeClosesWindow="True"
+                      Icon="{Binding Icon}"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      SizeToContent="Height"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <StackPanel Margin="10" Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Image Width="26"
+                   Height="26"
+                   VerticalAlignment="Top"
+                   RenderOptions.BitmapScalingMode="HighQuality">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="{Binding ProcessInfo.Icon}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProcessInfo.Icon}" Value="{x:Null}">
+                                <Setter Property="Source" Value="{extensions:WindowsIcons LibraryName=imageres.dll, IconId=11, Size=26}" />
+                                <Setter Property="SnapsToDevicePixels" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <StackPanel Margin="15,0,0,0" Orientation="Vertical">
+                <TextBox Style="{StaticResource ValueText}" Text="{Binding ProcessInfo.Name, Mode=OneWay}" />
+                <TextBox>
+                    <TextBox.Style>
+                        <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                            <Setter Property="Text" Value="{Binding ProcessInfo.CompanyName}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ProcessInfo.CompanyName, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="Text" Value="N/A" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource Description}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox>
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                        <Setter Property="Text" Value="{Binding ProcessInfo.Description}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProcessInfo.Description, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="Text" Value="N/A" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource FileVersion}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox>
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                        <Setter Property="Text" Value="{Binding ProcessInfo.FileVersion}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProcessInfo.FileVersion, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="Text" Value="N/A" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource ProductVersion}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox>
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                        <Setter Property="Text" Value="{Binding ProcessInfo.ProductVersion}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProcessInfo.ProductVersion, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="Text" Value="N/A" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+        <TextBlock Margin="0,10,0,0" Text="{DynamicResource Path}" />
+        <TextBox Margin="0,2,0,0"
+                 IsReadOnly="True"
+                 Text="{Binding ProcessInfo.Filename,
+                                Mode=OneWay}" />
+        <TextBlock Margin="0,10,0,0" Text="{DynamicResource CommandLine}" />
+        <TextBox Margin="0,2,0,0"
+                 IsReadOnly="True"
+                 Text="{Binding ProcessInfo.CommandLine,
+                                Mode=OneWay}" />
+        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource Parent}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox Style="{StaticResource ValueText}" Text="{Binding ParentProcess, Mode=OneWay}" />
+        </StackPanel>
+        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource User}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox>
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                        <Setter Property="Text" Value="{Binding ProcessInfo.ProcessOwner, Mode=OneWay}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProcessInfo.ProcessOwner, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="Text" Value="{StaticResource AccessDenied}" />
+                                <Setter Property="Foreground" Value="#e74c3c" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+            <TextBlock Width="100" HorizontalAlignment="Left">
+                <Run Text="{DynamicResource StartTime}" /><Run Text=":" />
+            </TextBlock>
+            <TextBox Style="{StaticResource ValueText}" Text="{Binding ProcessInfo.StartTime}" />
+        </StackPanel>
+    </StackPanel>
+</controls:MetroWindow>

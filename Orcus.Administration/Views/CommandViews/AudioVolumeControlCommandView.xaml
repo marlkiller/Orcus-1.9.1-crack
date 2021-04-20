@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.AudioVolumeControlCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Orcus.Shared.Commands.Audio;assembly=Orcus.Shared"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             d:DataContext="{d:DesignInstance commandViewModels:AudioVolumeControlViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <extensions:ComboBoxDataTemplateSelector x:Key="ComboBoxItemTemplateChooser" />
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <StackPanel Margin="0,5,0,0" Orientation="Vertical">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="14" Text="{DynamicResource PlaybackDevices}" />
+                    <ComboBox x:Name="PlaybackDevicesComboBox"
+                              Width="350"
+                              Margin="0,10,0,0"
+                              HorizontalAlignment="Left"
+                              ItemTemplateSelector="{StaticResource ComboBoxItemTemplateChooser}"
+                              ItemsSource="{Binding PlaybackDevicesCollectionView}"
+                              SelectedItem="{Binding SelectedPlaybackDevice}">
+                        <extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                            <DataTemplate DataType="{x:Type data:SoundOutDevice}">
+                                <TextBlock x:Name="NameTextBlock" Text="{Binding Name}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ComboBoxItem}, Path=IsSelected}" Value="True">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="White" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                        <extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                            <DataTemplate DataType="{x:Type data:SoundOutDevice}">
+                                <TextBlock x:Name="NameTextBlock" Text="{Binding Name}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                    </ComboBox>
+                    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+                        <TextBlock Text="{DynamicResource MasterVolume}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="500" />
+                            </Grid.ColumnDefinitions>
+                            <Slider Margin="0,5,0,0"
+                                    LargeChange=".2"
+                                    Maximum="1"
+                                    Minimum="0"
+                                    SmallChange=".1"
+                                    Value="{Binding PlaybackDeviceMasterVolume,
+                                                    Delay=500}" />
+                        </Grid>
+                        <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding SelectedPlaybackDevice.AudioChannels}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel Margin="0,5,0,0">
+                                        <TextBlock VerticalAlignment="Center">
+                                            <Run Text="{DynamicResource Channel}" />
+                                            <Run Text="{Binding ChannelIndex}" /><Run Text=": " />
+                                        </TextBlock>
+                                        <Grid Margin="5,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" MaxWidth="500" />
+                                            </Grid.ColumnDefinitions>
+                                            <Slider LargeChange=".2"
+                                                    Maximum="1"
+                                                    Minimum="0"
+                                                    SmallChange=".1"
+                                                    Tag="{Binding ChannelIndex}"
+                                                    Thumb.DragCompleted="PlaybackThumb_OnDragCompleted"
+                                                    Value="{Binding Volume}" />
+                                        </Grid>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,40,0,0" Orientation="Vertical">
+                    <TextBlock FontSize="14" Text="{DynamicResource RecordingDevices}" />
+                    <ComboBox x:Name="RecordingDevicesComboBox"
+                              Width="350"
+                              Margin="0,10,0,0"
+                              HorizontalAlignment="Left"
+                              ItemTemplateSelector="{StaticResource ComboBoxItemTemplateChooser}"
+                              ItemsSource="{Binding RecordingDevicesCollectionView}"
+                              SelectedItem="{Binding SelectedRecordingDevice}">
+                        <extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                            <DataTemplate DataType="{x:Type data:SoundOutDevice}">
+                                <TextBlock x:Name="NameTextBlock" Text="{Binding Name}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ComboBoxItem}, Path=IsSelected}" Value="True">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="White" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                        <extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                            <DataTemplate DataType="{x:Type data:SoundOutDevice}">
+                                <TextBlock x:Name="NameTextBlock" Text="{Binding Name}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                        <Setter TargetName="NameTextBlock" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                    </ComboBox>
+                    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+                        <TextBlock Text="{DynamicResource MasterVolume}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="500" />
+                            </Grid.ColumnDefinitions>
+                            <Slider Margin="0,5,0,0"
+                                    LargeChange=".2"
+                                    Maximum="1"
+                                    Minimum="0"
+                                    SmallChange=".1"
+                                    Value="{Binding RecordingDeviceMasterVolume,
+                                                    Delay=500}" />
+                        </Grid>
+                        <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding SelectedRecordingDevice.AudioChannels}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel Margin="0,5,0,0">
+                                        <TextBlock VerticalAlignment="Center">
+                                            <Run Text="{DynamicResource Channel}" />
+                                            <Run Text="{Binding ChannelIndex}" /><Run Text=": " />
+                                        </TextBlock>
+                                        <Grid Margin="5,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" MaxWidth="500" />
+                                            </Grid.ColumnDefinitions>
+                                            <Slider LargeChange=".2"
+                                                    Maximum="1"
+                                                    Minimum="0"
+                                                    SmallChange=".1"
+                                                    Tag="{Binding ChannelIndex}"
+                                                    Thumb.DragCompleted="RecordingThumb_OnDragCompleted"
+                                                    Value="{Binding Volume}" />
+                                        </Grid>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Command="{Binding RefreshDevicesCommand}"
+                    Content="{DynamicResource Refresh}" />
+        </Grid>
+    </ScrollViewer>
+</UserControl>

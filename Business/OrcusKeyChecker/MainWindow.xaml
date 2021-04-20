@@ -1,0 +1,61 @@
+﻿<Window x:Class="OrcusKeyChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:orcusKeyChecker="clr-namespace:OrcusKeyChecker"
+        Title="Orcus Key Checker"
+        Width="451.375"
+        Height="182.362"
+        FocusManager.FocusedElement="{Binding ElementName=LicenseKeyTextBox}"
+        ResizeMode="NoResize"
+        mc:Ignorable="d">
+    <Window.DataContext>
+        <orcusKeyChecker:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+            <TextBlock Text="Input key here:" />
+            <TextBox x:Name="LicenseKeyTextBox"
+                     Width="300"
+                     Margin="0,4,0,0"
+                     Text="{Binding LicenseKey,
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    Delay=50}" />
+            <TextBlock Margin="0,2,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.Banned}">
+                                <Setter Property="Foreground" Value="#c0392b" />
+                                <Setter Property="Text" Value="License is banned" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.Checking}">
+                                <Setter Property="Foreground" Value="#2980b9" />
+                                <Setter Property="Text" Value="Checking license..." />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.ConnectionFailed}">
+                                <Setter Property="Foreground" Value="#e67e22" />
+                                <Setter Property="Text" Value="Connection to server failed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.NotFound}">
+                                <Setter Property="Foreground" Value="#c0392b" />
+                                <Setter Property="Text" Value="The license was not found" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.UnknownResult}">
+                                <Setter Property="Foreground" Value="#e67e22" />
+                                <Setter Property="Text" Value="The response from the server was unexpected. Please contact Sorzus" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static orcusKeyChecker:CurrentState.Valid}">
+                                <Setter Property="Foreground" Value="#27ae60" />
+                                <Setter Property="Text" Value="The license key is valid" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

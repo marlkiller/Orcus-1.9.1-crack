@@ -1,0 +1,468 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.PluginsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      xmlns:plugins="clr-namespace:Orcus.Administration.ViewModels.Plugins;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource Plugins}"
+                      Width="850"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance viewModels:PluginsViewModel}"
+                      Icon="/Resources/Images/VisualStudio/Extension.ico"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource ExtensionIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDoingSomething}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <controls:MetroAnimatedTabControl SelectedIndex="1">
+                <TabControl.Resources>
+                    <Style BasedOn="{StaticResource MetroTabItem}" TargetType="TabItem" />
+                </TabControl.Resources>
+                <TabItem Header="{StaticResource Browse}">
+                    <Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="2"
+                                     Margin="5"
+                                     controls:TextBoxHelper.Watermark="{StaticResource Search}"
+                                     Text="{Binding BrowseCollectionSearchText,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+                            <ListBox x:Name="BrowseListView"
+                                     Grid.Row="1"
+                                     Grid.Column="0"
+                                     ItemsSource="{Binding BrowseCollectionView}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type plugins:PublicPluginViewModel}">
+                                        <Grid Height="75" Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="120" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image VerticalAlignment="Center"
+                                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                                   Source="{Binding Thumbnail}" />
+                                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                                <TextBlock FontSize="14"
+                                                           FontWeight="Bold"
+                                                           Text="{Binding Name}"
+                                                           TextWrapping="Wrap" />
+                                                <TextBlock Margin="0,2,0,0"
+                                                           Text="{Binding Description}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextWrapping="Wrap" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="3"
+                                                        Margin="4"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        Orientation="Vertical">
+                                                <Button MinWidth="75"
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox},
+                                                                          Path=DataContext.DownloadPluginCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Content="{DynamicResource Download}">
+                                                    <Button.Style>
+                                                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true" />
+                                                                        <Condition Binding="{Binding IsInstalled}" Value="false" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </MultiDataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+                                                <Viewbox Width="16"
+                                                         Height="16"
+                                                         Margin="4">
+                                                    <Viewbox.Style>
+                                                        <Style TargetType="Viewbox">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsInstalled}" Value="true">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Viewbox.Style>
+                                                    <Path Data="{StaticResource VectorTrue}">
+                                                        <Path.Style>
+                                                            <Style TargetType="Path">
+                                                                <Setter Property="Fill" Value="#27ae60" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true">
+                                                                        <Setter Property="Fill" Value="White" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
+                                                </Viewbox>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="1"
+                                        Grid.Column="1"
+                                        Width="250"
+                                        Margin="10"
+                                        Orientation="Vertical">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=BrowseListView, Path=SelectedItem}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource CreatedBy}" /><Run Text=": " />
+                                    </Bold>
+                                    <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ElementName=BrowseListView, Path=SelectedItem.AuthorUrl}"><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.Author, Mode=OneWay}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Type}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.Type, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Version}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.Version, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Downloads}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.Downloads, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Description}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.Description, Mode=OneWay}" />
+                                </TextBlock>
+                                <StackPanel>
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=BrowseListView, Path=SelectedItem.ProjectWebsite, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <TextBlock Margin="0,5,0,0">
+                                        <Bold><Run Text="{StaticResource Website}" /><Run Text=": " />
+                                        </Bold>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,2,0,0"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding ElementName=BrowseListView,
+                                                                 Path=SelectedItem.ProjectWebsite}">
+                                        <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ElementName=BrowseListView, Path=SelectedItem.ProjectWebsite}"><Run Text="{Binding ElementName=BrowseListView, Path=SelectedItem.ProjectWebsite, Mode=OneWay}" />
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="{StaticResource WhiteBrush}">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PublicPlugins.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{StaticResource ConnectionToServerFailed}" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{StaticResource Installed}">
+                    <Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="2"
+                                     Margin="5"
+                                     controls:TextBoxHelper.Watermark="{StaticResource Search}"
+                                     Text="{Binding InstalledCollectionSearchText,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+                            <ListView x:Name="InstalledListView"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                                      BorderThickness="0"
+                                      ItemsSource="{Binding InstalledCollectionView}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.Resources>
+                                    <Style x:Key="NoHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Style>
+                                </ListView.Resources>
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                                        <Setter Property="Height" Value="80" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource NoHeaderStyle}">
+                                        <GridViewColumn Width="120" listViewLayoutManager:FixedColumn.Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type plugins:IPluginViewModel}">
+                                                    <Image VerticalAlignment="Center"
+                                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                                           Source="{Binding Thumbnail}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type plugins:IPluginViewModel}">
+                                                    <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                                                        <TextBlock FontSize="14"
+                                                                   FontWeight="Bold"
+                                                                   Text="{Binding Name}"
+                                                                   TextWrapping="Wrap" />
+                                                        <TextBlock Margin="0,2,0,0"
+                                                                   Text="{Binding Description}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="120" listViewLayoutManager:FixedColumn.Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type plugins:IPluginViewModel}">
+                                                    <StackPanel Margin="4"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Top"
+                                                                Orientation="Vertical">
+                                                        <Button MinWidth="75"
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox},
+                                                                                  Path=DataContext.UninstallPluginCommand}"
+                                                                CommandParameter="{Binding}"
+                                                                Content="{DynamicResource Uninstall}" />
+                                                        <Button MinWidth="75"
+                                                                Margin="0,4,0,0"
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox},
+                                                                                  Path=DataContext.UpdatePluginCommand}"
+                                                                CommandParameter="{Binding}"
+                                                                Content="{StaticResource Update}">
+                                                            <Button.Style>
+                                                                <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsUpdateAvailable}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <StackPanel Grid.Row="1"
+                                        Grid.Column="1"
+                                        Width="250"
+                                        Margin="10"
+                                        Orientation="Vertical">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=InstalledListView, Path=SelectedItem}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource CreatedBy}" /><Run Text=": " />
+                                    </Bold>
+                                    <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ElementName=InstalledListView, Path=SelectedItem.AuthorUrl}"><Run Text="{Binding ElementName=InstalledListView, Path=SelectedItem.Author, Mode=OneWay}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Type}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=InstalledListView, Path=SelectedItem.Type, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Version}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=InstalledListView, Path=SelectedItem.Version, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap">
+                                    <Bold><Run Text="{StaticResource Description}" /><Run Text=": " />
+                                    </Bold><Run Text="{Binding ElementName=InstalledListView, Path=SelectedItem.Description, Mode=OneWay}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="{StaticResource WhiteBrush}">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InstalledPlugins.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{StaticResource NoPluginsInstalled}" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{StaticResource Updates}">
+                    <Grid>
+                        <ListBox x:Name="UpdateListView"
+                                 ItemsSource="{Binding UpdateCollectionView}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type plugins:IPluginViewModel}">
+                                    <Grid Height="75" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image VerticalAlignment="Center"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               Source="{Binding Thumbnail}" />
+                                        <StackPanel Grid.Column="2" Orientation="Vertical">
+                                            <TextBlock FontSize="14"
+                                                       FontWeight="Bold"
+                                                       Text="{Binding Name}"
+                                                       TextWrapping="Wrap" />
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="{Binding Description}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       TextWrapping="Wrap" />
+                                        </StackPanel>
+                                        <Button Grid.Column="3"
+                                                MinWidth="75"
+                                                Margin="4"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Top"
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox},
+                                                                  Path=DataContext.UpdatePluginCommand}"
+                                                CommandParameter="{Binding}"
+                                                Content="{StaticResource Update}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding UpdateCollectionView.IsEmpty}" Value="true">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <TextBlock Text="{StaticResource NoUpdatesAvailable}" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </controls:MetroAnimatedTabControl>
+            <controls:MetroProgressBar Grid.Row="1"
+                                       Margin="0,4,0,2"
+                                       Maximum="1"
+                                       Value="{Binding CurrentProgress}">
+                <controls:MetroProgressBar.Style>
+                    <Style BasedOn="{StaticResource ColoredMetroProgressBar}" TargetType="controls:MetroProgressBar">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDoingSomething}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentProgress}" Value="0">
+                                <Setter Property="IsIndeterminate" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:MetroProgressBar.Style>
+            </controls:MetroProgressBar>
+        </Grid>
+        <Grid Background="{StaticResource WhiteBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="true">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <controls:ProgressRing Width="24" Height="24" />
+                <TextBlock Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="14"
+                           Text="{StaticResource GatheringPluginData}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

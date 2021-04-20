@@ -1,0 +1,25 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.RequireAdministratorPrivilegesInstallerBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:localExtensions="clr-namespace:Orcus.Administration.Extensions"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:RequireAdministratorPrivilegesInstallerBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:RequireAdministratorPrivilegesInstallerBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <Image Width="16"
+               Height=" 16"
+               VerticalAlignment="Center"
+               Source="{x:Static localExtensions:SystemImages.UacIcon}"
+               Style="{StaticResource DisableableImage}" />
+        <CheckBox Margin="5,0,0,0"
+                  Content="{StaticResource InstallationForceAdminPrivileges}"
+                  IsChecked="{Binding RequireAdministratorPrivileges}"
+                  ToolTip="{StaticResource InstallationForceAdminPrivilegesToolTip}" />
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

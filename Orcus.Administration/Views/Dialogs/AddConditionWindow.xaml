@@ -1,0 +1,83 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.Dialogs.AddConditionWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:addConditions="clr-namespace:Orcus.Administration.ViewModels.AddCondition;assembly=Orcus.Administration.ViewModels"
+                      xmlns:conditionViews="clr-namespace:Orcus.Administration.ConditionViews"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource AddCondition}"
+                      Width="400"
+                      Height="250"
+                      d:DataContext="{d:DesignInstance viewModels:AddConditionViewModel}"
+                      extensions:WindowService.DialogResult="{Binding DialogResult}"
+                      extensions:WindowService.EscapeClosesWindow="True"
+                      Icon="/Resources/Images/VisualStudio/AddConditionalRule_16x.png"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource AddConditionalRuleIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <controls:MetroWindow.Resources>
+        <extensions:ComboBoxDataTemplateSelector x:Key="ComboBoxItemTemplateChooser" />
+    </controls:MetroWindow.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ComboBox ItemTemplateSelector="{StaticResource ComboBoxItemTemplateChooser}"
+                  ItemsSource="{Binding Conditions}"
+                  SelectedItem="{Binding SelectedCondition}">
+            <extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding ConditionName}" />
+                </DataTemplate>
+            </extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+            <extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SelectedCondition.ConditionName}" />
+                </DataTemplate>
+            </extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+        </ComboBox>
+        <ContentControl Grid.Row="1"
+                        Margin="10"
+                        Content="{Binding SelectedCondition}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type addConditions:ClientBinaryFrameworkVersionConditionViewModel}">
+                    <conditionViews:ClientBinaryFrameworkVersionConditionView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type addConditions:ClientTagConditionViewModel}">
+                    <conditionViews:ClientTagConditionView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type addConditions:OperatingSystemConditionViewModel}">
+                    <conditionViews:OperatingSystemConditionView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type addConditions:PasswordDataAvailableConditionViewModel}">
+                    <conditionViews:PasswordDataAvailableConditionView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type addConditions:PrivilegesConditionViewModel}">
+                    <conditionViews:PrivilegesConditionView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type addConditions:VersionConditionViewModel}">
+                    <conditionViews:VersionConditionView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+        <Button Grid.Row="2"
+                Width="200"
+                HorizontalAlignment="Center"
+                Command="{Binding AddConditionCommand}"
+                Content="{StaticResource Add}"
+                Visibility="{Binding IsCreatingNewCondition,
+                                     Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Grid>
+</controls:MetroWindow>

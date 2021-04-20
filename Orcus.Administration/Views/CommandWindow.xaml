@@ -1,0 +1,80 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CommandWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:views="clr-namespace:Orcus.Administration.Views"
+    Title="CommandWindow"
+    Width="800"
+    Height="420"
+    d:DataContext="{d:DesignInstance viewModels:CommandViewModel}"
+    ResizeMode="CanResize"
+    ShowInTaskbar="True"
+    mc:Ignorable="d">
+    <controls:MetroWindow.Style>
+        <Style BasedOn="{StaticResource NormalWindow}" TargetType="controls:MetroWindow">
+            <Setter Property="Icon" Value="{Binding Icon}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Icon}" Value="{x:Null}">
+                    <Setter Property="ShowIconOnTitleBar" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </controls:MetroWindow.Style>
+    <controls:MetroWindow.Resources>
+        <Popup
+            x:Key="WindowSettingsPopup"
+            d:DataContext="{d:DesignInstance views:CommandWindow}"
+            AllowsTransparency="True"
+            StaysOpen="False">
+            <Border>
+                <Border Margin="5" Background="{StaticResource WhiteBrush}">
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="6"
+                            Direction="0"
+                            Opacity=".4"
+                            ShadowDepth="0"
+                            Color="Black" />
+                    </Border.Effect>
+                    <StackPanel
+                        MinWidth="140"
+                        Margin="10"
+                        Orientation="Vertical">
+                        <TextBlock Text="{DynamicResource Settings}" />
+                        <CheckBox
+                            x:Name="TopmostCheckBox"
+                            Margin="0,5,0,0"
+                            Content="{DynamicResource Topmost}"
+                            IsChecked="{Binding IsTopmost}" />
+                        <CheckBox
+                            x:Name="FullscreenCheckBox"
+                            Margin="0,5,0,0"
+                            Content="{DynamicResource Fullscreen}"
+                            IsChecked="{Binding IsFullscreen}" />
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Popup>
+    </controls:MetroWindow.Resources>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands ShowLastSeparator="True">
+            <Button
+                Margin="4,0,0,0"
+                VerticalAlignment="Center"
+                behavior:DropDownButtonBehavior.Popup="{StaticResource WindowSettingsPopup}"
+                Content="{DynamicResource Window}"
+                ContextMenuService.IsEnabled="false">
+                <i:Interaction.Behaviors>
+                    <behavior:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <ContentPresenter Content="{Binding View}" />
+</controls:MetroWindow>

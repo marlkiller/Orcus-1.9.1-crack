@@ -1,0 +1,113 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl
+    x:Class="Orcus.Administration.Views.BuilderViews.AutostartBuilderPropertyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+    xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:localExtensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance builderSettings:AutostartBuilderProperty}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    x:TypeArguments="builderSettings:AutostartBuilderProperty"
+    mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock FontWeight="Bold" Text="{StaticResource Autostart}" />
+        <RadioButton
+            x:Name="DisableAutostartRadioButton"
+            Margin="0,10,0,0"
+            Content="{StaticResource DisableAutostart}"
+            IsChecked="{Binding AutostartMethod, ConverterParameter={x:Static builderSettings:StartupMethod.Disable}, Converter={StaticResource EnumBooleanConverter}}" />
+        <RadioButton
+            x:Name="RegistryAutostartRadioButton"
+            Margin="0,10,0,0"
+            Content="{StaticResource Registry}"
+            IsChecked="{Binding AutostartMethod, ConverterParameter={x:Static builderSettings:StartupMethod.Registry}, Converter={StaticResource EnumBooleanConverter}}" />
+        <StackPanel Margin="20,5,0,0">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=RegistryAutostartRadioButton, Path=IsChecked}" Value="false">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=TryOtherMethodCheckBox, Path=IsChecked}" Value="true">
+                            <Setter Property="IsEnabled" Value="True" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=DisableAutostartRadioButton, Path=IsChecked}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center"><Run Text="{StaticResource RegistryKey}" /><Run Text=":" /></TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding RegistryKeyName}" />
+            </Grid>
+            <CheckBox
+                Margin="0,5,0,0"
+                Content="{StaticResource HiddenStart}"
+                IsChecked="{Binding RegistryHiddenStart}" />
+        </StackPanel>
+        <RadioButton
+            x:Name="TaskSchedulerAutostartRadioButton"
+            Margin="0,10,0,0"
+            Content="{StaticResource TaskScheduler}"
+            IsChecked="{Binding AutostartMethod, ConverterParameter={x:Static builderSettings:StartupMethod.TaskScheduler}, Converter={StaticResource EnumBooleanConverter}}" />
+        <StackPanel Margin="20,5,0,0">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=TaskSchedulerAutostartRadioButton, Path=IsChecked}" Value="false">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=TryOtherMethodCheckBox, Path=IsChecked}" Value="true">
+                            <Setter Property="IsEnabled" Value="True" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=DisableAutostartRadioButton, Path=IsChecked}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center"><Run Text="{StaticResource TaskName}" /><Run Text=":" /></TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding TaskSchedulerTaskName}" />
+            </Grid>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Image
+                    Width="16"
+                    Height=" 16"
+                    Source="{x:Static localExtensions:SystemImages.UacIcon}"
+                    Style="{StaticResource DisableableImage}" />
+                <CheckBox
+                    Margin="5,0,0,0"
+                    Content="{StaticResource TryRegisterWithHighestPrivileges}"
+                    IsChecked="{Binding TaskHighestPrivileges}" />
+            </StackPanel>
+        </StackPanel>
+        <CheckBox
+            x:Name="TryOtherMethodCheckBox"
+            Margin="0,10,0,0"
+            Content="{StaticResource TryOtherAutostartMethod}"
+            IsChecked="{Binding TryAllAutostartMethodsOnFail}">
+            <CheckBox.Style>
+                <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="{x:Type CheckBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=DisableAutostartRadioButton}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

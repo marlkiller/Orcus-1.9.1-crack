@@ -1,0 +1,167 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.ConfigureServerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+    Title="{StaticResource ConfigureServer}"
+    Width="552.5"
+    d:DataContext="{d:DesignInstance viewModels:ConfigureServerViewModel}"
+    extensions:WindowService.DialogResult="{Binding DialogResult}"
+    Icon="/Resources/Images/VisualStudio/AddRemoteServer_16x.png"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    SizeToContent="Height"
+    Style="{StaticResource NormalWindow}"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource AddRemoteServerIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <StackPanel>
+        <StackPanel Margin="10" Orientation="Vertical">
+            <TextBlock FontSize="16" Text="{StaticResource IpAddresses}" />
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="250" />
+                </Grid.ColumnDefinitions>
+                <ListView listViewLayoutManager:ListViewLayoutManager.Enabled="true" ItemsSource="{Binding IpAddresses}">
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RemoveIpAddressCommand}"
+                                CommandParameter="{Binding}"
+                                Header="{StaticResource Remove}" />
+                        </ContextMenu>
+                    </ListView.Resources>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn
+                                listViewLayoutManager:ProportionalColumn.Width="2"
+                                DisplayMemberBinding="{Binding Ip}"
+                                Header="{StaticResource IpAddress}" />
+                            <GridViewColumn
+                                listViewLayoutManager:ProportionalColumn.Width="1"
+                                DisplayMemberBinding="{Binding Port}"
+                                Header="{StaticResource Port}" />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                <StackPanel Grid.Column="2" Orientation="Vertical">
+                    <TextBlock Text="{StaticResource IpAddress}" />
+                    <ComboBox
+                        x:Name="IpAddressComboBox"
+                        Margin="0,2,0,0"
+                        IsEditable="True"
+                        ItemsSource="{Binding AvailableIpAddresses}"
+                        SelectedIndex="0" />
+                    <TextBlock Margin="0,5,0,0" Text="{StaticResource Port}" />
+                    <controls:NumericUpDown
+                        x:Name="PortNumericUpDown"
+                        Width="130"
+                        Margin="0,2,0,0"
+                        HorizontalAlignment="Left"
+                        Maximum="65535"
+                        Minimum="1"
+                        Value="10134" />
+                    <Button
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding AddIpAddressCommand}"
+                        Content="{StaticResource Add}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=IpAddressComboBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource CloneConverter}">
+                                <Binding ElementName="IpAddressComboBox" Path="Text" />
+                                <Binding ElementName="PortNumericUpDown" Path="Value" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <TextBlock
+                Margin="0,10,0,0"
+                FontSize="16"
+                Text="{StaticResource Password}" />
+            <PasswordBox Margin="0,5,0,0" PasswordChanged="PasswordBox_OnPasswordChanged" />
+            <TextBlock Margin="0,10,0,0">
+                <Run FontSize="16" Text="{StaticResource GeoIpLocation}" />
+                <Run />
+                <Hyperlink Command="{Binding RegisterIp2LocationCommand}"><Run Text="{StaticResource RegisterHere}" /></Hyperlink>
+            </TextBlock>
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBox controls:TextBoxHelper.Watermark="{StaticResource EmailAddress}" Text="{Binding Ip2LocationEmailAddress}" />
+                <PasswordBox
+                    Grid.Column="2"
+                    controls:TextBoxHelper.Watermark="{StaticResource Password}"
+                    PasswordChanged="Ip2LocationPasswordBox_OnPasswordChanged" />
+            </Grid>
+        </StackPanel>
+        <Rectangle
+            Height="1"
+            Fill="{StaticResource GrayBrush9}"
+            SnapsToDevicePixels="True" />
+        <Grid Background="{StaticResource DialogBottomBrush}">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock
+                    Margin="0,5,0,0"
+                    FontSize="16"
+                    Text="{StaticResource Type}" />
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <RadioButton Content="GUI" IsChecked="{Binding IsGuiSelected}" />
+                    <RadioButton Margin="10,0,0,0" Content="{StaticResource Console}" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        MinWidth="100"
+                        Margin="0,0,10,0"
+                        Command="{Binding ExtractServerCommand}"
+                        Content="{StaticResource Extract}" />
+                    <Button
+                        MinWidth="100"
+                        Command="{Binding BuildServerCommand}"
+                        Content="{StaticResource Build}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IpAddresses.Count}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Password.Length}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</controls:MetroWindow>

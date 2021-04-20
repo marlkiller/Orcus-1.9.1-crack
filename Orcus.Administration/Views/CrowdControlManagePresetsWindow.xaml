@@ -1,0 +1,129 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CrowdControlManagePresetsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource ManagePresetCommands}"
+                      Width="604"
+                      Height="376"
+                      d:DataContext="{d:DesignInstance viewModels:CrowdControlManagePresetsViewModel}"
+                      Icon="/Resources/Images/VisualStudio/EventSession.ico"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource EventSessionBlueIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap">
+            <Run Text="{StaticResource GeneralCommandPresetsDescription}" />
+            <LineBreak />
+            <Bold><Run Text="{StaticResource CommandPresetsWithTarget}" /></Bold>
+            <Run Text="{StaticResource CommandPresetsWithTargetDescription}" />
+            <LineBreak />
+            <Bold><Run Text="{StaticResource CommandPresets}" /></Bold>
+            <Run Text="{StaticResource CommandPrestsDescription}" />
+        </TextBlock>
+        <StackPanel Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal">
+            <Button Command="{Binding CreatePresetWithTargetCommand}" Content="{StaticResource CreatePresetCommandWithTarget}" />
+            <Button Margin="10,0,0,0"
+                    Command="{Binding CreatePresetCommand}"
+                    Content="{StaticResource CreatePresetCommand}" />
+        </StackPanel>
+        <ListView Grid.Row="2"
+                  Margin="0,10,0,0"
+                  listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                  ItemsSource="{Binding PresetsViewSource.View}"
+                  SelectionMode="Single">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                Path=DataContext.RemovePresetCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                         Path=SelectedItem}"
+                              Header="{StaticResource Remove}" />
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.InputBindings>
+                <KeyBinding Key="Delete"
+                            Command="{Binding RemovePresetCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                       Path=SelectedItem}" />
+            </ListView.InputBindings>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="1" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <DockPanel>
+                                                <TextBlock Margin="10,0,0,0"
+                                                           FontSize="13"
+                                                           Foreground="{DynamicResource DarkColorBrush}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Name}" Value="true">
+                                                                    <Setter Property="Text" Value="{StaticResource CommandPresets}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Name}" Value="false">
+                                                                    <Setter Property="Text" Value="{StaticResource CommandPresetsWithTarget}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <Rectangle Height="1"
+                                                           Margin="10,0,0,0"
+                                                           VerticalAlignment="Center"
+                                                           Fill="{DynamicResource DarkColorBrush}"
+                                                           SnapsToDevicePixels="True" />
+                                            </DockPanel>
+                                            <ItemsPresenter Grid.Row="2" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="2"
+                                    DisplayMemberBinding="{Binding Name}"
+                                    Header="{StaticResource Name}" />
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1"
+                                    DisplayMemberBinding="{Binding Shortcut.StaticCommand.Name}"
+                                    Header="{StaticResource Command}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</controls:MetroWindow>

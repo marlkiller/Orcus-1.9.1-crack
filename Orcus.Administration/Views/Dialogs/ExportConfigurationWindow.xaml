@@ -1,0 +1,49 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.Dialogs.ExportConfigurationWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Title="{StaticResource ExportConfiguration}"
+                      Width="650"
+                      Height="325"
+                      FocusManager.FocusedElement="{Binding ElementName=TextBox}"
+                      ResizeMode="NoResize"
+                      ShowIconOnTitleBar="False"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TextBox"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto" />
+        <DockPanel Grid.Row="1" Margin="0,10,0,0">
+            <CheckBox VerticalAlignment="Center"
+                      Checked="FormatToggleButton_OnChecked"
+                      Content="{StaticResource Format2}"
+                      Unchecked="FormatToggleButton_OnUnchecked" />
+            <Button Width="100"
+                    HorizontalAlignment="Right"
+                    Click="OkButton_Click"
+                    Content="OK">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=TextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </DockPanel>
+    </Grid>
+</controls:MetroWindow>

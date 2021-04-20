@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0D743E5D-0D5F-4B9B-B2DF-1F607B5031C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Plugins</RootNamespace>
+    <AssemblyName>Orcus.Plugins</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+ <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !-->
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DisallowMultipleThreadsAttribute.cs" />
+    <Compile Include="Resources\PluginsTranslation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PluginsTranslation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StaticCommands\ActiveStaticCommand.cs" />
+    <Compile Include="Builder\BuilderCategory.cs" />
+    <Compile Include="Builder\BuilderGroup.cs" />
+    <Compile Include="Builder\BuilderPropertyIndex.cs" />
+    <Compile Include="Builder\BuilderPropertyPosition.cs" />
+    <Compile Include="Builder\IBuilderPropertyView.cs" />
+    <Compile Include="Builder\ILeaderBuilderPropertyView.cs" />
+    <Compile Include="Builder\IRequestServerInfo.cs" />
+    <Compile Include="ClientController.cs" />
+    <Compile Include="Builder\BuilderPropertyEntry.cs" />
+    <Compile Include="Builder\IBuilderPropertyEntry.cs" />
+    <Compile Include="Builder\IOverwriteBuilderProperties.cs" />
+    <Compile Include="Builder\IProvideBuilderSettings.cs" />
+    <Compile Include="ClientPlugin\ClientControllerBuilderSettings.cs" />
+    <Compile Include="ClientPlugin\ClientControllerProvideEditablePropertyGrid.cs" />
+    <Compile Include="IClientInfo.cs" />
+    <Compile Include="IClientOperator.cs" />
+    <Compile Include="IClientStartup.cs" />
+    <Compile Include="IConnectionInitializer.cs" />
+    <Compile Include="IDatabaseConnection.cs" />
+    <Compile Include="IFactoryClientCommand.cs" />
+    <Compile Include="IPathInformation.cs" />
+    <Compile Include="PropertyGrid\IProvideEditableProperties.cs" />
+    <Compile Include="PropertyGrid\Attributes\MultilineStringAttribute.cs" />
+    <Compile Include="PropertyGrid\Attributes\NumericValueAttribute.cs" />
+    <Compile Include="PropertyGrid\Attributes\OfflineAvailableAttribute.cs" />
+    <Compile Include="PropertyGrid\PropertyGridExtensions.cs" />
+    <Compile Include="StaticCommands\CommandParameter.cs" />
+    <Compile Include="PropertyGrid\Property.cs" />
+    <Compile Include="StaticCommands\FeedbackFactoryExtensions.cs" />
+    <Compile Include="PropertyGrid\FluentCommandPropertyHelper.cs" />
+    <Compile Include="PropertyGrid\IProperty.cs" />
+    <Compile Include="StaticCommands\IFeedbackFactory.cs" />
+    <Compile Include="PropertyGrid\InputValidationResult.cs" />
+    <Compile Include="PackageCompression.cs" />
+    <Compile Include="PluginFactory.cs" />
+    <Compile Include="FactoryCommand.cs" />
+    <Compile Include="ILoadable.cs" />
+    <Compile Include="IToolBase.cs" />
+    <Compile Include="PluginType.cs" />
+    <Compile Include="PropertyGrid\Attributes\PathAttribute.cs" />
+    <Compile Include="StaticCommands\MessageType.cs" />
+    <Compile Include="StaticCommands\StaticCommand.cs" />
+    <Compile Include="PluginInfo.cs" />
+    <Compile Include="PluginVersion.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="IConnectionInfo.cs" />
+    <Compile Include="IServerConnection.cs" />
+    <Compile Include="IServicePipe.cs" />
+    <Compile Include="StaticCommands\StaticCommandCategory.cs" />
+    <Compile Include="PropertyGrid\ValidationState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PluginsTranslation.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PluginsTranslation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PluginsTranslation.de.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<!-- <Import Project="$(SolutionDir)\Build\Orcus.PostSettings.targets" /> -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

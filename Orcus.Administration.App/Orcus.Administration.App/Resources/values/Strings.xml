@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Administration</string>
+  <string name="ip_address">IP-Address:</string>
+  <string name="port">Port:</string>
+  <string name="password">Password:</string>
+  <string name="remember_password">Remember Password</string>
+  <string name="Connect">Connect</string>
+  <string name="drawer_open">DrawerOpen</string>
+  <string name="drawer_closed">DrawerClosed</string>
+  <string name="is_administrator">Administrator:</string>
+  <string name="is_service">Service:</string>
+  <string name="language">Language:</string>
+  <string name="operating_system">Operating System:</string>
+  <string name="online_since">Online since:</string>
+</resources>

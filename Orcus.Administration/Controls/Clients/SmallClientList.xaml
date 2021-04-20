@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.Clients.SmallClientList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Orcus.Administration.Core.ClientManagement;assembly=Orcus.Administration.Core"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:extensions1="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Geometry x:Key="SharedVectorTrue">F1 M 19.754,9.561 L 11.147,18.168 C 10.971,18.345 10.685,18.345 10.510,18.168 L 9.238,16.883 C 9.063,16.707 8.776,16.419 8.602,16.241 L 5.642,13.129 C 5.555,13.042 5.509,12.919 5.509,12.802 C 5.509,12.687 5.555,12.575 5.642,12.488 L 6.939,11.319 C 7.027,11.229 7.144,11.185 7.260,11.185 C 7.374,11.186 7.488,11.231 7.575,11.319 L 10.511,14.314 C 10.686,14.492 10.972,14.492 11.148,14.314 L 17.847,7.633 C 18.023,7.456 18.308,7.456 18.483,7.633 L 19.755,8.918 C 19.930,9.094 19.930,9.384 19.754,9.561 Z M 12.000,0.000 C 5.373,0.000 0.000,5.373 0.000,12.000 C 0.000,18.628 5.373,24.000 12.000,24.000 C 18.627,24.000 24.000,18.628 24.000,12.000 C 24.000,5.373 18.627,0.000 12.000,0.000 Z</Geometry>
+        <Geometry x:Key="SharedVectorFalse">F1 M 10.631,3.642 L 8.010,6.253 L 5.389,3.632 L 3.593,5.428 L 6.213,8.049 L 3.603,10.660 L 5.399,12.467 L 8.010,9.855 L 10.611,12.457 L 12.407,10.660 L 9.816,8.049 L 12.428,5.438 L 10.631,3.642 Z M 8.000,16.000 C 3.583,16.000 0.000,12.417 0.000,8.000 C 0.000,3.583 3.583,0.000 8.000,0.000 C 12.417,0.000 16.000,3.583 16.000,8.000 C 16.000,12.417 12.417,16.000 8.000,16.000 Z</Geometry>
+    </UserControl.Resources>
+    <ListView x:Name="MainListView"
+              extensions1:GridViewSort.AutoSort="True"
+              extensions1:GridViewSort.SortGlyphAscending="/Resources/Images/ArrowUp.png"
+              extensions1:GridViewSort.SortGlyphDescending="/Resources/Images/ArrowDown.png"
+              listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+              BorderThickness="0,1,0,0"
+              ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                    Path=CollectionView.View}">
+        <ListView.InputBindings>
+            <KeyBinding Key="Delete"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                          Path=Commands.DeleteCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                   Path=SelectedItems}" />
+            <KeyBinding Key="Return"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                          Path=Commands.LogInCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                   Path=SelectedItem}" />
+        </ListView.InputBindings>
+        <ListView.Style>
+            <Style TargetType="ListView">
+                <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+                <Setter Property="VirtualizingStackPanel.IsVirtualizingWhenGrouping" Value="True" />
+            </Style>
+        </ListView.Style>
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="70"
+                                extensions1:GridViewSort.PropertyName="IsOnline"
+                                listViewLayoutManager:FixedColumn.Width="70"
+                                Header="{DynamicResource Online}">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type data:ClientViewModel}">
+                            <Viewbox Width="12"
+                                     Height="12"
+                                     VerticalAlignment="Center">
+                                <Path>
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                                    <Setter Property="Data" Value="{StaticResource SharedVectorTrue}" />
+                                                    <Setter Property="Fill" Value="#27ae60" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                    <Setter Property="Data" Value="{StaticResource SharedVectorFalse}" />
+                                                    <Setter Property="Fill" Value="#c0392b" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                    <Setter Property="Fill" Value="White" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </Viewbox>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="100"
+                                extensions1:GridViewSort.PropertyName="Group"
+                                listViewLayoutManager:FixedColumn.Width="100"
+                                DisplayMemberBinding="{Binding Group}"
+                                Header="{DynamicResource Group}" />
+                <GridViewColumn extensions1:GridViewSort.PropertyName="UserName"
+                                listViewLayoutManager:ProportionalColumn.Width="1"
+                                DisplayMemberBinding="{Binding UserName,
+                                                               FallbackValue=Unknown}"
+                                Header="{DynamicResource Username}" />
+                <GridViewColumn extensions1:GridViewSort.PropertyName="LastSeen"
+                                listViewLayoutManager:ProportionalColumn.Width="1"
+                                Header="{DynamicResource IpAddressLastSeen}">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type data:ClientViewModel}">
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                                <Setter Property="Text" Value="{Binding IpAddress}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                <Setter Property="Text" Value="{Binding LastSeen, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter={x:Static converter:DateTimeFormat.GeneralLong}}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="60"
+                                extensions1:GridViewSort.PropertyName="Id"
+                                listViewLayoutManager:FixedColumn.Width="60"
+                                Header="ID">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type data:ClientViewModel}">
+                            <TextBlock>
+                                <Run Text="CI-" /><Run Text="{Binding Id, Mode=OneWay}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn extensions1:GridViewSort.PropertyName="OsType"
+                                listViewLayoutManager:ProportionalColumn.Width="2"
+                                DisplayMemberBinding="{Binding OsName}"
+                                Header="{DynamicResource OperatingSystem}" />
+                <GridViewColumn Width="80"
+                                listViewLayoutManager:FixedColumn.Width="80"
+                                Header="{DynamicResource Version}">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type data:ClientViewModel}">
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{Binding Version}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                <Setter Property="Text" Value="" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="120"
+                                extensions1:GridViewSort.PropertyName="IsAdministrator"
+                                listViewLayoutManager:FixedColumn.Width="100"
+                                DisplayMemberBinding="{Binding IsAdministrator}"
+                                Header="{DynamicResource Administrator}" />
+                <GridViewColumn extensions1:GridViewSort.PropertyName="GeoLocationCountry"
+                                listViewLayoutManager:ProportionalColumn.Width="1"
+                                DisplayMemberBinding="{Binding GeoLocationCountry,
+                                                               FallbackValue=Unknown}"
+                                Header="{DynamicResource Country}" />
+                <GridViewColumn extensions1:GridViewSort.PropertyName="Language"
+                                listViewLayoutManager:ProportionalColumn.Width="1"
+                                DisplayMemberBinding="{Binding LanguageName,
+                                                               FallbackValue=Unknown}"
+                                Header="{DynamicResource Language}" />
+            </GridView>
+        </ListView.View>
+        <ListView.ItemContainerStyle>
+            <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                <Setter Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=ItemContextMenu}" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="MinHeight" Value="20" />
+                <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Commands.LogInCommand}" />
+                <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+            </Style>
+        </ListView.ItemContainerStyle>
+    </ListView>
+</UserControl>

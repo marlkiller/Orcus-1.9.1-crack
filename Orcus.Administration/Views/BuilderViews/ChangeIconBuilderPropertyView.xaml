@@ -1,0 +1,50 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.ChangeIconBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:ChangeIconBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:ChangeIconBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel Orientation="Vertical">
+        <CheckBox x:Name="ChangeIconCheckBox"
+                  Height="32"
+                  Content="{StaticResource ChangeIcon}"
+                  IsChecked="{Binding ChangeIcon}" />
+        <DockPanel Margin="0,5,0,0">
+            <Image Width="32"
+                   Height="32"
+                   Margin="0,0,5,0"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                    Path=SelectedIcon}">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SelectedIcon}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBox VerticalAlignment="Center"
+                     IsEnabled="{Binding ElementName=ChangeIconCheckBox,
+                                         Path=IsChecked}"
+                     IsReadOnly="True"
+                     Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                    Path=IconPath}" />
+        </DockPanel>
+        <Button Margin="0,5,0,0"
+                HorizontalAlignment="Right"
+                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                  Path=SelectIconPathCommand}"
+                Content="{StaticResource SelectedPath}"
+                IsEnabled="{Binding ElementName=ChangeIconCheckBox,
+                                    Path=IsChecked}" />
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

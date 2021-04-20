@@ -1,0 +1,303 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.RegistryCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="clr-namespace:Orcus.Administration.FileExplorer.Controls;assembly=Orcus.Administration.FileExplorer"
+             xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+             xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:registry="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.Registry;assembly=Orcus.Administration.ViewModels"
+             xmlns:registryData="clr-namespace:Orcus.Shared.Commands.Registry;assembly=Orcus.Shared"
+             d:DataContext="{d:DesignInstance commandViewModels:RegistryViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Orcus.Administration.FileExplorer;component/Resources/ControlThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:RegistryValueKindToStringConverter x:Key="RegistryValueKindToStringConverter" />
+            <converter:RegistryDataToStringConverter x:Key="RegistryDataToStringConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Margin="10"
+                BorderThickness="1"
+                CornerRadius=".2"
+                SnapsToDevicePixels="True">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="{StaticResource GrayBrush9}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=ContentSwitch, Path=IsSwitched}" Value="true">
+                            <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush2}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <controls1:StandaloneExplorerTextBox x:Name="ExplorerTextBox"
+                                                 Height="25"
+                                                 VerticalAlignment="Center"
+                                                 CurrentPath="{Binding CurrentPath,
+                                                                       Mode=OneWay}"
+                                                 DisplayMemberPath="Selection.Value.Path"
+                                                 EnterTextCommand="{Binding OpenPathCommand}"
+                                                 IsInEditMode="True"
+                                                 RootItem="{Binding RegistryTreeViewModel}"
+                                                 Style="{StaticResource ExplorerTextBoxStyle}"
+                                                 ValuePath="Selection.Value.Path" />
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"
+                                  MinWidth="100"
+                                  MaxWidth="500" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <controls:TreeViewEx extensions:TreeViewExtensions.SelectOnRightClick="True"
+                                 ItemsSource="{Binding RegistryTreeViewModel.Entries.All}"
+                                 Style="{StaticResource VirtualisedMetroTreeView}">
+                <TreeView.Resources>
+                    <ContextMenu x:Key="SubKeyContextMenu" d:DataContext="{d:DesignInstance registry:SubKeyNodeViewModel}">
+                        <MenuItem MinWidth="200"
+                                  Command="{Binding ToogleIsExpandedCommand}"
+                                  FontWeight="Bold">
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Entries.IsExpanded}" Value="true">
+                                            <Setter Property="Header" Value="{DynamicResource Reduce}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Entries.IsExpanded}" Value="false">
+                                            <Setter Property="Header" Value="{DynamicResource Expand}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem Command="{Binding RefreshSubItemsCommand}"
+                                  Header="{DynamicResource Refresh}"
+                                  Icon="{StaticResource RefreshIcon}" />
+                        <Separator />
+                        <MenuItem Command="{Binding CopyKeyNameCommand}"
+                                  Header="{DynamicResource CopyKeyName}"
+                                  Icon="{StaticResource CopyToClipboardIcon}" />
+                        <MenuItem Header="{DynamicResource New}">
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                        Path=DataContext.CreateNewSubKeyCommand}"
+                                      CommandParameter="{Binding}"
+                                      Header="{DynamicResource Key}"
+                                      Icon="{StaticResource NewSolutionFolderIcon}" />
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                    Path=DataContext.RemoveSubKeyCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Remove}"
+                                  Icon="{StaticResource CancelIcon}">
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsRegistryHive}" Value="true">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                    </ContextMenu>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style d:DataContext="{d:DesignInstance registry:SubKeyNodeViewModel}"
+                           BasedOn="{StaticResource MetroTreeViewItem}"
+                           TargetType="controls:TreeViewItemEx">
+                        <Setter Property="IsExpanded" Value="{Binding Entries.IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding Selection.IsSelected, Mode=TwoWay}" />
+                        <Setter Property="IsBringIntoView" Value="{Binding IsBringIntoView, Mode=TwoWay}" />
+                        <Setter Property="ContextMenu" Value="{StaticResource SubKeyContextMenu}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type registry:SubKeyNodeViewModel}" ItemsSource="{Binding Entries.All}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl>
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <Setter Property="Content" Value="{StaticResource FolderIcon}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Entries.IsExpanded}" Value="true">
+                                                <Setter Property="Content" Value="{StaticResource FolderOpenIcon}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                            <TextBlock Margin="5,0"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Value.Name}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </controls:TreeViewEx>
+            <GridSplitter Grid.Column="1"
+                          Margin="-3,0"
+                          HorizontalAlignment="Stretch"
+                          Background="{StaticResource GridSplitterBrush}"
+                          BorderBrush="Transparent"
+                          BorderThickness="3,0"
+                          Canvas.ZIndex="100" />
+            <ListView Grid.Column="2"
+                      listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+                      BorderThickness="0"
+                      ItemsSource="{Binding RegistryValues}"
+                      SelectionMode="Single"
+                      UseLayoutRounding="True">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{DynamicResource New}">
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.String}"
+                                      Header="{DynamicResource StringValue}" />
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.Binary}"
+                                      Header="{DynamicResource BinaryValue}" />
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.DWord}"
+                                      Header="{DynamicResource DWordValue}" />
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.QWord}"
+                                      Header="{DynamicResource QWordValue}" />
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.MultiString}"
+                                      Header="{DynamicResource MultiStringValue}" />
+                            <MenuItem Command="{Binding CreateRegistryValueCommand}"
+                                      CommandParameter="{x:Static registryData:RegistryValueKind.ExpandString}"
+                                      Header="{DynamicResource ExpandValue}" />
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                    Path=DataContext.EditRegistryValueCommand}"
+                                  CommandParameter="{Binding}"
+                                  FontWeight="Bold"
+                                  Header="{DynamicResource Edit}"
+                                  Icon="{StaticResource EditIcon}" />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                    Path=DataContext.RemoveRegistryValueCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Remove}"
+                                  Icon="{StaticResource CancelIcon}" />
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1" Header="{DynamicResource Name}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type registryData:RegistryValue}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <!--  ContentPresenter would cause a StackOverflowException  -->
+                                        <ContentControl>
+                                            <ContentControl.Style>
+                                                <Style TargetType="ContentControl">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.Binary}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueBinaryTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.DWord}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueBinaryTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.QWord}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueBinaryTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.MultiString}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueStringTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.ExpandString}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueStringTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.String}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueStringTypeIcon}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ValueKind}" Value="{x:Static registryData:RegistryValueKind.Unknown}">
+                                                            <Setter Property="Content" Value="{StaticResource RegistryValueStringTypeIcon}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
+                                        </ContentControl>
+                                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text" Value="{Binding Key}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Key, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                            <Setter Property="Text" Value="{DynamicResource DefaultValue}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1"
+                                        DisplayMemberBinding="{Binding ValueKind,
+                                                                       Converter={StaticResource RegistryValueKindToStringConverter}}"
+                                        Header="{DynamicResource Type}" />
+                        <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="2" Header="{DynamicResource Data}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueBinary}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueDWord}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueExpandString}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueMultiString}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueQWord}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueString}">
+                                                <TextBlock Text="{Binding Value, Converter={StaticResource RegistryDataToStringConverter}}" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type registryData:RegistryValueUnknown}">
+                                                <!--  Just a little easter egg, no translation needed  -->
+                                                <TextBlock Text="Who knows?" />
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                        <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.EditRegistryValueCommand}" />
+                        <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,496 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.TaskManagerCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+             xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=System"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:extensions1="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:taskManager1="clr-namespace:Orcus.Administration.Commands.TaskManager;assembly=Orcus.Administration.Commands"
+             xmlns:taskmanager="clr-namespace:Orcus.Shared.Commands.TaskManager;assembly=Orcus.Shared"
+             d:DataContext="{d:DesignInstance commandViewModels:TaskmanagerViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="ImmersiveProcessColor" Color="#321ABC5E" />
+        <SolidColorBrush x:Key="NetAssemblyProcessColor" Color="#32F39C12" />
+        <SolidColorBrush x:Key="ServiceProcessColor" Color="#32E74C3C" />
+        <SolidColorBrush x:Key="UserProcessColor" Color="#323498DB" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox Margin="5,5,5,10"
+                 controls:TextBoxHelper.Watermark="{DynamicResource SearchProcess}"
+                 Text="{Binding SearchText,
+                                UpdateSourceTrigger=PropertyChanged}" />
+        <controls1:TreeListView x:Name="TaskManagerListView"
+                                Grid.Row="1"
+                                ChildrenPropertyName="ViewChildProcesses"
+                                ItemsSource="{Binding Processes}"
+                                ScrollViewer.CanContentScroll="True"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <controls1:TreeListView.Resources>
+                <ContextMenu x:Key="ContextMenu"
+                             d:DataContext="{d:DesignInstance taskManager1:AdvancedProcessInfo}"
+                             x:Shared="False">
+                    <MenuItem Header="{DynamicResource Window}" Icon="{StaticResource ApplicationIcon}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MainWindowHandle}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.OpenProcessWindowsCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource ShowAllWindows}" />
+                        <Separator />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.BringWindowToFrontCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource BringToFront}" />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.RestoreWindowCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Restore}" />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.MinimizeWindowCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Minimize}" />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.MaximizeWindowCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Maximize}" />
+                        <Separator />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.CloseWindowCommand}"
+                                  CommandParameter="{Binding}"
+                                  Header="{DynamicResource Close}" />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.KillCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Kill}"
+                              Icon="{StaticResource CloseSolutionIcon}"
+                              InputGestureText="{DynamicResource Del}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.KillProcessTreeCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource KillProcessTree}"
+                              Icon="{StaticResource CloseGroupIcon}"
+                              InputGestureText="{DynamicResource DelShift}" />
+                    <MenuItem Header="{DynamicResource SetPriority}"
+                              Icon="{StaticResource GaugeIcon}"
+                              IsEnabled="{Binding CanChangePriorityClass}">
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource Realtime}"
+                                  IsCheckable="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.RealTime}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.RealTime}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource High}"
+                                  IsCheckable="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.High}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.High}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource AboveNormal}"
+                                  IsCheckable="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.AboveNormal}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.AboveNormal}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource Normal}"
+                                  IsCheckable="True"
+                                  IsChecked="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.Normal}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.Normal}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource BelowNormal}"
+                                  IsCheckable="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.BelowNormal}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.BelowNormal}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem extensions:MenuItemExtensions.GroupName="{Binding Id}"
+                                  Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                    Path=DataContext.SetProcessPriorityCommand}"
+                                  Header="{DynamicResource Low}"
+                                  IsCheckable="True">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Static diagnostics:ProcessPriorityClass.Idle}" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PriorityClass}" Value="{x:Static diagnostics:ProcessPriorityClass.Idle}">
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.SuspendProcessCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Suspend}"
+                              Icon="{StaticResource PauseIcon}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.ResumeProcessCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Resume}"
+                              Icon="{StaticResource RunIcon}" />
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.OpenPathInFileExplorerCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource OpenPathInFileExplorer}"
+                              Icon="{StaticResource ListFolderIcon}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Filename, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                Path=DataContext.OpenProcessPropertiesCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Properties}"
+                              Icon="{StaticResource PropertyIcon}" />
+                </ContextMenu>
+                <Style BasedOn="{StaticResource MetroTreeListViewItem}" TargetType="controls1:TreeListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ContextMenu}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static taskmanager:ProcessStatus.Immersive}">
+                            <Setter Property="Background" Value="{StaticResource ImmersiveProcessColor}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static taskmanager:ProcessStatus.NetAssembly}">
+                            <Setter Property="Background" Value="{StaticResource NetAssemblyProcessColor}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static taskmanager:ProcessStatus.Service}">
+                            <Setter Property="Background" Value="{StaticResource ServiceProcessColor}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static taskmanager:ProcessStatus.UserProcess}">
+                            <Setter Property="Background" Value="{StaticResource UserProcessColor}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls1:TreeListView.Resources>
+            <controls1:TreeListView.InputBindings>
+                <KeyBinding Key="Delete"
+                            Command="{Binding KillCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                       Path=SelectedItem}" />
+                <KeyBinding Key="Delete"
+                            Command="{Binding KillProcessTreeCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=controls1:TreeListView},
+                                                       Path=SelectedItem}"
+                            Modifiers="Shift" />
+            </controls1:TreeListView.InputBindings>
+            <controls1:TreeListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Width="200" Header="{DynamicResource Name}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="20"
+                                               Height="20"
+                                               RenderOptions.BitmapScalingMode="HighQuality">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Source" Value="{Binding Icon}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Icon}" Value="{x:Null}">
+                                                            <Setter Property="Source" Value="{extensions1:WindowsIcons LibraryName=imageres.dll, IconId=11, Size=20}" />
+                                                            <Setter Property="SnapsToDevicePixels" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <TextBlock Margin="10,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="130" Header="{DynamicResource StartTime}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="{Binding StartTime, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter={x:Static converter:DateTimeFormat.GeneralLong}}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding StartTime}" Value="{x:Static sys:DateTime.MinValue}">
+                                                        <Setter Property="Text" Value="N/A" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="100" Header="{DynamicResource PrivateBytes}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding PrivateBytes, Converter={StaticResource FormatBytesConverter}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="100" Header="{DynamicResource WorkingSet}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding WorkingSet, Converter={StaticResource FormatBytesConverter}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="75" Header="PID">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Id}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200" Header="{DynamicResource CompanyName}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding CompanyName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200" Header="{DynamicResource Description}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type taskManager1:AdvancedProcessInfo}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </controls1:TreeListView.View>
+        </controls1:TreeListView>
+        <Grid Grid.Row="2" Background="{StaticResource GrayBrush10}">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Button x:Name="InformationButton"
+                        Width="16"
+                        Height="16"
+                        Style="{StaticResource InformationButton}" />
+                <Popup AllowsTransparency="True"
+                       Focusable="False"
+                       HorizontalOffset="{Binding ElementName=InformationButton,
+                                                  Path=ActualWidth}"
+                       IsHitTestVisible="False"
+                       IsOpen="{Binding ElementName=InformationButton,
+                                        Path=IsMouseOver,
+                                        Mode=OneWay}"
+                       Placement="Top"
+                       PlacementTarget="{Binding ElementName=InformationButton}"
+                       PopupAnimation="Fade">
+                    <Border Margin="5"
+                            HorizontalAlignment="Stretch"
+                            Background="{StaticResource WhiteBrush}"
+                            BorderBrush="{DynamicResource ComboBoxPopupBrush}"
+                            BorderThickness="1"
+                            IsHitTestVisible="False">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="5"
+                                              Opacity=".4"
+                                              ShadowDepth="0" />
+                        </Border.Effect>
+                        <StackPanel Margin="5">
+                            <TextBlock FontSize="14"
+                                       FontWeight="Bold"
+                                       Text="{DynamicResource Columns}" />
+                            <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="{DynamicResource Name}" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource ProcessNameInfo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="{DynamicResource StartTime}" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource ProcessNameInfo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="{StaticResource PrivateBytes}" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource PrivateBytesInfo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="{DynamicResource WorkingSet}" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource WorkingSetInfo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="PID" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource ProcessIdInfo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                <TextBlock Width="150" Text="{DynamicResource CompanyName}" />
+                                <TextBlock FontStyle="Italic" Text="{DynamicResource CompanyNameInfo}" />
+                            </StackPanel>
+                            <TextBlock Margin="0,12,0,0"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Text="{DynamicResource Colors}" />
+                            <Grid Height="25"
+                                  Margin="0,4,0,0"
+                                  Background="{StaticResource ImmersiveProcessColor}">
+                                <StackPanel Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <TextBlock Width="140"
+                                               FontWeight="Bold"
+                                               Text="{DynamicResource ImmersiveProcess}" />
+                                    <TextBlock Text="{DynamicResource ImmersiveProcessInfo}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Height="25"
+                                  Margin="0,2,0,0"
+                                  Background="{StaticResource NetAssemblyProcessColor}">
+                                <StackPanel Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <TextBlock Width="140"
+                                               FontWeight="Bold"
+                                               Text="{DynamicResource NetAssembly}" />
+                                    <TextBlock Text="{DynamicResource NetAssemblyInfo}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Height="25"
+                                  Margin="0,2,0,0"
+                                  Background="{StaticResource ServiceProcessColor}">
+                                <StackPanel Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <TextBlock Width="140"
+                                               FontWeight="Bold"
+                                               Text="{DynamicResource Service}" />
+                                    <TextBlock Text="{DynamicResource ServiceInfo}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Height="25"
+                                  Margin="0,2,0,0"
+                                  Background="{StaticResource UserProcessColor}">
+                                <StackPanel Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <TextBlock Width="140"
+                                               FontWeight="Bold"
+                                               Text="{DynamicResource UserProcess}" />
+                                    <TextBlock Text="{DynamicResource UserProcessInfo}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </StackPanel>
+            <Button MinWidth="65"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Command="{Binding RefreshCommand}"
+                    Content="{DynamicResource Refresh}" />
+        </Grid>
+    </Grid>
+</UserControl>

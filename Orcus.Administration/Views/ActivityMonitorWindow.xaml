@@ -1,0 +1,134 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.ActivityMonitorWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:core="clr-namespace:Orcus.Administration.Core;assembly=Orcus.Administration.Core"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Width="900"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance viewModels:ActivityMonitorViewModel}"
+                      Icon="/Resources/Images/VisualStudio/PerformanceDiagnosticsGraph.ico"
+                      Style="{StaticResource NormalWindow}"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource PerformanceDiagnosticsGraphIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10">
+            <TextBlock FontSize="16" Text="{DynamicResource Performance}" />
+            <TextBlock Margin="0,5,0,0" Text="CPU" />
+            <TextBlock Margin="0,5,0,0"
+                       VerticalAlignment="Center"
+                       FontSize="11"
+                       Text="{Binding CpuUsage,
+                                      StringFormat=P}" />
+            <controls:MetroProgressBar Width="400"
+                                       Margin="0,1,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Background="{StaticResource DialogBottomBrush}"
+                                       Foreground="{StaticResource AccentColorBrush2}"
+                                       Maximum="1"
+                                       Value="{Binding CpuUsage}" />
+            <TextBlock Margin="0,5,0,0" Text="{DynamicResource Memory}" />
+            <TextBlock Margin="0,5,0,0"
+                       VerticalAlignment="Center"
+                       FontSize="11"
+                       Text="{Binding MemoryUsage,
+                                      Converter={StaticResource FormatBytesConverter}}" />
+            <controls:MetroProgressBar Width="400"
+                                       Margin="0,1,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Background="{StaticResource DialogBottomBrush}"
+                                       Foreground="{StaticResource AccentColorBrush2}"
+                                       Maximum="{Binding TotalMemory}"
+                                       Value="{Binding MemoryUsage}" />
+            <TextBlock Margin="0,20,0,0"
+                       FontSize="16"
+                       Text="{DynamicResource Network}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock>
+                        <Run Text="{DynamicResource UploadSpeed}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,0">
+                        <Run Text="{DynamicResource DownloadSpeed}" /><Run Text=":" />
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>
+                        <Run Text="{Binding UploadSpeed, Mode=OneWay, Converter={StaticResource FormatBytesConverter}}" /><Run Text="/s" />
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,0">
+                        <Run Text="{Binding DownloadSpeed, Mode=OneWay, Converter={StaticResource FormatBytesConverter}}" /><Run Text="/s" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <ListView x:Name="ActivityListView"
+                  Grid.Row="1"
+                  listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                  Background="Transparent"
+                  BorderBrush="{StaticResource BorderBrush}"
+                  ItemsSource="{Binding Packages}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  Style="{StaticResource VirtualisedMetroListView}">
+            <i:Interaction.Behaviors>
+                <behavior:ListBoxAutoScrollBehavior />
+            </i:Interaction.Behaviors>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="75"
+                                    listViewLayoutManager:FixedColumn.Width="75"
+                                    Header="{DynamicResource Mode}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type core:PackageInformation}">
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsReceived}" Value="true">
+                                                    <Setter Property="Text" Value="{StaticResource Receive}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsReceived}" Value="false">
+                                                    <Setter Property="Text" Value="{StaticResource Send}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150"
+                                    listViewLayoutManager:FixedColumn.Width="150"
+                                    DisplayMemberBinding="{Binding Timestamp,
+                                                                   Converter={StaticResource DateTimeToStringConverter},
+                                                                   ConverterParameter={x:Static converter:DateTimeFormat.GeneralLong}}"
+                                    Header="{DynamicResource Timestamp}" />
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1"
+                                    DisplayMemberBinding="{Binding Description}"
+                                    Header="{DynamicResource Description}" />
+                    <GridViewColumn Width="75"
+                                    listViewLayoutManager:FixedColumn.Width="75"
+                                    DisplayMemberBinding="{Binding Size,
+                                                                   Converter={StaticResource FormatBytesConverter}}"
+                                    Header="{DynamicResource Size}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</controls:MetroWindow>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="si.ziga.switchinsideab.MainActivity" >
+    <item
+        android:id="@+id/switchId"
+        android:title="Enable / Disable"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        app:actionLayout="@layout/switch_layout"/>
+</menu>

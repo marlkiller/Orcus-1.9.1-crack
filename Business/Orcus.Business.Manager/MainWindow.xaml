@@ -1,0 +1,151 @@
+﻿<Window x:Class="Orcus.Business.Manager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behavior="clr-namespace:Orcus.Business.Manager.Behavior"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:extensions="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+        xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Orcus.Business.Manager.ViewModels"
+        Title="Business Server Manager"
+        Width="700"
+        Height="400"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ComboBox Margin="10"
+                  IsEditable="True"
+                  Text="{Binding SearchLicenses,
+                                 UpdateSourceTrigger=PropertyChanged,
+                                 Delay=100}">
+            <ComboBoxItem Content="is:paid" />
+            <ComboBoxItem Content="isnot:paid" />
+            <ComboBoxItem Content="is:banned" />
+            <ComboBoxItem Content="isnot:banned" />
+        </ComboBox>
+        <Button Grid.Row="0"
+                Grid.Column="1"
+                Width="120"
+                Margin="5,0,10,0"
+                VerticalAlignment="Center"
+                Command="{Binding GenerateLicensesCommand}"
+                Content="Generate Licenses" />
+        <ListView Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  extensions:GridViewSort.AutoSort="True"
+                  listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+                  ItemsSource="{Binding LicensesCollectionView}"
+                  Style="{StaticResource VirtualisedMetroListView}">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                Path=DataContext.OpenLicenseInformationCommand}"
+                              CommandParameter="{Binding}"
+                              Header="Open" />
+                    <Separator />
+                    <MenuItem Header="State">
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                    Path=DataContext.BanLicensesCommand}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                             Path=SelectedItems}"
+                                  Header="Ban" />
+                        <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                    Path=DataContext.UnbanLicensesCommand}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                             Path=SelectedItems}"
+                                  Header="Unban" />
+                    </MenuItem>
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                Path=DataContext.ChangeLicensesCommentCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                         Path=SelectedItems}"
+                              Header="Change Comment" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                Path=DataContext.ClearComputersCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                         Path=SelectedItems}"
+                              Header="Clear Computers" />
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                Path=DataContext.DeleteLicensesCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                         Path=SelectedItems}"
+                              Header="Delete" />
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                    <Setter Property="behavior:ControlBehavior.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OpenLicenseInformationCommand}" />
+                    <Setter Property="behavior:ControlBehavior.DoubleClickCommandParameter" Value="{Binding}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NoMoney}" Value="true">
+                            <Setter Property="Background" Value="#882ecc71" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsBanned}" Value="true">
+                            <Setter Property="Background" Value="#88E74C3C" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn extensions:GridViewSort.PropertyName="licenseKey"
+                                    listViewLayoutManager:ProportionalColumn.Width="1"
+                                    DisplayMemberBinding="{Binding licenseKey}"
+                                    Header="License Key" />
+                    <GridViewColumn extensions:GridViewSort.PropertyName="comment"
+                                    listViewLayoutManager:ProportionalColumn.Width="2"
+                                    DisplayMemberBinding="{Binding comment}"
+                                    Header="Comment" />
+                    <GridViewColumn Width="200"
+                                    extensions:GridViewSort.PropertyName="DateTime"
+                                    listViewLayoutManager:FixedColumn.Width="200"
+                                    DisplayMemberBinding="{Binding DateTimeString}"
+                                    Header="Creation Date" />
+                    <GridViewColumn Width="75"
+                                    extensions:GridViewSort.PropertyName="RegisteredComputers"
+                                    listViewLayoutManager:FixedColumn.Width="75"
+                                    DisplayMemberBinding="{Binding RegisteredComputers}"
+                                    Header="Computers" />
+                    <GridViewColumn Width="75"
+                                    extensions:GridViewSort.PropertyName="IsBanned"
+                                    listViewLayoutManager:FixedColumn.Width="75"
+                                    DisplayMemberBinding="{Binding IsBanned}"
+                                    Header="Banned" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Background="#3498db">
+            <TextBlock Margin="5" Foreground="White">
+                <Run Text="Total:" />
+                <Run Text="{Binding Licenses.Count, Mode=OneWay}" />
+                <Run Text=" | " />
+                <Run Text="Shown: " />
+                <Run Text="{Binding LicensesCollectionView.Count, Mode=OneWay}" />
+                <Run Text=" | " />
+                <Run Text="Banned: " />
+                <Run Text="{Binding BannedLicensesCount, Mode=OneWay}" />
+                <Run Text=" | " />
+                <Run Text="Paid: " />
+                <Run Text="{Binding PaidLicensesCount, Mode=OneWay}" />
+            </TextBlock>
+        </Grid>
+    </Grid>
+</Window>

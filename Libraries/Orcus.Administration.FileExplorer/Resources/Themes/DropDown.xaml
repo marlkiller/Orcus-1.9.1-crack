@@ -1,0 +1,139 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Orcus.Administration.FileExplorer.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+        <ResourceDictionary Source="HotTrack.xaml" />
+        <ResourceDictionary Source="ComboBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="BaseToggleButton" TargetType="{x:Type ToggleButton}">
+        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type controls:DropDown}">
+        <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SelectionBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HeaderButtonTemplate" Value="{StaticResource BaseToggleButton}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DropDown}">
+                    <Grid>
+                        <ToggleButton x:Name="PART_ToggleButton"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Focusable="False"
+                                      Foreground="{StaticResource GrayBrush3}"
+                                      IsChecked="{Binding IsDropDownOpen,
+                                                          Mode=TwoWay,
+                                                          RelativeSource={RelativeSource TemplatedParent}}"
+                                      Template="{Binding HeaderButtonTemplate,
+                                                         RelativeSource={RelativeSource TemplatedParent},
+                                                         Mode=OneWay}">
+                            <ContentPresenter Content="{TemplateBinding Header}" />
+                        </ToggleButton>
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               HorizontalOffset="{TemplateBinding HorizontalOffset}"
+                               IsOpen="{Binding IsDropDownOpen,
+                                                Mode=TwoWay,
+                                                RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="{TemplateBinding Placement}"
+                               PlacementTarget="{TemplateBinding PlacementTarget}"
+                               PopupAnimation="None"
+                               StaysOpen="False"
+                               VerticalOffset="{TemplateBinding VerticalOffset}">
+                            <Grid>
+                                <Border MinWidth="150"
+                                        MinHeight="10"
+                                        Margin="0,0,8,8"
+                                        Background="{StaticResource WhiteBrush}"
+                                        BorderBrush="{StaticResource GrayBrush4}"
+                                        BorderThickness="1"
+                                        Padding="{TemplateBinding Padding}">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="5"
+                                                          Opacity="0.2"
+                                                          ShadowDepth="2" />
+                                    </Border.Effect>
+                                    <ContentPresenter x:Name="PART_Content" Content="{TemplateBinding Content}" />
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <Setter TargetName="PART_ToggleButton" Property="Template" Value="{StaticResource BasicArrowButton}" />
+                        </Trigger>
+                        <Trigger Property="Content" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownAlignLeft" Value="True">
+                            <Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="{Binding ActualWidth, ElementName=PART_ToggleButton}" />
+                            <Setter TargetName="PART_Popup" Property="VerticalOffset" Value="{Binding ActualHeight, ElementName=PART_ToggleButton}" />
+                            <Setter TargetName="PART_Popup" Property="Placement" Value="Left" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type controls:DropDownList}" TargetType="{x:Type controls:DropDownList}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" />
+        <Setter Property="HeaderButtonTemplate" Value="{StaticResource BaseToggleButton}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DropDownList}">
+                    <controls:DropDown Background="{TemplateBinding Background}"
+                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                       Header="{Binding Header,
+                                                        RelativeSource={RelativeSource TemplatedParent}}"
+                                       HeaderButtonTemplate="{Binding HeaderButtonTemplate,
+                                                                      RelativeSource={RelativeSource TemplatedParent}}"
+                                       HorizontalOffset="{TemplateBinding HorizontalOffset}"
+                                       IsDropDownOpen="{Binding IsDropDownOpen,
+                                                                Mode=TwoWay,
+                                                                RelativeSource={RelativeSource TemplatedParent}}"
+                                       Placement="{TemplateBinding Placement}"
+                                       PlacementTarget="{TemplateBinding PlacementTarget}"
+                                       VerticalOffset="{TemplateBinding VerticalOffset}">
+                        <ScrollViewer x:Name="DropDownScrollViewer" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </controls:DropDown>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ComboboxNullAsSeparatorStyle}" />
+        <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

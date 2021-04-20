@@ -1,0 +1,1001 @@
+﻿<UserControl
+    x:Class="Orcus.Administration.Views.CommandViews.FileExplorerCommandView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+    xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:controls="clr-namespace:Orcus.Administration.FileExplorer.Controls;assembly=Orcus.Administration.FileExplorer"
+    xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:controls2="clr-namespace:Orcus.Administration.Controls"
+    xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:extensions1="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:fileExplorer="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.FileExplorer;assembly=Orcus.Administration.ViewModels"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DataContext="{d:DesignInstance commandViewModels:FileExplorerViewModel}"
+    d:DesignHeight="420"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Orcus.Administration.FileExplorer;component/Resources/ControlThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="SelectionColor">#24257AB5</Color>
+            <extensions:BindingProxy x:Key="FileExplorerBindingProxy" Data="{Binding}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Menu />
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Margin="5"
+            DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="210" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    Width="20"
+                    Margin="5,0,5,0"
+                    Command="{Binding GoBackInHistoryCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="{Binding PathHistoryManager.CanGoBack}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="Transparent">
+                                            <iconPacks:PackIconMaterial
+                                                x:Name="Icon"
+                                                Width="10"
+                                                Height="10"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource BlackBrush}"
+                                                Kind="ArrowLeft" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource GrayBrush8}" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource AccentColorBrush2}" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button
+                    Width="20"
+                    Margin="5,0,10,0"
+                    Command="{Binding GoForwardInHistoryCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="{Binding PathHistoryManager.CanGoForward}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="Transparent">
+                                            <iconPacks:PackIconMaterial
+                                                x:Name="Icon"
+                                                Width="10"
+                                                Height="10"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource BlackBrush}"
+                                                Kind="ArrowRight" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource GrayBrush8}" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource AccentColorBrush2}" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+            <Border
+                Grid.Column="1"
+                BorderThickness="1"
+                CornerRadius=".2"
+                SnapsToDevicePixels="True">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BorderBrush" Value="{StaticResource GrayBrush9}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ContentSwitch, Path=IsSwitched}" Value="true">
+                                <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush2}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <controls:Switch x:Name="ContentSwitch" Height="25">
+                    <controls:Switch.Header>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Margin="7,0,5,0"
+                            Source="{Binding ElementName=DirectoryTreeView, Path=SelectedItem.Icon}" />
+                    </controls:Switch.Header>
+                    <controls:Switch.ContentOff>
+                        <DockPanel Height="25">
+                            <ContentControl
+                                Width="16"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Style="{StaticResource ExplorerContentControl}">
+                                <controls:DropDownList
+                                    x:Name="bexp"
+                                    ItemTemplate="{Binding MenuItemTemplate, ElementName=btree}"
+                                    ItemsSource="{Binding DirectoryTreeViewModel.RootViewModels}">
+                                    <controls:DropDownList.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource MetroComboBoxItem}" TargetType="ComboBoxItem">
+                                            <Setter Property="IsSelected" Value="{Binding Selection.IsSelected, Mode=TwoWay}" />
+                                        </Style>
+                                    </controls:DropDownList.ItemContainerStyle>
+                                </controls:DropDownList>
+                            </ContentControl>
+                            <controls:BreadcrumbTree x:Name="btree" ItemsSource="{Binding DirectoryTreeViewModel.Entries.All}">
+                                <controls:BreadcrumbTree.ItemContainerStyle>
+                                    <Style
+                                        d:DataContext="{d:DesignInstance fileExplorer:DirectoryNodeViewModel}"
+                                        BasedOn="{StaticResource BreadcrumbTreeItemStyle}"
+                                        TargetType="{x:Type controls:BreadcrumbTreeItem}">
+                                        <Setter Property="ValuePath" Value="Selection.Value" />
+                                        <Setter Property="IsCurrentSelected" Value="{Binding Selection.IsSelected, Mode=TwoWay}" />
+                                        <Setter Property="SelectedChild" Value="{Binding Selection.SelectedChild, Mode=TwoWay}" />
+                                        <Setter Property="IsChildSelected" Value="{Binding Selection.IsChildSelected, Mode=OneWay}" />
+                                        <Setter Property="IsExpanded" Value="{Binding IsBreadcrumbExpanded, Mode=TwoWay}" />
+                                    </Style>
+                                </controls:BreadcrumbTree.ItemContainerStyle>
+                                <controls:BreadcrumbTree.MenuItemTemplate>
+                                    <DataTemplate DataType="{x:Type fileExplorer:DirectoryNodeViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                Source="{Binding Icon}" />
+                                            <TextBlock
+                                                Margin="8,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Label}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:BreadcrumbTree.MenuItemTemplate>
+                                <controls:BreadcrumbTree.ItemTemplate>
+                                    <HierarchicalDataTemplate DataType="{x:Type fileExplorer:DirectoryNodeViewModel}" ItemsSource="{Binding Entries.All}">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </HierarchicalDataTemplate>
+                                </controls:BreadcrumbTree.ItemTemplate>
+                            </controls:BreadcrumbTree>
+                        </DockPanel>
+                    </controls:Switch.ContentOff>
+                    <controls:Switch.ContentOn>
+                        <controls:ExplorerTextBox
+                            x:Name="ExplorerTextBox"
+                            VerticalAlignment="Center"
+                            CurrentPath="{Binding CurrentPath, Mode=OneWay}"
+                            DisplayMemberPath="Selection.Value.Path"
+                            EnterTextCommand="{Binding TextBoxUpdateCommand}"
+                            IsInEditMode="{Binding RelativeSource={RelativeSource Self}, Path=(controls:Switch.IsContentVisible)}"
+                            RootItem="{Binding DirectoryTreeViewModel}"
+                            ValuePath="Selection.Value.Path" />
+                    </controls:Switch.ContentOn>
+                </controls:Switch>
+            </Border>
+            <Border
+                Grid.Column="2"
+                BorderBrush="{StaticResource GrayBrush9}"
+                BorderThickness="0,1,1,1"
+                CornerRadius=".2"
+                SnapsToDevicePixels="True">
+                <Button Command="{Binding RefreshItemsCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                            x:Name="PART_BORDER"
+                                            Width="28"
+                                            BorderThickness="1">
+                                            <Border.Background>
+                                                <SolidColorBrush Opacity="0" Color="{DynamicResource SelectionColor}" />
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <SolidColorBrush Opacity="0" Color="#54257AB5" />
+                                            </Border.BorderBrush>
+                                            <Viewbox Width="12" Height="12">
+                                                <Grid x:Name="PART_CONTENT">
+                                                    <Path Data="F1 M 21.263,0.352 C 21.263,0.352 19.938,1.645 19.020,2.553 C 14.333,-0.871 7.728,-0.483 3.495,3.750 C 1.025,6.220 -0.128,9.497 0.011,12.733 L 4.011,12.733 C 3.870,10.521 4.629,8.266 6.319,6.575 C 8.982,3.912 13.054,3.532 16.131,5.413 C 15.089,6.445 13.886,7.651 13.886,7.651 C 13.045,8.660 13.990,9.243 14.470,9.228 L 20.094,9.227 C 20.391,9.227 20.633,9.228 20.633,9.228 C 20.633,9.228 20.878,9.228 21.176,9.228 L 22.268,9.228 C 22.566,9.228 22.808,8.985 22.808,8.687 L 22.808,0.956 C 22.842,0.249 22.066,-0.437 21.263,0.352 Z" Fill="{StaticResource GrayBrush2}" />
+                                                    <Path Data="F1 M 2.374,23.770 C 2.374,23.770 3.700,22.477 4.617,21.569 C 9.305,24.993 15.909,24.605 20.143,20.372 C 22.613,17.901 23.765,14.625 23.627,11.389 L 19.626,11.389 C 19.768,13.600 19.009,15.856 17.318,17.548 C 14.655,20.210 10.583,20.591 7.506,18.709 C 8.548,17.677 9.751,16.471 9.751,16.471 C 10.592,15.461 9.647,14.879 9.167,14.894 L 3.543,14.896 C 3.246,14.896 3.003,14.894 3.003,14.894 C 3.003,14.894 2.758,14.894 2.460,14.894 L 1.370,14.894 C 1.072,14.894 0.830,15.136 0.829,15.435 L 0.829,23.167 C 0.796,23.873 1.572,24.559 2.374,23.770 Z" Fill="{StaticResource GrayBrush2}" />
+                                                </Grid>
+                                            </Viewbox>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="PART_BORDER"
+                                                                Storyboard.TargetProperty="Background.Opacity"
+                                                                To="1"
+                                                                Duration="0:0:0.2" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="PART_BORDER"
+                                                                Storyboard.TargetProperty="BorderBrush.Opacity"
+                                                                To="1"
+                                                                Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="PART_BORDER"
+                                                                Storyboard.TargetProperty="Background.Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.2" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="PART_BORDER"
+                                                                Storyboard.TargetProperty="BorderBrush.Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Border>
+            <TextBox
+                Grid.Column="3"
+                Margin="10,0,0,0"
+                VerticalAlignment="Stretch"
+                controls1:TextBoxHelper.Watermark="{DynamicResource Search}"
+                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="25" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <controls:TreeViewEx
+                x:Name="DirectoryTreeView"
+                extensions:TreeViewExtensions.SelectOnRightClick="True"
+                BorderThickness="0"
+                ItemsSource="{Binding DirectoryTreeViewModel.Entries.All}"
+                ScrollViewer.CanContentScroll="False">
+                <TreeView.Resources>
+                    <ContextMenu x:Key="TreeDirectoryContextMenu" d:DataContext="{d:DesignInstance fileExplorer:DirectoryNodeViewModel}">
+                        <MenuItem MinWidth="200" Command="{Binding ToogleIsExpandedCommand}">
+                            <MenuItem.Style>
+                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Entries.IsExpanded}" Value="true">
+                                            <Setter Property="Header" Value="{DynamicResource Reduce}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Entries.IsExpanded}" Value="false">
+                                            <Setter Property="Header" Value="{DynamicResource Expand}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                        <MenuItem
+                            Command="{Binding UpdateEntriesCommand}"
+                            Header="{DynamicResource Refresh}"
+                            Icon="{StaticResource RefreshIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RemoveCommand}"
+                            Header="{DynamicResource Remove}"
+                            Icon="{StaticResource CancelIcon}" />
+                        <MenuItem
+                            Command="{Binding BeginRenameCommand}"
+                            Header="{DynamicResource Rename}"
+                            Icon="{StaticResource RenameIcon}" />
+                        <Separator />
+                        <MenuItem Header="{DynamicResource New}">
+                            <MenuItem
+                                MinWidth="180"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView}, Path=DataContext.CreateFolderCommand}"
+                                CommandParameter="{Binding}"
+                                Header="{DynamicResource Directory}">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Width="18"
+                                        Height="18"
+                                        Source="/Resources/Images/FileExplorer/Folders/Folder.png"
+                                        Stretch="UniformToFill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView}, Path=DataContext.UploadFileCommand}"
+                            Header="{DynamicResource UploadFile}"
+                            Icon="{StaticResource UploadFileIcon}" />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView}, Path=DataContext.OpenCommandPromptHereCommand}"
+                            CommandParameter="{Binding}"
+                            Header="{DynamicResource OpenConsoleHere}"
+                            Icon="{StaticResource ConsoleIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView}, Path=DataContext.OpenDirectoryPropertiesCommand}"
+                            CommandParameter="{Binding}"
+                            Header="{DynamicResource Properties}"
+                            Icon="{StaticResource PropertyIcon}" />
+                    </ContextMenu>
+                </TreeView.Resources>
+                <TreeView.InputBindings>
+                    <extensions:ExtendedMouseBinding Command="{Binding GoBackInHistoryCommand}" Gesture="XButton1" />
+                    <extensions:ExtendedMouseBinding Command="{Binding GoForwardInHistoryCommand}" Gesture="XButton2" />
+                </TreeView.InputBindings>
+                <TreeView.ItemContainerStyle>
+                    <Style
+                        d:DataContext="{d:DesignInstance fileExplorer:DirectoryNodeViewModel}"
+                        BasedOn="{StaticResource MetroTreeViewItem}"
+                        TargetType="controls:TreeViewItemEx">
+                        <Setter Property="IsBringIntoView" Value="{Binding IsBringIntoView, Mode=TwoWay}" />
+                        <Setter Property="IsExpanded" Value="{Binding Entries.IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding Selection.IsSelected, Mode=TwoWay}" />
+                        <Setter Property="ContextMenu" Value="{StaticResource TreeDirectoryContextMenu}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type fileExplorer:DirectoryNodeViewModel}" ItemsSource="{Binding Entries.All}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Width="20"
+                                Height="20"
+                                Source="{Binding Icon}" />
+                            <controls2:RenameControl
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                IsInRenamingMode="{Binding IsInRenameMode, Mode=TwoWay}"
+                                RenameCommand="{Binding Commands.RenameCommand}"
+                                Text="{Binding Label, Mode=OneWay}"
+                                TextToEdit="{Binding Name, Mode=OneWay}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel
+                            extensions:FrameworkElementExtensions.SupressBringIntoView="True"
+                            IsVirtualizing="True"
+                            VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
+            </controls:TreeViewEx>
+            <GridSplitter
+                Grid.Column="1"
+                Margin="-3,0"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource GridSplitterBrush}"
+                BorderBrush="Transparent"
+                BorderThickness="3,0"
+                Canvas.ZIndex="100"
+                SnapsToDevicePixels="True" />
+            <ListView
+                x:Name="FileListView"
+                Grid.Column="2"
+                extensions1:GridViewSort.AutoSort="True"
+                listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+                BorderThickness="0"
+                ItemsSource="{Binding Entries.View}"
+                SelectionChanged="EntriesListView_OnSelectionChanged"
+                SelectionMode="Extended">
+                <i:Interaction.Behaviors>
+                    <behavior:VisibleItemsListBoxBehavior VisibleItems="{Binding VisibleItemsRange, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+                <ListView.InputBindings>
+                    <extensions:ExtendedMouseBinding Command="{Binding GoBackInHistoryCommand}" Gesture="XButton1" />
+                    <extensions:ExtendedMouseBinding Command="{Binding GoForwardInHistoryCommand}" Gesture="XButton2" />
+                    <KeyBinding Key="Delete" Command="{Binding RemoveEntriesCommand}" />
+                    <KeyBinding Key="F2" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.BeginRenameCommand}" />
+                </ListView.InputBindings>
+                <ListView.Resources>
+                    <ContextMenu x:Key="DefaultContextMenu">
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RefreshItemsCommand}"
+                            Header="{DynamicResource Refresh}"
+                            Icon="{StaticResource RefreshIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.UploadFileCommand}"
+                            Header="{DynamicResource UploadFile}"
+                            Icon="{StaticResource UploadFileIcon}" />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.DownloadFileFromUrlCommand}"
+                            Header="{DynamicResource DownloadFileOnRemoteComputer}"
+                            Icon="{StaticResource DownloadFileIcon}" />
+                        <MenuItem
+                            Command="{Binding OpenCommandPromptHereCommand}"
+                            Header="{DynamicResource OpenConsoleHere}"
+                            Icon="{StaticResource ConsoleIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Header="{DynamicResource ShowThumbnails}"
+                            IsCheckable="True"
+                            IsChecked="{Binding ShowThumbnails}"
+                            IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.SupportShowThumbnail}" />
+                        <Separator />
+                        <MenuItem Header="{DynamicResource New}">
+                            <MenuItem
+                                MinWidth="180"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateFolderCommand}"
+                                Header="{DynamicResource Directory}">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Width="18"
+                                        Height="18"
+                                        Source="/Resources/Images/FileExplorer/Folders/Folder.png"
+                                        Stretch="UniformToFill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateShortcutCommand}"
+                                Header="{DynamicResource Shortcut}"
+                                Icon="{StaticResource ShortcutIcon}" />
+                        </MenuItem>
+                    </ContextMenu>
+                    <ContextMenu x:Key="FileContextMenu" d:DataContext="{d:DesignInstance fileExplorer:FileEntryViewModel}">
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ExecuteFileCommand}"
+                            CommandParameter="{Binding}"
+                            FontWeight="Bold"
+                            Header="{DynamicResource Execute}"
+                            Icon="{StaticResource RunIcon}" />
+                        <Separator />
+                        <MenuItem Header="{DynamicResource Archive}" Icon="{StaticResource ZipFileIcon}">
+                            <MenuItem
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ExtractArchiveCommand}"
+                                CommandParameter="{Binding}"
+                                Header="{DynamicResource ExtractHere}">
+                                <MenuItem.Style>
+                                    <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanBeExtracted}" Value="false">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.Style>
+                            </MenuItem>
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ExtratArchiveToCommand}" CommandParameter="{Binding}">
+                                <MenuItem.Style>
+                                    <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanBeExtracted}" Value="false">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.Style>
+                                <MenuItem.Header>
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource ExtractTo}" />
+                                        <Run Text="{Binding NameWithoutExtension, Mode=OneWay}" /><Run Text="\" />
+                                    </TextBlock>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            <Separator>
+                                <Separator.Style>
+                                    <Style TargetType="Separator">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanBeExtracted}" Value="false">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Separator.Style>
+                            </Separator>
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateArchiveCommand}" Header="{DynamicResource AddToArchive}" />
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateZipArchiveFastCommand}" CommandParameter="{Binding}">
+                                <MenuItem.Header>
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource AddToZip1}" /><Run Text="{Binding NameWithoutExtension, Mode=OneWay}" /><Run Text="{DynamicResource AddToZip2}" />
+                                    </TextBlock>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.DownloadToServerCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                            Header="{DynamicResource DownloadToServer}"
+                            Icon="{StaticResource DataGenerationPlanIcon}" />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.DownloadEntriesCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                            Header="{DynamicResource Download}"
+                            Icon="{StaticResource DownloadFileIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RemoveEntriesCommand}"
+                            Header="{DynamicResource Remove}"
+                            Icon="{StaticResource CancelIcon}" />
+                        <MenuItem
+                            Command="{Binding BeginRenameCommand}"
+                            Header="{DynamicResource Rename}"
+                            Icon="{StaticResource RenameIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.OpenFilePropertiesCommand}"
+                            CommandParameter="{Binding}"
+                            Header="{DynamicResource Properties}"
+                            Icon="{StaticResource PropertyIcon}" />
+                    </ContextMenu>
+                    <ContextMenu x:Key="DirectoryContextMenu" d:DataContext="{d:DesignInstance fileExplorer:DirectoryNodeViewModel}">
+                        <MenuItem Header="{DynamicResource Archive}" Icon="{StaticResource ZipFileIcon}">
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateArchiveCommand}" Header="{DynamicResource AddToArchive}" />
+                            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CreateZipArchiveFastCommand}" CommandParameter="{Binding}">
+                                <MenuItem.Header>
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource AddToZip1}" /><Run Text="{Binding Name, Mode=OneWay}" /><Run Text="{DynamicResource AddToZip2}" />
+                                    </TextBlock>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.DownloadToServerCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                            Header="{DynamicResource DownloadToServer}"
+                            Icon="{StaticResource DataGeneratorIcon}" />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.DownloadEntriesCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                            Header="{DynamicResource Download}"
+                            Icon="{StaticResource DownloadFolderIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RemoveEntriesCommand}"
+                            Header="{DynamicResource Remove}"
+                            Icon="{StaticResource CancelIcon}" />
+                        <MenuItem
+                            Command="{Binding BeginRenameCommand}"
+                            Header="{DynamicResource Rename}"
+                            Icon="{StaticResource RenameIcon}" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.OpenDirectoryPropertiesCommand}"
+                            CommandParameter="{Binding}"
+                            Header="{DynamicResource Properties}"
+                            Icon="{StaticResource PropertyIcon}" />
+                    </ContextMenu>
+                    <ContextMenu x:Key="ProcessingEntryContextMenu" d:DataContext="{d:DesignInstance fileExplorer:ProcessingEntryViewModel}">
+                        <MenuItem
+                            Command="{Binding CancelCommand}"
+                            Header="{DynamicResource Cancel}"
+                            IsEnabled="{Binding CanCancel}" />
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+                        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+                        <Setter Property="ContextMenu" Value="{StaticResource DefaultContextMenu}" />
+                    </Style>
+                </ListView.Style>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            extensions1:GridViewSort.PropertyName="Label"
+                            listViewLayoutManager:ProportionalColumn.Width="2"
+                            Header="{DynamicResource Name}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type fileExplorer:IEntryViewModel}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <Image
+                                            Width="22"
+                                            Height="22"
+                                            Source="{Binding Icon}" />
+                                        <controls2:RenameControl
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            IsInRenamingMode="{Binding IsInRenameMode, Mode=TwoWay}"
+                                            RenameCommand="{Binding Commands.RenameCommand}"
+                                            Text="{Binding Label, Mode=OneWay}"
+                                            TextToEdit="{Binding Name, Mode=OneWay}">
+                                            <controls2:RenameControl.Style>
+                                                <Style TargetType="controls2:RenameControl">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.File}">
+                                                            <Setter Property="FileSelectionMode" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </controls2:RenameControl.Style>
+                                        </controls2:RenameControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn
+                            extensions1:GridViewSort.PropertyName="Description"
+                            listViewLayoutManager:ProportionalColumn.Width="1"
+                            DisplayMemberBinding="{Binding Description}"
+                            Header="{DynamicResource Type}" />
+                        <GridViewColumn
+                            Width="150"
+                            extensions1:GridViewSort.PropertyName="Value.LastAccess"
+                            listViewLayoutManager:FixedColumn.Width="150">
+                            <GridViewColumn.Header>
+                                <controls1:ContentControlEx ContentCharacterCasing="Upper">
+                                    <controls1:ContentControlEx.Style>
+                                        <Style TargetType="ContentControl">
+                                            <Setter Property="Content" Value="{DynamicResource LastAccess}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ShowThumbnails}" Value="true">
+                                                    <Setter Property="Content" Value="{DynamicResource Thumbnails}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </controls1:ContentControlEx.Style>
+                                </controls1:ContentControlEx>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type fileExplorer:IEntryViewModel}">
+                                    <ContentControl>
+                                        <ContentControl.Style>
+                                            <Style TargetType="ContentControl">
+                                                <Setter Property="Content">
+                                                    <Setter.Value>
+                                                        <TextBlock VerticalAlignment="Center">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Text" Value="{Binding Value.LastAccess, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter={x:Static converter:DateTimeFormat.GeneralLong}}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Value.LastAccess}" Value="{x:Static sys:DateTime.MinValue}">
+                                                                            <Setter Property="Text" Value="N/A" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.File}" />
+                                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ShowThumbnails}" Value="true" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Content">
+                                                            <Setter.Value>
+                                                                <Image
+                                                                    Width="100"
+                                                                    Height="56"
+                                                                    Margin="0,1"
+                                                                    Source="{Binding Thumbnail}"
+                                                                    Stretch="Uniform"
+                                                                    ToolTipService.ShowDuration="2147483647">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="ToolTipOpening">
+                                                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource FileExplorerBindingProxy}, Path=Data.FileToolTipOpenedCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                        <i:EventTrigger EventName="ToolTipClosing">
+                                                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource FileExplorerBindingProxy}, Path=Data.FileToolTipClosedCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                    <Image.ToolTip>
+                                                                        <Image Source="{Binding BigThumbnail}" Stretch="None" />
+                                                                    </Image.ToolTip>
+                                                                </Image>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentControl.Style>
+                                    </ContentControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn
+                            Width="130"
+                            extensions1:GridViewSort.PropertyName="Size"
+                            listViewLayoutManager:FixedColumn.Width="130"
+                            Header="{DynamicResource Size}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type fileExplorer:IEntryViewModel}">
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.File}">
+                                                        <Setter Property="Text" Value="{Binding Size, Converter={StaticResource FormatBytesConverter}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.Processing}">
+                                                        <Setter Property="Text" Value="{Binding Size, Converter={StaticResource FormatBytesConverter}}" />
+                                                    </DataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.Directory}" />
+                                                            <Condition Binding="{Binding IsDrive}" Value="true" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0} / {1}">
+                                                                    <Binding Converter="{StaticResource FormatBytesConverter}" Path="Value.UsedSpace" />
+                                                                    <Binding Converter="{StaticResource FormatBytesConverter}" Path="Value.TotalSize" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style
+                        d:DataContext="{d:DesignInstance fileExplorer:DirectoryNodeViewModel}"
+                        BasedOn="{StaticResource MetroListViewItem}"
+                        TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.Directory}">
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.OpenDirectoryCommand}" />
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+                                <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.File}">
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ExecuteFileCommand}" />
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+                                <Setter Property="ContextMenu" Value="{StaticResource FileContextMenu}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding EntryType}" Value="{x:Static fileExplorer:EntryType.Processing}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ProcessingEntryContextMenu}" />
+                                <Setter Property="extensions:FrameworkElementExtensions.Progress" Value="{Binding Progress}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border x:Name="Bd" SnapsToDevicePixels="true">
+                                                <Grid>
+                                                    <controls1:MetroProgressBar
+                                                        x:Name="BackgroundProgress"
+                                                        MaxHeight="200"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Background="{StaticResource WhiteBrush}"
+                                                        Foreground="{StaticResource GrayBrush9}"
+                                                        Maximum="1"
+                                                        Value="{Binding Path=(extensions:FrameworkElementExtensions.Progress), RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                        <GridViewRowPresenter.Resources>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=Foreground}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
+                                                                    </DataTrigger>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False" />
+                                                                            <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <MultiDataTrigger.Setters>
+                                                                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                                        </MultiDataTrigger.Setters>
+                                                                    </MultiDataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </GridViewRowPresenter.Resources>
+                                                    </GridViewRowPresenter>
+                                                    <ContentPresenter
+                                                        x:Name="contentPresenter"
+                                                        Margin="{TemplateBinding Padding}"
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                        Visibility="Collapsed" />
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                                                    <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="true">
+                                                    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                    <Setter TargetName="BackgroundProgress" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                                                    <Setter TargetName="BackgroundProgress" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="BackgroundProgress" Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+                                                    <Setter TargetName="BackgroundProgress" Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
+                                                </Trigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsSelected" Value="true" />
+                                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                    <Setter TargetName="BackgroundProgress" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                                                    <Setter TargetName="BackgroundProgress" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                </MultiTrigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsEnabled" Value="False" />
+                                                        <Condition Property="IsSelected" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <MultiTrigger.Setters>
+                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                                                    </MultiTrigger.Setters>
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+        <Border
+            Grid.Row="3"
+            BorderBrush="{StaticResource GrayBrush10}"
+            BorderThickness="0,1,0,0"
+            SnapsToDevicePixels="True">
+            <Grid Margin="10,4">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock>
+                        <Run Text="{Binding Entries.View.Count, Mode=OneWay}" />
+                        <Run>
+                            <Run.Style>
+                                <Style TargetType="Run">
+                                    <Setter Property="Text" Value="{DynamicResource Items}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Entries.View.Count}" Value="1">
+                                            <Setter Property="Text" Value="{DynamicResource Item}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Run.Style>
+                        </Run>
+                    </TextBlock>
+                    <TextBlock Margin="20,0,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItemsCount}" Value="0">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <Run Text="{Binding SelectedItemsCount, Mode=OneWay}" />
+                        <Run>
+                            <Run.Style>
+                                <Style TargetType="Run">
+                                    <Setter Property="Text" Value="{DynamicResource ItemsSelected}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedItemsCount}" Value="1">
+                                            <Setter Property="Text" Value="{DynamicResource ItemSelected}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Run.Style>
+                        </Run>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FileTransferManagerViewModel.IsActive}" Value="false">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <controls1:MetroProgressBar
+                            Width="200"
+                            Background="{StaticResource GrayBrush10}"
+                            Foreground="{DynamicResource AccentColorBrush}"
+                            Maximum="1"
+                            Value="{Binding FileTransferManagerViewModel.Progress}" />
+                        <TextBlock Margin="10,0,0,0" Text="{Binding FileTransferManagerViewModel.Progress, StringFormat=P}" />
+                    </StackPanel>
+                    <Button
+                        Margin="10,0,10,0"
+                        Command="{Binding OpenFileTransferManagerCommand}"
+                        Content="{DynamicResource TransferManager}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="Transparent">
+                                                <TextBlock
+                                                    x:Name="ContentTextBlock"
+                                                    Foreground="{DynamicResource AccentColorBrush2}"
+                                                    Text="{TemplateBinding Content}" />
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="ContentTextBlock" Property="Foreground" Value="{StaticResource GrayBrush4}" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="ContentTextBlock" Property="Foreground" Value="{StaticResource GrayBrush7}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FileTransferManagerViewModel.FileTransferTasks.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <ProgressBar
+                        Width="100"
+                        VerticalAlignment="Center"
+                        Background="{StaticResource WhiteBrush}"
+                        IsIndeterminate="{Binding IsLoading}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

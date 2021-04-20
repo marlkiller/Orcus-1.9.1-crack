@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:id="@+id/mainScrollView">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:id="@+id/consoleOutputScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:layout_margin="8dp">
+            <TextView
+                android:id="@+id/consoleOutputTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:layout_margin="5dp">
+            <EditText
+                android:id="@+id/InputEditText"
+                android:layout_width="0dp"
+                android:imeActionLabel="Send"
+                android:layout_weight="1"
+                android:inputType="textVisiblePassword"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:focusableInTouchMode="true"
+                android:singleLine="true" />
+            <Button
+                android:text="Send"
+                android:id="@+id/SendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:enabled="false" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

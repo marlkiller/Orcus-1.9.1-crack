@@ -1,0 +1,24 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.ChangeCreationDateBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:ChangeCreationDateBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:ChangeCreationDateBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <CheckBox x:Name="ChangeCreationTimeCheckBox"
+                  VerticalAlignment="Center"
+                  Content="{StaticResource ChangeCreationDate}"
+                  IsChecked="{Binding IsEnabled}" />
+        <TextBox Width="150"
+                 Margin="10,0,0,0"
+                 IsEnabled="{Binding IsChecked,
+                                     ElementName=ChangeCreationTimeCheckBox}"
+                 Text="{Binding NewCreationDate}" />
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

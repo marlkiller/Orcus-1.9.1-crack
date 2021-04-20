@@ -1,0 +1,39 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.WatchdogBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:WatchdogBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:WatchdogBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock FontWeight="Bold" Text="{StaticResource Watchdog}" />
+        <TextBlock Margin="0,2,0,0" Text="{StaticResource WatchdogDescription}" />
+        <CheckBox x:Name="StartWatchdogWithOrcusCheckBox"
+                  Margin="0,10,0,0"
+                  Content="{StaticResource StartWithOrcus}"
+                  IsChecked="{Binding IsEnabled}" />
+        <StackPanel Margin="10,10,0,0"
+                    IsEnabled="{Binding ElementName=StartWatchdogWithOrcusCheckBox,
+                                        Path=IsChecked}"
+                    Orientation="Vertical">
+            <TextBlock Text="{StaticResource Location}" />
+            <TextBox Margin="0,5,0,0" Text="{Binding Name}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <RadioButton Content="AppData" IsChecked="{Binding WatchdogLocation, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static builderSettings:WatchdogLocation.AppData}}" />
+                <RadioButton Margin="10,0,0,0"
+                             Content="Temp"
+                             IsChecked="{Binding WatchdogLocation,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static builderSettings:WatchdogLocation.Temp}}" />
+            </StackPanel>
+            <CheckBox Margin="0,10,0,0"
+                      Content="{StaticResource PreventFileDeletion}"
+                      IsChecked="{Binding PreventFileDeletion}" />
+        </StackPanel>
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

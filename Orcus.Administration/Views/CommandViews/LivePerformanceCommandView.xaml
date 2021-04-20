@@ -1,0 +1,429 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.LivePerformanceCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:chart="http://sparrowtoolkit.codeplex.com/wpf"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance commandViewModels:LivePerformanceViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <Grid>
+        <controls:ToggleSwitchButton Margin="5,5,10,5"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"
+                                     IsChecked="{Binding IsLiveUpdateEnabled}"
+                                     IsEnabled="{Binding CanLiveUpdate}" />
+        <TabControl x:Name="MainTabControl"
+                    Margin="0,18,0,0"
+                    Background="{StaticResource WhiteBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,1,0,0">
+            <TabControl.Style>
+                <Style BasedOn="{StaticResource Windows10TabControl}" TargetType="{x:Type TabControl}">
+                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabControl}">
+                                <Grid KeyboardNavigation.TabNavigation="Local">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TabPanel Name="HeaderPanel"
+                                              Grid.Row="0"
+                                              Margin="0,0,100,-1"
+                                              Panel.ZIndex="1"
+                                              IsItemsHost="True"
+                                              KeyboardNavigation.TabIndex="1" />
+                                    <Border x:Name="ContentPanel"
+                                            Grid.Row="1"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"
+                                            KeyboardNavigation.TabIndex="2"
+                                            KeyboardNavigation.TabNavigation="Local"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                          Margin="{TemplateBinding Padding}"
+                                                          ContentSource="SelectedContent"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Style>
+            <TabControl.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="CPU">
+                <TabItem.Resources>
+                    <Style x:Key="ChartContainerStyle" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="#117dbb" />
+                        <Setter Property="BorderThickness" Value="1" />
+                    </Style>
+                    <Style x:Key="CrossLineStyle" TargetType="{x:Type Line}">
+                        <Setter Property="Stroke" Value="{StaticResource CpuChartCrossBrush}" />
+                        <Setter Property="StrokeThickness" Value="1" />
+                    </Style>
+                </TabItem.Resources>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <DockPanel>
+                            <TextBlock FontFamily="Segoe UI Medium"
+                                       FontSize="24"
+                                       Text="CPU" />
+                            <TextBlock HorizontalAlignment="Right"
+                                       VerticalAlignment="Bottom"
+                                       FontFamily="Segoe UI"
+                                       FontSize="15"
+                                       Text="{Binding StaticPerformanceData.ProcessorName}" />
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock FontFamily="Segoe UI Light">
+                                <Run Text="%" />
+                                <Run Text="{DynamicResource Utilization}" />
+                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Right"
+                                       FontFamily="Segoe UI Light"
+                                       Text="100%" />
+                        </DockPanel>
+                    </StackPanel>
+                    <chart:SparrowChart x:Name="CpuChart"
+                                        Grid.Row="1"
+                                        Margin="1"
+                                        ContainerBorderStyle="{StaticResource ChartContainerStyle}"
+                                        RenderingMode="WritableBitmap">
+                        <chart:AreaSeries Fill="{StaticResource CpuChartFill}"
+                                          PointsSource="{Binding GraphPoints}"
+                                          Stroke="#117dbb"
+                                          StrokeThickness="1"
+                                          XPath="Time"
+                                          YPath="Percentage" />
+                        <chart:SparrowChart.YAxis>
+                            <chart:LinearYAxis CrossLineStyle="{StaticResource CrossLineStyle}"
+                                               Interval="10"
+                                               MaxValue="100"
+                                               MinValue="0"
+                                               Visibility="Collapsed" />
+                        </chart:SparrowChart.YAxis>
+                        <chart:SparrowChart.XAxis>
+                            <chart:DateTimeXAxis CrossLineStyle="{StaticResource CrossLineStyle}"
+                                                 Interval="0:0:1"
+                                                 Visibility="Collapsed" />
+                        </chart:SparrowChart.XAxis>
+                    </chart:SparrowChart>
+                    <StackPanel Grid.Row="2" Orientation="Vertical">
+                        <DockPanel>
+                            <TextBlock FontFamily="Segoe UI Light">
+                                <Run Text="60" />
+                                <Run Text="{DynamicResource Seconds}" />
+                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Right"
+                                       FontFamily="Segoe UI Light"
+                                       Text="0" />
+                        </DockPanel>
+                        <Grid Margin="0,10,0,15" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="210" />
+                                <ColumnDefinition Width="300" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Width="105" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Utilization2}" />
+                                        <TextBlock FontFamily="Segoe UI Medium" FontSize="20">
+                                            <Run Text="{Binding LiveData.InUse}" /><Run Text="%" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Width="105" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Speed}" />
+                                        <TextBlock FontFamily="Segoe UI Medium" FontSize="20">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                                    <Setter Property="Text" Value="{Binding CurrentCpuSpeed}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CurrentCpuSpeed, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                            <Setter Property="Text" Value="N/A" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                    <StackPanel Width="70" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Processes}" />
+                                        <TextBlock FontFamily="Segoe UI Medium"
+                                                   FontSize="20"
+                                                   Text="{Binding LiveData.Processes,
+                                                                  FallbackValue=N/A}" />
+                                    </StackPanel>
+                                    <StackPanel Width="70" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Threads}" />
+                                        <TextBlock FontFamily="Segoe UI Medium"
+                                                   FontSize="20"
+                                                   Text="{Binding LiveData.Threads,
+                                                                  FallbackValue=N/A}" />
+                                    </StackPanel>
+                                    <StackPanel Width="70" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Handles}" />
+                                        <TextBlock FontFamily="Segoe UI Medium"
+                                                   FontSize="20"
+                                                   Text="{Binding LiveData.Handles,
+                                                                  FallbackValue=N/A}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Width="210"
+                                            Margin="0,5,0,0"
+                                            Orientation="Vertical">
+                                    <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource UpTime}" />
+                                    <TextBlock FontFamily="Segoe UI Medium" FontSize="20">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="{Binding UpTime}" />
+                                                <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UpTime, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                        <Setter Property="Text" Value="N/A" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Orientation="Vertical">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource MaximumSpeed}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1"
+                                               FontFamily="Segoe UI Medium"
+                                               Text="{Binding MaximumCpuSpeed}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource Cores}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1"
+                                               FontFamily="Segoe UI Medium"
+                                               Text="{Binding StaticPerformanceData.Cores}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource LogicalProcessors}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1"
+                                               FontFamily="Segoe UI Medium"
+                                               Text="{Binding StaticPerformanceData.LogicalProcessors}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource L1Cache}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" FontFamily="Segoe UI Medium">
+                                        <Run Text="{Binding StaticPerformanceData.L1Cache}" />
+                                        <Run Text="KB" />
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource L2Cache}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" FontFamily="Segoe UI Medium">
+                                        <Run Text="{Binding StaticPerformanceData.L2Cache}" />
+                                        <Run Text="KB" />
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource L3Cache}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" FontFamily="Segoe UI Medium">
+                                        <Run Text="{Binding StaticPerformanceData.L3Cache}" />
+                                        <Run Text="KB" />
+                                    </TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="MemoryTabItem" Header="{DynamicResource Memory}">
+                <TabItem.Resources>
+                    <Style x:Key="ChartContainerStyle" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="#9528b4" />
+                        <Setter Property="BorderThickness" Value="1" />
+                    </Style>
+                    <Style x:Key="CrossLineStyle" TargetType="{x:Type Line}">
+                        <Setter Property="Stroke" Value="{StaticResource MemoryChartCrossBrush}" />
+                        <Setter Property="StrokeThickness" Value="1" />
+                    </Style>
+                </TabItem.Resources>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <DockPanel>
+                            <TextBlock FontFamily="Segoe UI Medium"
+                                       FontSize="24"
+                                       Text="{DynamicResource Memory}" />
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource MemoryUsage}" />
+                            <TextBlock HorizontalAlignment="Right"
+                                       FontFamily="Segoe UI Light"
+                                       Text="{Binding StaticPerformanceData.TotalMemory,
+                                                      Converter={StaticResource FormatBytesConverter}}" />
+                        </DockPanel>
+                    </StackPanel>
+                    <chart:SparrowChart x:Name="MemoryChart"
+                                        Grid.Row="1"
+                                        Margin="1"
+                                        ContainerBorderStyle="{StaticResource ChartContainerStyle}"
+                                        RenderingMode="WritableBitmap">
+                        <chart:AreaSeries Fill="{StaticResource MemoryChartFill}"
+                                          PointsSource="{Binding GraphPoints}"
+                                          Stroke="#9528b4"
+                                          StrokeThickness="1"
+                                          XPath="Time"
+                                          YPath="MemoryUsage" />
+                        <chart:SparrowChart.YAxis>
+                            <chart:LinearYAxis CrossLineStyle="{StaticResource CrossLineStyle}"
+                                               Interval="10"
+                                               MaxValue="100"
+                                               MinValue="0"
+                                               Visibility="Collapsed" />
+                        </chart:SparrowChart.YAxis>
+                        <chart:SparrowChart.XAxis>
+                            <chart:DateTimeXAxis CrossLineStyle="{StaticResource CrossLineStyle}"
+                                                 Interval="0:0:1"
+                                                 Visibility="Collapsed" />
+                        </chart:SparrowChart.XAxis>
+                    </chart:SparrowChart>
+                    <StackPanel Grid.Row="2" Orientation="Vertical">
+                        <DockPanel>
+                            <TextBlock FontFamily="Segoe UI Light">
+                                <Run Text="60" />
+                                <Run Text="{DynamicResource Seconds}" />
+                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Right"
+                                       FontFamily="Segoe UI Light"
+                                       Text="0" />
+                        </DockPanel>
+                        <Grid Margin="0,10,0,15" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="210" />
+                                <ColumnDefinition Width="300" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Width="105" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource InUse}" />
+                                        <TextBlock FontFamily="Segoe UI Medium"
+                                                   FontSize="20"
+                                                   Text="{Binding LiveData.UsedMemory,
+                                                                  Converter={StaticResource FormatBytesConverter},
+                                                                  FallbackValue=N/A}" />
+                                    </StackPanel>
+                                    <StackPanel Width="105" Orientation="Vertical">
+                                        <TextBlock FontFamily="Segoe UI Light" Text="{DynamicResource Available}" />
+                                        <TextBlock FontFamily="Segoe UI Medium" FontSize="20">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                                    <Setter Property="Text" Value="{Binding AvailableMemory, Converter={StaticResource FormatBytesConverter}}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding AvailableMemory}" Value="0">
+                                                            <Setter Property="Text" Value="N/A" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Orientation="Vertical">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource Speed}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" FontFamily="Segoe UI Medium">
+                                        <Run Text="{Binding StaticPerformanceData.MemorySpeed}" />
+                                        <Run Text="MHz" />
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe UI Light">
+                                        <Run Text="{DynamicResource SlotsUsed}" /><Run Text=":" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" FontFamily="Segoe UI Medium">
+                                        <Run Text="{Binding StaticPerformanceData.UsedMemorySlots}" />
+                                        <Run Text="{DynamicResource Of}" />
+                                        <Run Text="{Binding StaticPerformanceData.TotalMemorySlots}" />
+                                    </TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

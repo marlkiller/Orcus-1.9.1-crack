@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Magenta.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Color x:Key="DarkColor">#8B008B</Color>
+    <Color x:Key="LightColor">#CCFB54AD</Color>
+    <Color x:Key="TransparentLightColor">#30D834DB</Color>
+
+    <SolidColorBrush x:Key="LightColorBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource LightColor}" />
+    <SolidColorBrush x:Key="DarkColorBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource DarkColor}" />
+    <SolidColorBrush x:Key="TransparentLightColorBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource TransparentLightColor}" />
+
+    <SolidColorBrush x:Key="KeyBackgroundBrush" Color="#680268" />
+    <SolidColorBrush x:Key="KeyBorderBrush" Color="#FFFFBFFD" />
+    <SolidColorBrush x:Key="KeyForegroundBrush" Color="{StaticResource LightColor}" />
+
+    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="TextBoxFocusBorderBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="ControlFocusBorderBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush"
+                     options:Freeze="true"
+                     Color="{StaticResource AccentColor}" />
+</ResourceDictionary>

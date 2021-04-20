@@ -1,0 +1,158 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CommandViewWindows.FileExplorerArchiveOptionsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:fileExplorer="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.FileExplorer;assembly=Orcus.Administration.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shared="clr-namespace:Orcus.Shared.Commands.FileExplorer;assembly=Orcus.Shared"
+    Title="{StaticResource ArchiveOptions}"
+    Width="550"
+    d:DataContext="{d:DesignInstance fileExplorer:ArchiveOptionsViewModel}"
+    extensions:WindowService.DialogResult="{Binding DialogResult}"
+    extensions:WindowService.EscapeClosesWindow="True"
+    Icon="/Resources/Images/VisualStudio/ZipFile_16x.png"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    SizeToContent="Height"
+    Style="{StaticResource NormalWindow}"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource ZipFileIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Margin="10" Orientation="Vertical">
+            <TextBlock Text="{StaticResource ArchiveName}" />
+            <TextBox Margin="0,2,0,0" Text="{Binding ArchiveName}" />
+            <TextBlock Margin="0,10,0,0" Text="{StaticResource ArchiveFormat}" />
+            <ContentControl Margin="0,5,0,0">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSingleFile}" Value="true">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton Content="ZIP" IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Zip}}" />
+                                            <RadioButton
+                                                Margin="10,0"
+                                                Content="GZIP"
+                                                IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Gzip}}" />
+                                            <RadioButton Content="BZIP2" IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Bzip2}}" />
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSingleFile}" Value="false">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton
+                                                VerticalAlignment="Top"
+                                                Content="ZIP"
+                                                GroupName="ArchiveType"
+                                                IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Zip}}" />
+                                            <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                                                <RadioButton
+                                                    x:Name="TarRadioButton"
+                                                    Content="TAR"
+                                                    GroupName="ArchiveType"
+                                                    IsChecked="{Binding UseTarAsPacker}" />
+                                                <StackPanel
+                                                    Margin="0,5,0,0"
+                                                    IsEnabled="{Binding UseTarAsPacker}"
+                                                    Orientation="Horizontal">
+                                                    <RadioButton Content="GZIP" IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Gzip}}" />
+                                                    <RadioButton
+                                                        Margin="10,0"
+                                                        Content="BZIP2"
+                                                        IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.Bzip2}}" />
+                                                    <RadioButton
+                                                        Margin="10,0,0,0"
+                                                        Content="{StaticResource None}"
+                                                        IsChecked="{Binding CompressionMethod, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static shared:CompressionMethod.None}}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <TextBlock Margin="0,10,0,0">
+                <Run Text="{StaticResource Password}" />
+                <Run Text="(" /><Run Text="{StaticResource Optional}" /><Run Text=")" />
+            </TextBlock>
+            <TextBox Margin="0,5,0,0" Text="{Binding Password}">
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CompressionMethod}" Value="{x:Static shared:CompressionMethod.Gzip}">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CompressionMethod}" Value="{x:Static shared:CompressionMethod.Zip}">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBlock Margin="0,10,0,0" Text="{StaticResource CompressionLevel}" />
+            <Slider
+                Width="300"
+                Margin="0,5,0,0"
+                HorizontalAlignment="Left"
+                IsSnapToTickEnabled="True"
+                Maximum="9"
+                Minimum="0"
+                TickFrequency="1"
+                TickPlacement="BottomRight"
+                Value="{Binding CompressionLevel}">
+                <Slider.Style>
+                    <Style BasedOn="{StaticResource MetroSlider}" TargetType="Slider">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CompressionMethod}" Value="{x:Static shared:CompressionMethod.Gzip}">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CompressionMethod}" Value="{x:Static shared:CompressionMethod.Zip}">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Slider.Style>
+            </Slider>
+            <CheckBox Margin="0,15,0,0" Content="{StaticResource DeleteFilesAfterArchiving}" />
+        </StackPanel>
+        <Rectangle
+            Height="1"
+            Margin="0,5,0,0"
+            Fill="{StaticResource GrayBrush9}" />
+        <Grid Background="{StaticResource GrayBrush10}">
+            <StackPanel
+                Margin="10"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    MinWidth="80"
+                    Command="{Binding OkCommand}"
+                    Content="{StaticResource Ok}"
+                    IsDefault="True" />
+                <Button
+                    MinWidth="80"
+                    Margin="8,0,0,0"
+                    Command="{Binding CancelCommand}"
+                    Content="{StaticResource Cancel}"
+                    IsCancel="True" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</controls:MetroWindow>

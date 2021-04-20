@@ -1,0 +1,280 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.FileExplorerTransferManagerWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:fileExplorer="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.FileExplorer;assembly=Orcus.Administration.ViewModels"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Title="{StaticResource FileTransferManager}"
+                      Width="500"
+                      d:DataContext="{d:DesignInstance fileExplorer:FileTransferManagerViewModel}"
+                      extensions:WindowService.DialogResult="{Binding DialogResult}"
+                      Icon="/Resources/Images/VisualStudio/NextDocument_16x.png"
+                      ResizeMode="NoResize"
+                      SizeToContent="Height"
+                      Style="{StaticResource NormalWindow}"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource NextDocumentIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentTask}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock>
+                <Run Text="{StaticResource Name}" /><Run Text=":" />
+                <Run Text="{Binding CurrentTask.Name, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,5,0,0">
+                <Run Text="{StaticResource EstimatedTime}" /><Run Text=":" />
+                <Run Text="{Binding CurrentTask.EstimatedTime, Mode=OneWay, StringFormat=hh\\:mm\\:ss\\.f}" />
+            </TextBlock>
+            <TextBlock Margin="0,5,0,0">
+                <Run Text="{StaticResource Speed}" /><Run Text=":" />
+                <Run Text="{Binding CurrentTask.Speed, Mode=OneWay, Converter={StaticResource FormatBytesConverter}}" /><Run Text="/s" />
+            </TextBlock>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <TextBlock Margin="0,0,5,0" VerticalAlignment="Center">
+                    <Run Text="{StaticResource Mode}" /><Run Text=":" />
+                </TextBlock>
+                <iconPacks:PackIconMaterial Width="10"
+                                            Height="10"
+                                            Foreground="{StaticResource BlackBrush}">
+                    <iconPacks:PackIconMaterial.Style>
+                        <Style BasedOn="{StaticResource MahApps.Metro.Styles.PackIconMaterial}" TargetType="iconPacks:PackIconMaterial">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentTask.IsUpload}" Value="true">
+                                    <Setter Property="Kind" Value="ArrowUpBold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CurrentTask.IsUpload}" Value="false">
+                                    <Setter Property="Kind" Value="ArrowDownBold" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </iconPacks:PackIconMaterial.Style>
+                </iconPacks:PackIconMaterial>
+                <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentTask.IsUpload}" Value="true">
+                                    <Setter Property="Text" Value="{StaticResource Upload}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CurrentTask.IsUpload}" Value="false">
+                                    <Setter Property="Text" Value="{StaticResource Download}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock>
+                    <Run Text="{Binding CurrentTask.ProcessedSize, Mode=OneWay, Converter={StaticResource FormatBytesConverter}}" />
+                    <Run Text="/" />
+                    <Run Text="{Binding CurrentTask.Size, Mode=OneWay, Converter={StaticResource FormatBytesConverter}}" />
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Right" Text="{Binding CurrentTask.Progress, StringFormat=P}" />
+            </DockPanel>
+            <controls:MetroProgressBar Margin="0,2,0,0"
+                                       Foreground="{StaticResource AccentColorBrush}"
+                                       Maximum="1"
+                                       Value="{Binding CurrentTask.Progress}" />
+        </StackPanel>
+        <ListView Grid.Row="1"
+                  Margin="5,0"
+                  listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                  ItemsSource="{Binding CollectionView}">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu" d:DataContext="{d:DesignInstance fileExplorer:FileTransferTask}">
+                    <MenuItem Command="{Binding CancelCommand}" Header="{StaticResource Cancel}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFinished}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCanceled}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem Command="{Binding OpenFolderCommand}" Header="{StaticResource OpenFolder}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Succeed}">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.Style>
+                <Style BasedOn="{StaticResource MetroListView}" TargetType="ListView">
+                    <Setter Property="Height" Value="0" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=MoreDetailsExpander, Path=IsExpanded}" Value="true">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.2"
+                                                         Storyboard.TargetProperty="Height"
+                                                         To="200">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.2"
+                                                         Storyboard.TargetProperty="Height"
+                                                         To="0">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1" Header="{StaticResource Name}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type fileExplorer:FileTransferTask}">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Width="16" Height="16">
+                                        <iconPacks:PackIconMaterial.Style>
+                                            <Style BasedOn="{StaticResource MahApps.Metro.Styles.PackIconMaterial}" TargetType="iconPacks:PackIconMaterial">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsUpload}" Value="true">
+                                                        <Setter Property="Kind" Value="ArrowUpBoldCircle" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsUpload}" Value="false">
+                                                        <Setter Property="Kind" Value="ArrowDownBoldCircle" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                        <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </iconPacks:PackIconMaterial.Style>
+                                    </iconPacks:PackIconMaterial>
+                                    <TextBlock Margin="10,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="90"
+                                    listViewLayoutManager:FixedColumn.Width="90"
+                                    Header="{StaticResource Progress}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type fileExplorer:FileTransferTask}">
+                                <TextBlock>
+                                    <Run Text="{Binding Progress, Mode=OneWay, StringFormat=P}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="160"
+                                    listViewLayoutManager:FixedColumn.Width="160"
+                                    Header="{StaticResource Status}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type fileExplorer:FileTransferTask}">
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Failed}">
+                                                    <Setter Property="Text" Value="{StaticResource Failed}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Busy}">
+                                                    <Setter Property="Text" Value="{StaticResource Busy}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Canceled}">
+                                                    <Setter Property="Text" Value="{StaticResource Canceled}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.FileNotFound}">
+                                                    <Setter Property="Text" Value="{StaticResource FileNotFound}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Preparing}">
+                                                    <Setter Property="Text" Value="{StaticResource Preparing}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Succeed}">
+                                                    <Setter Property="Text" Value="{StaticResource Succeed}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.Waiting}">
+                                                    <Setter Property="Text" Value="{StaticResource Waiting}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.HashValuesNotMatch}">
+                                                    <Setter Property="Text" Value="{StaticResource HashValuesArentEqual}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="{x:Static fileExplorer:FileProcessEntryState.InvalidFileLength}">
+                                                    <Setter Property="Text" Value="{StaticResource InvalidFileLength}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Rectangle Grid.Row="2"
+                   Fill="{StaticResource GrayBrush5}"
+                   SnapsToDevicePixels="True" />
+        <Grid Grid.Row="3" Background="{StaticResource DialogBottomBrush}">
+            <DockPanel Margin="10">
+                <Expander x:Name="MoreDetailsExpander" Header="{StaticResource MoreDetails}">
+                    <Expander.Style>
+                        <Style TargetType="Expander" />
+                    </Expander.Style>
+                </Expander>
+                <Button MinWidth="80"
+                        HorizontalAlignment="Right"
+                        Command="{Binding CloseCommand}"
+                        Content="{DynamicResource Close}" />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

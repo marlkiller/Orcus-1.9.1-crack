@@ -1,0 +1,175 @@
+﻿<UserControl
+    x:Class="Orcus.Administration.Views.CommandViews.VoiceChatCommandView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:extensions1="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:opus="clr-namespace:OpusWrapper.Native;assembly=OpusWrapper"
+    d:DataContext="{d:DesignInstance commandViewModels:VoiceChatViewModel}"
+    d:DesignHeight="420"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <extensions1:ComboBoxDataTemplateSelector x:Key="ComboBoxDataTemplateSelector" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical">
+                <CheckBox Content="{DynamicResource MyMicrophone}" IsChecked="{Binding IsLocalStreaming}">
+                    <CheckBox.Style>
+                        <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding LocalCaptureDevices.Count}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </CheckBox.Style>
+                </CheckBox>
+                <ListBox
+                    Height="200"
+                    Margin="0,5,0,0"
+                    BorderThickness="0,1"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding LocalCaptureDevices}"
+                    SelectedItem="{Binding SelectedLocalCaptureDevice}">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                </DataTrigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </StackPanel>
+            <controls1:AudioVisualisationControl
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                DataProvider="{Binding LocalVisualisationDataProvider}"
+                IsActive="{Binding IsLocalStreaming}" />
+        </Grid>
+        <Grid
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical">
+                <CheckBox Content="{DynamicResource RemoteMicrophone}" IsChecked="{Binding IsRemoteStreaming}">
+                    <CheckBox.Style>
+                        <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RemoteCaptureDevices.Count}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </CheckBox.Style>
+                </CheckBox>
+                <ListBox
+                    Height="200"
+                    Margin="0,5,0,0"
+                    BorderThickness="0,1"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding RemoteCaptureDevices}"
+                    SelectedItem="{Binding SelectedRemoteCaptureDevice}">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDefault}" Value="true">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                </DataTrigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </StackPanel>
+            <controls1:AudioVisualisationControl
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                DataProvider="{Binding RemoteVisualisationDataProvider}"
+                IsActive="{Binding IsRemoteStreaming}" />
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Background="{StaticResource GrayBrush10}">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Grid Width="300">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="{DynamicResource Mode}" /><Run Text=":" />
+                    </TextBlock>
+                    <ComboBox
+                        Grid.Column="1"
+                        ItemTemplateSelector="{StaticResource ComboBoxDataTemplateSelector}"
+                        ItemsSource="{Binding Source={extensions:Enumeration {x:Type opus:Application}}}"
+                        SelectedIndex="0"
+                        SelectedValue="{Binding Application}"
+                        SelectedValuePath="Value">
+                        <extensions1:ComboBoxDataTemplateSelector.DropDownTemplate>
+                            <DataTemplate DataType="{x:Type extensions:EnumerationExtension+EnumerationMember}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Value}" />
+                                    <TextBlock Text="{Binding Description}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </extensions1:ComboBoxDataTemplateSelector.DropDownTemplate>
+                        <extensions1:ComboBoxDataTemplateSelector.SelectedTemplate>
+                            <DataTemplate DataType="{x:Type extensions:EnumerationExtension+EnumerationMember}">
+                                <TextBlock Text="{Binding Value}" />
+                            </DataTemplate>
+                        </extensions1:ComboBoxDataTemplateSelector.SelectedTemplate>
+                    </ComboBox>
+                </Grid>
+                <Grid Margin="40,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="{DynamicResource Bitrate}" /><Run Text=":" />
+                    </TextBlock>
+                    <controls:NumericUpDown
+                        Grid.Column="1"
+                        Width="130"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Minimum="1024"
+                        Value="{Binding Bitrate}" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

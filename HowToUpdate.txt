@@ -1,0 +1,2 @@
+- Update nUpdateVersion-Attribute
+- Update version of cli server

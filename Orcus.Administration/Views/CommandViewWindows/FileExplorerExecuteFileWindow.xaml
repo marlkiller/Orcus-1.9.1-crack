@@ -1,0 +1,46 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.FileExplorerExecuteFileWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:fileExplorer="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.FileExplorer;assembly=Orcus.Administration.ViewModels"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Width="500"
+                      d:DataContext="{d:DesignInstance fileExplorer:ExecuteFileViewModel}"
+                      extensions:WindowService.DialogResult="{Binding DialogResult}"
+                      extensions:WindowService.EscapeClosesWindow="True"
+                      Icon="/Resources/Images/VisualStudio/Run.ico"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      SizeToContent="Height"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource RunIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <StackPanel Margin="10">
+        <TextBlock Text="{StaticResource Path}" />
+        <TextBox Margin="0,2,0,0"
+                 IsReadOnly="True"
+                 Text="{Binding Path,
+                                Mode=OneTime}" />
+        <TextBlock Margin="0,10,0,0" Text="{StaticResource Arguments}" />
+        <TextBox Margin="0,2,0,0" Text="{Binding Arguments}" />
+        <TextBlock Margin="0,10,0,0" Text="{StaticResource Verb}" />
+        <ComboBox Margin="0,2,0,0"
+                  ItemsSource="{Binding Verbs}"
+                  Text="{Binding Verb}" />
+        <CheckBox Margin="0,10,0,0"
+                  Content="{StaticResource CreateNoWindow}"
+                  IsChecked="{Binding CreateNoWindow}" />
+        <Button MinWidth="100"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Right"
+                Command="{Binding ExecuteCommand}"
+                Content="{StaticResource Execute}" />
+    </StackPanel>
+</controls:MetroWindow>

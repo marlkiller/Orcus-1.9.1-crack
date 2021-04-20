@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.RenameControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="26"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <TextBlock x:Name="CONTENT_ON"
+                   VerticalAlignment="Center"
+                   Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                  Path=Text}" />
+        <TextBox x:Name="CONTENT_OFF"
+                 VerticalAlignment="Center"
+                 PreviewKeyDown="CONTENT_OFF_OnPreviewKeyDown"
+                 PreviewLostKeyboardFocus="CONTENT_OFF_OnPreviewLostKeyboardFocus"
+                 PreviewMouseRightButtonDown="CONTENT_OFF_OnPreviewMouseRightButtonDown"
+                 Visibility="Hidden">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+                    <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+                    <Setter Property="SelectionBrush" Value="{DynamicResource AccentColorBrush3}" />
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+    </Grid>
+</UserControl>

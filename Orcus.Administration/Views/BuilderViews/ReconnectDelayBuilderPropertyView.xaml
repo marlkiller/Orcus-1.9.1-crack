@@ -1,0 +1,25 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.ReconnectDelayBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:ReconnectDelayProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:ReconnectDelayProperty"
+                                            mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <TextBlock VerticalAlignment="Center">
+            <Run Text="{StaticResource ReconnectDelay}" /><Run Text=":" />
+        </TextBlock>
+        <controls:NumericUpDown Width="130"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Minimum="500"
+                                StringFormat="0 ms"
+                                Value="{Binding Delay}" />
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

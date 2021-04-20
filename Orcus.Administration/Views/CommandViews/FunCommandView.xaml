@@ -1,0 +1,316 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.FunCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             d:DataContext="{d:DesignInstance commandViewModels:FunViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="HeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer>
+        <StackPanel Margin="10" Orientation="Vertical">
+            <TextBlock Text="{DynamicResource Taskbar}" />
+            <Grid Margin="0,5,0,0" Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding ShowTaskbarCommand}"
+                        Content="{DynamicResource Show}" />
+                <Button Grid.Column="2"
+                        Command="{Binding HideTaskbarCommand}"
+                        Content="{DynamicResource Hide}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource Desktop}" />
+            <Grid Margin="0,5,0,0" Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding ShowDesktopCommand}"
+                        Content="{DynamicResource Show}" />
+                <Button Grid.Column="2"
+                        Command="{Binding HideDesktopCommand}"
+                        Content="{DynamicResource Hide}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource Clock}" />
+            <Grid Margin="0,5,0,0" Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding ShowClockCommand}"
+                        Content="{DynamicResource Show}" />
+                <Button Grid.Column="2"
+                        Command="{Binding HideClockCommand}"
+                        Content="{DynamicResource Hide}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource Mouse}" />
+            <Grid Margin="0,5,0,0" Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding MouseSwapButtonsCommand}"
+                        Content="{DynamicResource Swap}" />
+                <Button Grid.Column="2"
+                        Command="{Binding MouseRestoreButtonsCommand}"
+                        Content="{DynamicResource Restore}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource CdDrive}" />
+            <Grid Margin="0,5,0,0" Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding OpenCdDriveCommand}"
+                        Content="{DynamicResource Open}" />
+                <Button Grid.Column="2"
+                        Command="{Binding CloseCdDriveCommand}"
+                        Content="{DynamicResource Close}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource TaskManager}" />
+            <Grid Margin="0,5,0,0"
+                  Grid.IsSharedSizeScope="True"
+                  IsEnabled="{Binding IsAdministrator}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition SharedSizeGroup="Button" />
+                </Grid.ColumnDefinitions>
+                <Button MinWidth="70"
+                        Command="{Binding EnableTaskmanagerCommand}"
+                        Content="{DynamicResource Enable}" />
+                <Button Grid.Column="2"
+                        Command="{Binding DisableTaskmanagerCommand}"
+                        Content="{DynamicResource Disable}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource UserInput}" />
+            <Grid Margin="0,5,0,0"
+                  Grid.IsSharedSizeScope="True"
+                  IsEnabled="{Binding IsAdministrator}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <controls:NumericUpDown x:Name="BlockInputNumericUpDown"
+                                            Width="75"
+                                            Minimum="1"
+                                            Value="10" />
+                    <TextBlock Margin="5,0,10,0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource Seconds}" />
+                </StackPanel>
+                <Button Grid.Column="1"
+                        Width="70"
+                        Command="{Binding BlockUserInputCommand}"
+                        CommandParameter="{Binding ElementName=BlockInputNumericUpDown,
+                                                   Path=Value}"
+                        Content="{DynamicResource Block}" />
+            </Grid>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource Mouse}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <controls:NumericUpDown x:Name="MouseHoldTimerNumericUpDown"
+                                        Width="80"
+                                        Minimum="1"
+                                        Value="1" />
+                <Button Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding HoldMouseCommand}"
+                        CommandParameter="{Binding ElementName=MouseHoldTimerNumericUpDown,
+                                                   Path=Value}">
+                    <TextBlock>
+                        <Run Text="{DynamicResource HoldMouseForSeconds1}" />
+                        <Run Text="{Binding ElementName=MouseHoldTimerNumericUpDown, Path=Value}" />
+                        <Run Text="{DynamicResource HoldMouseForSeconds2}" />
+                    </TextBlock>
+                </Button>
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource OpenWebsite}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <TextBox x:Name="WebsiteTextBox"
+                         Width="400"
+                         controls:TextBoxHelper.Watermark="{DynamicResource Url}" />
+                <controls:NumericUpDown x:Name="OpenWebsiteNumericUpDown"
+                                        Margin="10,0"
+                                        Minimum="1"
+                                        Value="1" />
+                <Button Command="{Binding OpenWebsiteCommand}" Content="{DynamicResource DoIt}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                            <Binding ElementName="WebsiteTextBox" Path="Text" />
+                            <Binding ElementName="OpenWebsiteNumericUpDown" Path="Value" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=WebsiteTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource ChangeDesktopWallpaper}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <TextBox x:Name="WallpaperUrlTextBox"
+                         Width="400"
+                         controls:TextBoxHelper.Watermark="{DynamicResource UrlToImageFile}" />
+                <ComboBox x:Name="WallpaperStyleComboBox"
+                          Width="100"
+                          Margin="5,0,5,0"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="{DynamicResource Tiled}" />
+                    <ComboBoxItem Content="{DynamicResource Centered}" />
+                    <ComboBoxItem Content="{DynamicResource Stretched}" />
+                </ComboBox>
+                <Button Command="{Binding ChangeDesktopWallpaperCommand}" Content="{DynamicResource Change}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                            <Binding ElementName="WallpaperUrlTextBox" Path="Text" />
+                            <Binding ElementName="WallpaperStyleComboBox" Path="SelectedIndex" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=WallpaperUrlTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="{DynamicResource Other}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Button Margin="0,0,10,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding TurnMonitorOffCommand}"
+                        Content="{DynamicResource TurnMonitorOff}" />
+                <Button Margin="0,0,10,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding TriggerBluescreenCommand}"
+                        Content="{DynamicResource TriggerBluescreen}" />
+                <Button Margin="0,0,10,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding HangSystemCommand}"
+                        Content="{DynamicResource HangSystem}"
+                        ToolTip="{DynamicResource HangSystemToolTip}"
+                        ToolTipService.ShowDuration="60000" />
+            </StackPanel>
+            <TextBlock Margin="0,15,0,0"
+                       Style="{StaticResource HeaderStyle}"
+                       Text="{DynamicResource ComputerStatus}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <ComboBox x:Name="ShutdownModeComboBox"
+                          Width="300"
+                          HorizontalAlignment="Left"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="{DynamicResource Shutdown}" />
+                    <ComboBoxItem Content="{DynamicResource LogOff}" />
+                    <ComboBoxItem Content="{DynamicResource Restart}" />
+                </ComboBox>
+                <Button Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding ShutdownCommand}"
+                        CommandParameter="{Binding ElementName=ShutdownModeComboBox,
+                                                   Path=SelectedIndex}"
+                        Content="{DynamicResource DoIt}" />
+            </StackPanel>
+            <TextBlock Margin="0,15,0,0"
+                       Style="{StaticResource HeaderStyle}"
+                       Text="{DynamicResource RotateMonitor}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <ListBox x:Name="RotateDegreeListBox"
+                             Background="{StaticResource FlyoutBackgroundBrush}"
+                             SelectedIndex="0">
+                        <ListBox.Items>
+                            <ListBoxItem Content="0 °" />
+                            <ListBoxItem Content="90 °" />
+                            <ListBoxItem Content="180 °" />
+                            <ListBoxItem Content="270 °" />
+                        </ListBox.Items>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Margin" Value="5,0,5,0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <RadioButton Content="{TemplateBinding Content}" IsChecked="{Binding IsSelected, RelativeSource={x:Static RelativeSource.TemplatedParent}}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+                <Button Margin="10,0,0,0"
+                        Command="{Binding RotateScreenCommand}"
+                        CommandParameter="{Binding ElementName=RotateDegreeListBox,
+                                                   Path=SelectedIndex}"
+                        Content="{DynamicResource Rotate}" />
+            </StackPanel>
+            <TextBlock Margin="0,15,0,0" Style="{StaticResource HeaderStyle}">
+                <Run Text="{DynamicResource PureEvilness}" />
+                <Hyperlink NavigateUri="http://9gag.com/gag/aLQOvg6" RequestNavigate="Hyperlink_OnRequestNavigate">
+                    <Run FontSize="10" Text="{DynamicResource MoreInformation}" />
+                </Hyperlink>
+            </TextBlock>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Button Command="{Binding LetItBurnCommand}" Content="{DynamicResource LetItBurn}" />
+                <Button Margin="10,0,0,0"
+                        Command="{Binding WaterCommand}"
+                        Content="{DynamicResource WaterWater}" />
+            </StackPanel>
+            <TextBlock Margin="0,15,0,0"
+                       Style="{StaticResource HeaderStyle}"
+                       Text="{DynamicResource KeyboardLayout}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <ComboBox x:Name="KeyboardLayoutComboBox"
+                          Width="200"
+                          SelectedIndex="0">
+                    <ComboBox.ItemsSource>
+                        <x:Array Type="system:String">
+                            <system:String>QWERTY</system:String>
+                            <system:String>QWERTZ</system:String>
+                            <system:String>AZERTY</system:String>
+                        </x:Array>
+                    </ComboBox.ItemsSource>
+                </ComboBox>
+                <Button Margin="5,0,0,0"
+                        Command="{Binding ChangeKeyboardLayoutCommand}"
+                        CommandParameter="{Binding ElementName=KeyboardLayoutComboBox,
+                                                   Path=SelectedIndex}"
+                        Content="{DynamicResource Change}" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

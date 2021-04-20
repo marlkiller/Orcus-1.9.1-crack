@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6AE72A9E-2F67-4F4D-8D63-7E617F15FBD3}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Administration.Core</RootNamespace>
+    <AssemblyName>Orcus.Administration.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !-->
+  <ItemGroup>
+    <Reference Include="Exceptionless.Signed, Version=4.3.2027.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <HintPath>..\packages\Exceptionless.Signed.4.3.2027\lib\net45\Exceptionless.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptionless.Wpf.Signed, Version=4.3.2027.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <HintPath>..\packages\Exceptionless.Wpf.Signed.4.3.2027\lib\net45\Exceptionless.Wpf.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nUpdate, Version=3.0.0.0, Culture=neutral, PublicKeyToken=851aa33cb9b88f1c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\nUpdate\nUpdate.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.3.1.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="starksoft.aspen, Version=1.0.1.0, Culture=neutral, PublicKeyToken=56b8923a24d03eb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\starksoft.aspen.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Vestris.ResourceLib, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vestris.ResourceLib.2.1.0\lib\net45\Vestris.ResourceLib.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Args\DynamicCommandStatusUpdatedEventArgs.cs" />
+    <Compile Include="Args\LibraryInformationEventArgs.cs" />
+    <Compile Include="Args\PluginLoadedEventArgs.cs" />
+    <Compile Include="Args\PluginUploadProgressChangedEventArgs.cs" />
+    <Compile Include="Build\Configuration\BuildConfiguration.cs" />
+    <Compile Include="Build\AssemblyResolver.cs" />
+    <Compile Include="Build\Builder.cs" />
+    <Compile Include="Build\BuilderExtensions.cs" />
+    <Compile Include="Build\BuildLogger.cs" />
+    <Compile Include="Build\BuildPluginEvent.cs" />
+    <Compile Include="Build\Configuration\BuildConfigurationHelper.cs" />
+    <Compile Include="Build\Configuration\BuildConfigurationInfo.cs" />
+    <Compile Include="Build\IconInjector.cs" />
+    <Compile Include="Build\ProgressChangedEventArgs.cs" />
+    <Compile Include="Build\ProxyOption.cs" />
+    <Compile Include="CLA\CommandLineArgs.cs" />
+    <Compile Include="ClientController.cs" />
+    <Compile Include="ClientManagement\ClientProvider.cs" />
+    <Compile Include="ClientManagement\ClientViewModel.cs" />
+    <Compile Include="CommandManagement\Commander.cs" />
+    <Compile Include="CommandManagement\CommandSettings.cs" />
+    <Compile Include="CommandManagement\ConnectionInfo.cs" />
+    <Compile Include="CommandManagement\StaticCommander.cs" />
+    <Compile Include="CommandManagement\View\CommandViewModelViewAttribute.cs" />
+    <Compile Include="CommandManagement\View\CrossViewManager.cs" />
+    <Compile Include="CommandManagement\View\MinimumClientVersionAttribute.cs" />
+    <Compile Include="ConnectionManager.cs" />
+    <Compile Include="ConnectionManagerCommands.cs" />
+    <Compile Include="ConnectionManagerStaticCommands.cs" />
+    <Compile Include="ConnectionResult.cs" />
+    <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\NamedPipeConnection.cs" />
+    <Compile Include="Connection\TcpConnection.cs" />
+    <Compile Include="CrowdControl\CommandPreset.cs" />
+    <Compile Include="CrowdControl\CommandPresetWithTarget.cs" />
+    <Compile Include="CrowdControl\CrowdControlPresets.cs" />
+    <Compile Include="CrowdControl\PresetInfo.cs" />
+    <Compile Include="DataManagement\DataConnection.cs" />
+    <Compile Include="Exceptionless\ExceptionlessExtensions.cs" />
+    <Compile Include="Exceptionless\LoaderExceptionPlugin.cs" />
+    <Compile Include="Exceptionless\ServerStackTracePlugin.cs" />
+    <Compile Include="GlobalConsts.cs" />
+    <Compile Include="LanguageInfo.cs" />
+    <Compile Include="LocalLibraryInfo.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Native\BITMAPINFOHEADER.cs" />
+    <Compile Include="Native\CryptKeyProviderInformation.cs" />
+    <Compile Include="Native\CryptoApiBlob.cs" />
+    <Compile Include="Native\GRPICONDIRENTRY.cs" />
+    <Compile Include="Native\ICONDIR.cs" />
+    <Compile Include="Native\ICONDIRENTRY.cs" />
+    <Compile Include="Native\MEMORYSTATUSEX.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\SystemTime.cs" />
+    <Compile Include="Native\ValueHelper.cs" />
+    <Compile Include="PackageInformation.cs" />
+    <Compile Include="Plugins\AdministrationControl.cs" />
+    <Compile Include="Plugins\ICommandPlugin.cs" />
+    <Compile Include="Plugins\IPayload.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\IViewPlugin.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\UiModifier.cs" />
+    <Compile Include="Plugins\Wrappers\ViewPlugin.cs" />
+    <Compile Include="Plugins\Web\PublicPluginData.cs" />
+    <Compile Include="Plugins\Wrappers\AdministrationPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\AudioPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\BuildPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\ClientPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\CommandAndViewPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\FactoryCommandPlugin.cs" />
+    <Compile Include="Plugins\Wrappers\StaticCommandPlugin.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Sender.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="UpdateService.cs" />
+    <Compile Include="Utilities\ApplicationUtilities.cs" />
+    <Compile Include="Utilities\BitmapConverter.cs" />
+    <Compile Include="Utilities\Certificate.cs" />
+    <Compile Include="Utilities\Computer.cs" />
+    <Compile Include="Utilities\DateTimeExtensions.cs" />
+    <Compile Include="Utilities\EnumUtilities.cs" />
+    <Compile Include="Utilities\FileExtensions.cs" />
+    <Compile Include="Utilities\KeyLogExtensions.cs" />
+    <Compile Include="Utilities\ListExtensions.cs" />
+    <Compile Include="Utilities\NotepadHelper.cs" />
+    <Compile Include="Utilities\ObjectCopier.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\TaskExtensions.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Orcus.Administration.Commands\Orcus.Administration.Commands.csproj">
+      <Project>{917798e0-c646-4616-b6ed-5a2d2ac87ff6}</Project>
+      <Name>Orcus.Administration.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Plugins\Orcus.Administration.Plugins.csproj">
+      <Project>{BEE3B0EA-ABAE-43F3-A377-763E1A28C967}</Project>
+      <Name>Orcus.Administration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0D743E5D-0D5F-4B9B-B2DF-1F607B5031C4}</Project>
+      <Name>Orcus.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared.Utilities\Orcus.Shared.Utilities.csproj">
+      <Project>{e23e8c6f-6f71-4954-8a42-fba873b86e5e}</Project>
+      <Name>Orcus.Shared.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.StaticCommands\Orcus.StaticCommands.csproj">
+      <Project>{8a420d43-c212-4981-8df1-eed79fdea1cf}</Project>
+      <Name>Orcus.StaticCommands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sorzus.Wpf.Toolkit\Sorzus.Wpf.Toolkit.csproj">
+      <Project>{bf0e0718-3e64-4246-a17f-594dcf19edfc}</Project>
+      <Name>Sorzus.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PostSettings.targets" /> -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,418 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.StatisticsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:oxy="http://oxyplot.org/wpf"
+                      xmlns:pieControls="clr-namespace:Orcus.Administration.Controls.PieControls"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource Statistics}"
+                      Width="852"
+                      Height="432"
+                      d:DataContext="{d:DesignInstance viewModels:StatisticsViewModel}"
+                      Icon="/Resources/Images/VisualStudio/ExplodedPieChart_16x.png"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource ExplodedPieChartIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <ScrollViewer>
+            <ScrollViewer.Style>
+                <Style BasedOn="{StaticResource MetroScrollViewer}" TargetType="ScrollViewer">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Statistics.TotalClients}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock FontSize="14" Text="{StaticResource Server}" />
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{StaticResource UpTime}" />
+                    <controls1:DateTimeDifferenceTextBlock Grid.Column="1" DateTime="{Binding Statistics.UpSince, Converter={StaticResource DateTimeUtcToLocal}}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource DatabaseSize}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{Binding Statistics.DatabaseSize, Converter={StaticResource FormatBytesConverter}}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource MemoryUsage2}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{Binding Statistics.UsedMemory, Converter={StaticResource FormatBytesConverter}}" />
+                </Grid>
+                <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <ControlTemplate x:Key="TrackerContentTemplate" TargetType="ContentControl">
+                            <oxy:TrackerControl Background="{StaticResource WhiteBrush}"
+                                                BorderBrush="{StaticResource GrayBrush6}"
+                                                BorderThickness="1"
+                                                LineExtents="{Binding PlotModel.PlotArea}"
+                                                LineStroke="{StaticResource BlackBrush}"
+                                                Position="{Binding Position}">
+                                <oxy:TrackerControl.Content>
+                                    <TextBlock Margin="7"
+                                               Foreground="{StaticResource BlackBrush}"
+                                               Text="{Binding}" />
+                                </oxy:TrackerControl.Content>
+                            </oxy:TrackerControl>
+                        </ControlTemplate>
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Text="{StaticResource ConnectedClientsHistory}" />
+                        <ComboBox Width="150"
+                                  Margin="10,0,0,0"
+                                  SelectedIndex="{Binding SelectedConnectedClientsView}">
+                            <ComboBoxItem Content="{StaticResource Last7Days}" />
+                            <ComboBoxItem Content="{StaticResource Last30Days}" />
+                            <ComboBoxItem Content="{StaticResource Last90Days}" />
+                            <ComboBoxItem Content="{StaticResource Year}" />
+                            <ComboBoxItem Content="{StaticResource Ever}" />
+                        </ComboBox>
+                    </StackPanel>
+                    <oxy:Plot Height="350"
+                              Margin="0,10,0,0"
+                              Background="{StaticResource WhiteBrush}"
+                              DefaultTrackerTemplate="{StaticResource TrackerContentTemplate}"
+                              Foreground="{StaticResource BlackBrush}"
+                              LegendTextColor="{StaticResource BlackColor}"
+                              PlotAreaBorderColor="{StaticResource BlackColor}"
+                              TextColor="{StaticResource BlackColor}">
+                        <oxy:Plot.Axes>
+                            <oxy:DateTimeAxis IntervalType="Days"
+                                              IsPanEnabled="False"
+                                              IsZoomEnabled="False"
+                                              Maximum="{Binding MaximumClientsConnectedX}"
+                                              Minimum="{Binding MinimumClientsConnectedX}"
+                                              Position="Bottom"
+                                              StringFormat="dd.MM.yyyy"
+                                              TicklineColor="{StaticResource BlackColor}" />
+                            <oxy:LinearAxis IsPanEnabled="False"
+                                            IsZoomEnabled="False"
+                                            Minimum="0"
+                                            Position="Left"
+                                            TicklineColor="{StaticResource BlackColor}" />
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:AreaSeries Color2="{StaticResource TransparentLightColor}"
+                                            ConstantY2="0"
+                                            DataFieldX="Key"
+                                            DataFieldY="ClientsCount"
+                                            Fill="{StaticResource TransparentLightColor}"
+                                            ItemsSource="{Binding ClientsConnected}" />
+                            <oxy:LineSeries DataFieldX="Key"
+                                            DataFieldY="ClientsCount"
+                                            ItemsSource="{Binding ClientsConnected}"
+                                            LineStyle="Solid"
+                                            MarkerFill="{StaticResource LightColor}"
+                                            MarkerSize="3"
+                                            MarkerType="Circle"
+                                            TrackerFormatString="{}{4:0}&#x0a;{2:dd.MM.yyyy HH:mm}"
+                                            Color="{StaticResource LightColor}" />
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+                    <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Text="{StaticResource NewClients}" />
+                        <ComboBox Width="150"
+                                  Margin="10,0,0,0"
+                                  SelectedIndex="{Binding SelectedNewClientsView}">
+                            <ComboBoxItem Content="{StaticResource Last7Days}" />
+                            <ComboBoxItem Content="{StaticResource Last30Days}" />
+                            <ComboBoxItem Content="{StaticResource Last90Days}" />
+                            <ComboBoxItem Content="{StaticResource Year}" />
+                            <ComboBoxItem Content="{StaticResource Ever}" />
+                        </ComboBox>
+                    </StackPanel>
+                    <oxy:Plot Height="350"
+                              Margin="0,10,0,0"
+                              Background="{StaticResource WhiteBrush}"
+                              DefaultTrackerTemplate="{StaticResource TrackerContentTemplate}"
+                              Foreground="{StaticResource BlackBrush}"
+                              LegendTextColor="{StaticResource BlackColor}"
+                              PlotAreaBorderColor="{StaticResource BlackColor}"
+                              TextColor="{StaticResource BlackColor}">
+                        <oxy:Plot.Axes>
+                            <oxy:DateTimeAxis IntervalType="Days"
+                                              IsPanEnabled="False"
+                                              IsZoomEnabled="False"
+                                              Maximum="{Binding MaximumNewClientsX}"
+                                              Minimum="{Binding MinimumNewClientsX}"
+                                              Position="Bottom"
+                                              StringFormat="dd.MM.yyyy"
+                                              TicklineColor="{StaticResource BlackColor}" />
+                            <oxy:LinearAxis IsPanEnabled="False"
+                                            IsZoomEnabled="False"
+                                            Minimum="0"
+                                            Position="Left"
+                                            TicklineColor="{StaticResource BlackColor}" />
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:AreaSeries Color2="{StaticResource TransparentLightColor}"
+                                            ConstantY2="0"
+                                            DataFieldX="Key"
+                                            DataFieldY="ClientsCount"
+                                            Fill="{StaticResource TransparentLightColor}"
+                                            ItemsSource="{Binding NewClients}" />
+                            <oxy:LineSeries DataFieldX="Key"
+                                            DataFieldY="ClientsCount"
+                                            ItemsSource="{Binding NewClients}"
+                                            LineStyle="Solid"
+                                            MarkerFill="{DynamicResource DarkColor}"
+                                            MarkerSize="3"
+                                            MarkerType="Circle"
+                                            TrackerFormatString="{}{4:0}&#x0a;{2:dd.MM.yyyy HH:mm}"
+                                            Color="{StaticResource LightColor}" />
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+                </StackPanel>
+                <TextBlock Margin="0,20,0,0" FontSize="14">
+                    <Run Text="{StaticResource Clients}" />
+                    <Run Text="(" /><Run Text="{StaticResource Total}" /><Run Text=": " /><Run Text="{Binding Statistics.TotalClients}" /><Run Text="," />
+                    <Run Text="{StaticResource OnlineToday}" /><Run Text=":" />
+                    <Run Text="{Binding Statistics.ClientsOnlineToday}" /><Run Text=")" />
+                </TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <pieControls:PieControl Width="200"
+                                            Height="200"
+                                            Margin="0,10,0,0"
+                                            Data="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
+                                                           Path=DataContext.Clients}" />
+                    <ItemsControl Grid.Column="1"
+                                  Width="300"
+                                  Margin="20,0,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Foreground="{StaticResource BlackBrush}"
+                                  ItemsSource="{Binding Clients}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="10"
+                                               Height="10"
+                                               VerticalAlignment="Center"
+                                               Fill="{Binding SolidBrush}" />
+                                    <TextBlock Grid.Column="1"
+                                               Margin="10,0,10,0"
+                                               Text="{Binding Name}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <TextBlock Margin="0,20,0,0"
+                           FontSize="14"
+                           Text="{StaticResource OperatingSystem}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <pieControls:PieControl Width="200"
+                                            Height="200"
+                                            Margin="0,10,0,0"
+                                            Data="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
+                                                           Path=DataContext.OperatingSystemSegements}" />
+                    <ItemsControl Grid.Column="1"
+                                  Width="300"
+                                  Margin="20,0,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Foreground="{StaticResource BlackBrush}"
+                                  ItemsSource="{Binding OperatingSystemSegements}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="10"
+                                               Height="10"
+                                               VerticalAlignment="Center"
+                                               Fill="{Binding SolidBrush}" />
+                                    <TextBlock Grid.Column="1"
+                                               Margin="10,0,10,0"
+                                               Text="{Binding Name}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PrivilegesSegments.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Margin="0,20,0,0"
+                               FontSize="14"
+                               Text="{StaticResource Privileges}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <pieControls:PieControl Width="200"
+                                                Height="200"
+                                                Margin="0,10,0,0"
+                                                Data="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
+                                                               Path=DataContext.PrivilegesSegments}" />
+                        <ItemsControl Grid.Column="1"
+                                      Width="300"
+                                      Margin="20,0,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      Foreground="{StaticResource BlackBrush}"
+                                      ItemsSource="{Binding PrivilegesSegments}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="10"
+                                                   Height="10"
+                                                   VerticalAlignment="Center"
+                                                   Fill="{Binding SolidBrush}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="10,0,10,0"
+                                                   Text="{Binding Name}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Value}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </StackPanel>
+                <TextBlock Margin="0,20,0,0"
+                           FontSize="14"
+                           Text="{StaticResource Language}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <pieControls:PieControl Width="200"
+                                            Height="200"
+                                            Margin="0,10,0,0"
+                                            Data="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},
+                                                           Path=DataContext.LanguageSegments}" />
+                    <ScrollViewer Grid.Column="1"
+                                  MaxHeight="300"
+                                  PreviewMouseWheel="HandlePreviewMouseWheel"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Width="300"
+                                      Margin="20,0,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      Foreground="{StaticResource BlackBrush}"
+                                      ItemsSource="{Binding LanguageSegments}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="10"
+                                                   Height="10"
+                                                   VerticalAlignment="Center"
+                                                   Fill="{Binding SolidBrush}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="10,0,10,0"
+                                                   Text="{Binding Name}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Value}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="14"
+                   Text="{StaticResource NoClientsConnected}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Statistics.TotalClients}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Grid Background="{StaticResource WhiteBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Statistics}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="14"
+                           Text="{StaticResource LoadingStatistics}" />
+                <controls:MetroProgressBar Width="250"
+                                           Margin="0,5,0,0"
+                                           IsIndeterminate="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

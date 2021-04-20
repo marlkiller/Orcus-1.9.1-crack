@@ -1,0 +1,185 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.Licensing.RegisterOrcusWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:licensing="clr-namespace:Orcus.Administration.Views.Licensing"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels"
+                      Title="Orcus"
+                      Width="390"
+                      Height="550"
+                      Background="#2d2d30"
+                      Icon="/Resources/Icon.ico"
+                      ResizeMode="CanMinimize"
+                      ShowCloseButton="False"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
+                      ShowTitleBar="False"
+                      WindowStartupLocation="CenterScreen"
+                      WindowStyle="None"
+                      mc:Ignorable="d">
+    <Window.DataContext>
+        <viewModels:LicensingViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Style BasedOn="{StaticResource AwesomeToolTip}" TargetType="ToolTip" />
+        <licensing:ViewManager x:Key="ViewManager" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="75" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock Margin="10"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Foreground="White"
+                       Text="Orcus" />
+            <StackPanel Margin="10"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button x:Name="PART_MINIMIZE"
+                        Width="28"
+                        Height="28"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI Symbol"
+                        Style="{StaticResource BorderlessAwesomeButton}"
+                        ToolTip="{DynamicResource Minimize}">
+                    <TextBlock FontFamily="Segoe UI Symbol"
+                               FontSize="7"
+                               Text="&#x2581;" />
+                </Button>
+                <Button x:Name="PART_CLOSE"
+                        Width="28"
+                        Height="28"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI Symbol"
+                        Style="{StaticResource BorderlessAwesomeButton}"
+                        ToolTip="{DynamicResource Close}">
+                    <TextBlock FontFamily="Segoe UI Symbol"
+                               FontSize="7"
+                               Text="&#xE0A4;" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <controls:TransitioningContentControl Grid.Row="1"
+                                              Margin="0,20,0,0"
+                                              Content="{Binding CurrentView,
+                                                                Converter={StaticResource ViewManager}}"
+                                              CustomVisualStatesName="{Binding Animation}"
+                                              RestartTransitionOnContentChange="True"
+                                              Transition="Custom">
+            <controls:TransitioningContentControl.CustomVisualStates>
+                <VisualState Name="MoveForwardState">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                       Storyboard.TargetName="CurrentContentPresentationSite"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="390" />
+                            <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                       Storyboard.TargetName="PreviousContentPresentationSite"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="-390">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState Name="MoveBackwardState">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                       Storyboard.TargetName="CurrentContentPresentationSite"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="-390" />
+                            <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                       Storyboard.TargetName="PreviousContentPresentationSite"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="390">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </controls:TransitioningContentControl.CustomVisualStates>
+        </controls:TransitioningContentControl>
+        <Grid Grid.Row="2" Background="#252526">
+            <StackPanel Margin="10,10,10,15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <Button Width="80"
+                        Height="25"
+                        Command="{Binding CancelCommand}"
+                        IsEnabled="{Binding CanCancel}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource AwesomeButton}" TargetType="Button">
+                            <Setter Property="Content" Value="{DynamicResource Cancel}" />
+                            <Setter Property="ToolTip" Value="{DynamicResource CancelRegistration}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentViewMode}" Value="Finished">
+                                    <Setter Property="Content" Value="{DynamicResource Close}" />
+                                    <Setter Property="ToolTip" Value="{DynamicResource CloseText}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="80"
+                        Height="25"
+                        Margin="10,0,10,0"
+                        Command="{Binding GoBackCommand}"
+                        Content="{DynamicResource Back}"
+                        IsEnabled="{Binding CanGoBack}"
+                        Style="{StaticResource AwesomeButton}"
+                        ToolTip="{DynamicResource BackText}" />
+                <Button Width="80"
+                        Height="25"
+                        Command="{Binding GoForwardCommand}"
+                        IsEnabled="{Binding CanGoForward}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource AwesomeButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentViewMode}" Value="LastStep">
+                                    <Setter Property="Content" Value="{DynamicResource Register}" />
+                                    <Setter Property="ToolTip" Value="{DynamicResource RegisterSoftware}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CurrentViewMode}" Value="SmallTalk">
+                                    <Setter Property="Content" Value="{DynamicResource Next}" />
+                                    <Setter Property="ToolTip" Value="{DynamicResource NextStep}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CurrentViewMode}" Value="Finished">
+                                    <Setter Property="Content" Value="{DynamicResource Finish}" />
+                                    <Setter Property="ToolTip" Value="{DynamicResource FinishText}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

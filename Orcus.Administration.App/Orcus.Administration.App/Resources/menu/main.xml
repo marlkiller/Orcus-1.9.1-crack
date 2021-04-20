@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item android:id="@+id/action_icons" app:showAsAction="ifRoom" />
+
+  <item
+    android:id="@+id/action_contact"
+    app:showAsAction="always"
+    android:title="test" />
+
+</menu>

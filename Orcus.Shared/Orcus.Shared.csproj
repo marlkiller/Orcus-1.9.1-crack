@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Shared</RootNamespace>
+    <AssemblyName>Orcus.Shared</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+ <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !--> 
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\ClientSetting.cs" />
+    <Compile Include="Client\PluginSetting.cs" />
+    <Compile Include="Commands\ActiveConnections\ConnectionState.cs" />
+    <Compile Include="Commands\ActiveConnections\ProtocolName.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioChannel.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioDevice.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioEndpointType.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioVolumeControlCommunication.cs" />
+    <Compile Include="Commands\Audio\PlayAudioInformation.cs" />
+    <Compile Include="Commands\Audio\SoundOutDevice.cs" />
+    <Compile Include="Commands\ClientCommands\ClientCommandsCommunication.cs" />
+    <Compile Include="Commands\ClipboardManager\ClipboardFormat.cs" />
+    <Compile Include="Commands\ClipboardManager\ClipboardInfo.cs" />
+    <Compile Include="Commands\ClipboardManager\ClipboardManagerCommunication.cs" />
+    <Compile Include="Commands\ComputerInformation\BiosInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\IpAddress.cs" />
+    <Compile Include="Commands\ComputerInformation\LogicalDrive.cs" />
+    <Compile Include="Commands\ComputerInformation\HardwareInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\NetworkInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\OperatingSystemInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\ProcessorInfo.cs" />
+    <Compile Include="Commands\ComputerInformation\Screen.cs" />
+    <Compile Include="Commands\ComputerInformation\SoftwareInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\VideoCardInfo.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ConnectionInitializerCommunication.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ConnectionType.cs" />
+    <Compile Include="Commands\ConnectionInitializer\RemoteConnectionInformation.cs" />
+    <Compile Include="Commands\ConnectionInitializer\UdpHolePunchingFeedback.cs" />
+    <Compile Include="Commands\DataManager\DataEntry.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceInfo.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceManagerCommunication.cs" />
+    <Compile Include="Commands\DropAndExecute\DropAndExecuteCommunication.cs" />
+    <Compile Include="Commands\DropAndExecute\ExecuteOptions.cs" />
+    <Compile Include="Commands\DropAndExecute\ExecutionMode.cs" />
+    <Compile Include="Commands\DropAndExecute\FileTransferInfo.cs" />
+    <Compile Include="Commands\DropAndExecute\WindowUpdate.cs" />
+    <Compile Include="Commands\EventLog\EventLogEntryType.cs" />
+    <Compile Include="Commands\EventLog\EventLogType.cs" />
+    <Compile Include="Commands\FileExplorer\ArchiveOptions.cs" />
+    <Compile Include="Commands\FileExplorer\CompressionMethod.cs" />
+    <Compile Include="Commands\FileExplorer\DirectoryEntry.cs" />
+    <Compile Include="Commands\FileExplorer\DirectoryPropertiesInfo.cs" />
+    <Compile Include="Commands\FileExplorer\DownloadInformation.cs" />
+    <Compile Include="Commands\FileExplorer\DownloadResult.cs" />
+    <Compile Include="Commands\FileExplorer\DriveDirectoryEntry.cs" />
+    <Compile Include="Commands\FileExplorer\EntryInfo.cs" />
+    <Compile Include="Commands\FileExplorer\ExecutableProperties.cs" />
+    <Compile Include="Commands\FileExplorer\FileEntry.cs" />
+    <Compile Include="Commands\FileExplorer\FileExplorerCommunication.cs" />
+    <Compile Include="Commands\FileExplorer\FilePropertiesInfo.cs" />
+    <Compile Include="Commands\FileExplorer\HashValueType.cs" />
+    <Compile Include="Commands\FileExplorer\IFileExplorerEntry.cs" />
+    <Compile Include="Commands\FileExplorer\PackedDirectoryEntry.cs" />
+    <Compile Include="Commands\FileExplorer\PathRequest.cs" />
+    <Compile Include="Commands\FileExplorer\ProcessingEntry.cs" />
+    <Compile Include="Commands\FileExplorer\PropertiesInfo.cs" />
+    <Compile Include="Commands\FileExplorer\RootEntryCollection.cs" />
+    <Compile Include="Commands\FileExplorer\ShortcutInfo.cs" />
+    <Compile Include="Commands\FileExplorer\UploadResult.cs" />
+    <Compile Include="Commands\HiddenApplication\ApplicationWindow.cs" />
+    <Compile Include="Commands\HiddenApplication\HiddenApplicationCommunication.cs" />
+    <Compile Include="Commands\HiddenApplication\WindowPackage.cs" />
+    <Compile Include="Commands\HVNC\CreateDesktopInformation.cs" />
+    <Compile Include="Commands\HVNC\HvncCommunication.cs" />
+    <Compile Include="Commands\HVNC\WindowInformation.cs" />
+    <Compile Include="Commands\HVNC\WindowUpdate.cs" />
+    <Compile Include="Commands\LiveKeylogger\LiveKeyloggerCommunication.cs" />
+    <Compile Include="Commands\Registry\RegistryValueKind.cs" />
+    <Compile Include="Commands\RemoteDesktop\CaptureType.cs" />
+    <Compile Include="Commands\RemoteDesktop\ImageCompressionType.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteDesktopAction.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteDesktopInformation.cs" />
+    <Compile Include="Commands\RemoteDesktop\ScreenFlags.cs" />
+    <Compile Include="Commands\RemoteDesktop\ScreenInfo.cs" />
+    <Compile Include="Commands\RemoteDesktop\ScreenResponseFlags.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyConnect.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyStatusUpdate.cs" />
+    <Compile Include="Commands\StartupManager\AutostartProgramInfo.cs" />
+    <Compile Include="Commands\StartupManager\StartupManagerCommunication.cs" />
+    <Compile Include="Commands\SystemRestore\SystemRestoreCommunication.cs" />
+    <Compile Include="Commands\SystemRestore\SystemRestorePointInfo.cs" />
+    <Compile Include="Commands\TaskManager\ProcessStatus.cs" />
+    <Compile Include="Commands\TextChat\ChatSettings.cs" />
+    <Compile Include="Commands\TextChat\TextChatCommunication.cs" />
+    <Compile Include="Commands\UserInteraction\NotifyToolTipIcon.cs" />
+    <Compile Include="Commands\UserInteraction\SpeechVoice.cs" />
+    <Compile Include="Commands\UserInteraction\TextToSpeechPackage.cs" />
+    <Compile Include="Commands\UserInteraction\UserInteractionCommunication.cs" />
+    <Compile Include="Commands\UserInteraction\UserInteractionWelcomePackage.cs" />
+    <Compile Include="Commands\VoiceChat\CaptureDeviceInfo.cs" />
+    <Compile Include="Commands\VoiceChat\VoiceChatBeginCaptureInfo.cs" />
+    <Compile Include="Commands\VoiceChat\VoiceChatCommunication.cs" />
+    <Compile Include="Commands\VoiceChat\VoiceChatDataInfo.cs" />
+    <Compile Include="Commands\WindowManager\WindowInformation.cs" />
+    <Compile Include="Commands\WindowManager\WindowManagerCommunication.cs" />
+    <Compile Include="Commands\WindowsCustomizer\CurrentSettings.cs" />
+    <Compile Include="Commands\WindowsCustomizer\WindowsCustomizerCommunication.cs" />
+    <Compile Include="Commands\WindowsDrivers\WindowsDriversCommunication.cs" />
+    <Compile Include="Communication\FilePushCommunication.cs" />
+    <Compile Include="Communication\TestFeedback.cs" />
+    <Compile Include="Compression\LZF.cs" />
+    <Compile Include="Connection\ActiveCommandsUpdate.cs" />
+    <Compile Include="Connection\ClientRedirectOptions.cs" />
+    <Compile Include="Connection\PortableLibrary.cs" />
+    <Compile Include="Connection\PortableLibraryInfo.cs" />
+    <Compile Include="Connection\LightInformation.cs" />
+    <Compile Include="Connection\LoadablePlugin.cs" />
+    <Compile Include="Connection\OfflineClientInformation.cs" />
+    <Compile Include="Connection\OnlineClientInformation.cs" />
+    <Compile Include="Core\BuilderPropertyHelper.cs" />
+    <Compile Include="Core\FrameworkVersion.cs" />
+    <Compile Include="Core\IBuilderProperty.cs" />
+    <Compile Include="Core\PropertyNameValue.cs" />
+    <Compile Include="Core\SerializeAsUtcAttribute.cs" />
+    <Compile Include="Csv\CsvFile.cs" />
+    <Compile Include="DataTransferProtocol\DtpException.cs" />
+    <Compile Include="DataTransferProtocol\DtpFactory.cs" />
+    <Compile Include="DataTransferProtocol\DtpParameters.cs" />
+    <Compile Include="DataTransferProtocol\DtpProcessor.cs" />
+    <Compile Include="DataTransferProtocol\DataTransferProtocolMethodAttribute.cs" />
+    <Compile Include="DataTransferProtocol\ProcessorMethodParameterAttribute.cs" />
+    <Compile Include="DataTransferProtocol\ServerException.cs" />
+    <Compile Include="DataTransferProtocol\UnhandledExceptionEventArgs.cs" />
+    <Compile Include="Data\DataInfoAvailableEventArgs.cs" />
+    <Compile Include="Data\IDataInfo.cs" />
+    <Compile Include="DynamicCommands\DynamicCommand.cs" />
+    <Compile Include="DynamicCommands\DynamicCommandEvent.cs" />
+    <Compile Include="DynamicCommands\DynamicCommandInfo.cs" />
+    <Compile Include="DynamicCommands\ExecutionEvents\DateTimeExecutionEventBuilder.cs" />
+    <Compile Include="DynamicCommands\ExecutionEvents\IdleExecutionEventBuilder.cs" />
+    <Compile Include="DynamicCommands\ExecutionEvents\IExecutionEvent.cs" />
+    <Compile Include="DynamicCommands\PotentialCommand.cs" />
+    <Compile Include="DynamicCommands\CommandTarget.cs" />
+    <Compile Include="DynamicCommands\Condition.cs" />
+    <Compile Include="DynamicCommands\Conditions\ClientBinaryFrameworkCondition.cs" />
+    <Compile Include="DynamicCommands\Conditions\ClientTagCondition.cs" />
+    <Compile Include="DynamicCommands\Conditions\OperatingSystemCondition.cs" />
+    <Compile Include="DynamicCommands\Conditions\PasswordDataAvailableCondition.cs" />
+    <Compile Include="DynamicCommands\Conditions\PrivilegesCondition.cs" />
+    <Compile Include="DynamicCommands\Conditions\VersionCondition.cs" />
+    <Compile Include="DynamicCommands\ExecutionEvent.cs" />
+    <Compile Include="DynamicCommands\StopEvent.cs" />
+    <Compile Include="DynamicCommands\StopEvents\DateTimeStopEventBuilder.cs" />
+    <Compile Include="DynamicCommands\StopEvents\DurationStopEventBuilder.cs" />
+    <Compile Include="DynamicCommands\StopEvents\ShutdownStopEventBuilder.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvents\DateTimeTransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvents\EveryClientOnceTransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvents\ImmediatelyTransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvents\OnJoinTransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\TransmissionEvents\RepeatingTransmissionEvent.cs" />
+    <Compile Include="DynamicCommands\CommandTargets\TargetedClients.cs" />
+    <Compile Include="DynamicCommands\CommandTargets\TargetedGroups.cs" />
+    <Compile Include="DynamicCommands\RegisteredDynamicCommand.cs" />
+    <Compile Include="Commands\HVNC\HvncAction.cs" />
+    <Compile Include="Core\IpAddressInfo.cs" />
+    <Compile Include="NetSerializer\CodeGenContext.cs" />
+    <Compile Include="NetSerializer\Helpers.cs" />
+    <Compile Include="NetSerializer\ITypeSerializer.cs" />
+    <Compile Include="NetSerializer\Primitives.cs" />
+    <Compile Include="NetSerializer\Serializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\ArraySerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\DictionarySerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\EnumSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\GenericSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\ObjectSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\PrimitivesSerializer.cs" />
+    <Compile Include="Resharper\Annotations.cs" />
+    <Compile Include="Server\ServerConfig.cs" />
+    <Compile Include="Commands\ExceptionHandling\ExceptionInfo.cs" />
+    <Compile Include="Commands\FunActions\DesktopWallpaperStyle.cs" />
+    <Compile Include="Commands\Keylogger\KeyLogEntry.cs" />
+    <Compile Include="Commands\Keylogger\KeyLogPresenter.cs" />
+    <Compile Include="Commands\Keylogger\Keys.cs" />
+    <Compile Include="Commands\Keylogger\NormalText.cs" />
+    <Compile Include="Commands\Keylogger\SpecialKey.cs" />
+    <Compile Include="Commands\Keylogger\SpecialKeyType.cs" />
+    <Compile Include="Commands\Keylogger\StandardKey.cs" />
+    <Compile Include="Commands\Keylogger\WindowChanged.cs" />
+    <Compile Include="Commands\LivePerformance\EthernetAdapter.cs" />
+    <Compile Include="Commands\LivePerformance\EthernetAdapterData.cs" />
+    <Compile Include="Commands\LivePerformance\LiveData.cs" />
+    <Compile Include="Commands\LivePerformance\LivePerformanceCommunication.cs" />
+    <Compile Include="Commands\LivePerformance\StaticPerformanceData.cs" />
+    <Compile Include="Commands\MessageBox\MessageBoxButtons.cs" />
+    <Compile Include="Commands\MessageBox\SystemIcon.cs" />
+    <Compile Include="Commands\Password\PasswordData.cs" />
+    <Compile Include="Commands\Password\PasswordType.cs" />
+    <Compile Include="Commands\Password\RecoveredCookie.cs" />
+    <Compile Include="Commands\Password\RecoveredPassword.cs" />
+    <Compile Include="Commands\Registry\RegistryCreateValuePackage.cs" />
+    <Compile Include="Commands\Registry\RegistryHive.cs" />
+    <Compile Include="Commands\Registry\RegistrySubKey.cs" />
+    <Compile Include="Commands\Registry\RegistrySubKeyAction.cs" />
+    <Compile Include="Commands\Registry\RegistryValue.cs" />
+    <Compile Include="Commands\Registry\RegistryValueBinary.cs" />
+    <Compile Include="Commands\Registry\RegistryValueDWord.cs" />
+    <Compile Include="Commands\Registry\RegistryValueExpandString.cs" />
+    <Compile Include="Commands\Registry\RegistryValueMultiString.cs" />
+    <Compile Include="Commands\Registry\RegistryValueQWord.cs" />
+    <Compile Include="Commands\Registry\RegistryValuesPackage.cs" />
+    <Compile Include="Commands\Registry\RegistryValueString.cs" />
+    <Compile Include="Commands\Registry\RegistryValueUnknown.cs" />
+    <Compile Include="Commands\TaskManager\ProcessListChangelog.cs" />
+    <Compile Include="Commands\UninstallPrograms\UninstallProgramEntryLocation.cs" />
+    <Compile Include="Commands\Webcam\WebcamResolution.cs" />
+    <Compile Include="Commands\Webcam\WebcamSettings.cs" />
+    <Compile Include="Communication\AuthentificationFeedback.cs" />
+    <Compile Include="Communication\AuthentificationIntention.cs" />
+    <Compile Include="Communication\ClientAction.cs" />
+    <Compile Include="Communication\CommandResponse.cs" />
+    <Compile Include="Commands\Audio\AudioCommunication.cs" />
+    <Compile Include="Commands\Code\CodeCommunication.cs" />
+    <Compile Include="Commands\Console\ConsoleCommunication.cs" />
+    <Compile Include="Commands\EventLog\EventLogCommunication.cs" />
+    <Compile Include="Commands\FunActions\FunActionsCommunication.cs" />
+    <Compile Include="Commands\Internet\InternetCommunication.cs" />
+    <Compile Include="Commands\Password\PasswordCommunication.cs" />
+    <Compile Include="Commands\Registry\RegistryCommunication.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyCommunication.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteDesktopCommunication.cs" />
+    <Compile Include="Commands\TaskManager\TaskManagerCommunication.cs" />
+    <Compile Include="Commands\UninstallPrograms\UninstallProgramsCommunication.cs" />
+    <Compile Include="Commands\Webcam\WebcamCommunication.cs" />
+    <Compile Include="Communication\FromClientPackage.cs" />
+    <Compile Include="Communication\ResponseType.cs" />
+    <Compile Include="Communication\FromAdministrationPackage.cs" />
+    <Compile Include="Communication\SendingType.cs" />
+    <Compile Include="Connection\ClientInformation.cs" />
+    <Compile Include="Connection\ClientLocation.cs" />
+    <Compile Include="Connection\KeyDatabase.cs" />
+    <Compile Include="Connection\PluginInfo.cs" />
+    <Compile Include="Client\ClientConfig.cs" />
+    <Compile Include="Connection\PrimitiveProtocol.cs" />
+    <Compile Include="Connection\ServerPackage.cs" />
+    <Compile Include="Connection\Statistics.cs" />
+    <Compile Include="Connection\WelcomePackage.cs" />
+    <Compile Include="Connection\BasicComputerInformation.cs" />
+    <Compile Include="Commands\ComputerInformation\ComputerInformation.cs" />
+    <Compile Include="Commands\EventLog\EventLogEntry.cs" />
+    <Compile Include="Commands\Keylogger\KeyLog.cs" />
+    <Compile Include="Commands\MessageBox\MessageBoxInformation.cs" />
+    <Compile Include="Commands\ActiveConnections\ActiveConnection.cs" />
+    <Compile Include="Commands\Registry\RegistrySubKeysPackage.cs" />
+    <Compile Include="Commands\TaskManager\ProcessInfo.cs" />
+    <Compile Include="Commands\UninstallPrograms\UninstallableProgram.cs" />
+    <Compile Include="Commands\Webcam\WebcamInfo.cs" />
+    <Compile Include="Encryption\AES.cs" />
+    <Compile Include="Client\PluginResourceInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\WriterCall.cs" />
+    <Compile Include="Settings\AutostartBuilderProperty.cs" />
+    <Compile Include="Settings\ChangeAssemblyInformationBuilderProperty.cs" />
+    <Compile Include="Settings\ChangeCreationDateBuilderProperty.cs" />
+    <Compile Include="Settings\ChangeIconBuilderProperty.cs" />
+    <Compile Include="Settings\ClientTagBuilderProperty.cs" />
+    <Compile Include="Settings\ConnectionBuilderProperty.cs" />
+    <Compile Include="Settings\DataFolderBuilderProperty.cs" />
+    <Compile Include="Settings\DefaultPrivilegesBuilderProperty.cs" />
+    <Compile Include="Settings\DisableInstallationPromptBuilderProperty.cs" />
+    <Compile Include="Settings\FrameworkVersionBuilderProperty.cs" />
+    <Compile Include="Settings\HideFileBuilderProperty.cs" />
+    <Compile Include="Settings\InstallationLocationBuilderProperty.cs" />
+    <Compile Include="Settings\InstallBuilderProperty.cs" />
+    <Compile Include="Settings\KeyloggerBuilderProperty.cs" />
+    <Compile Include="Settings\MutexBuilderProperty.cs" />
+    <Compile Include="Settings\ProxyBuilderProperty.cs" />
+    <Compile Include="Settings\ReconnectDelayProperty.cs" />
+    <Compile Include="Settings\RequireAdministratorPrivilegesInstallerBuilderProperty.cs" />
+    <Compile Include="Settings\RespawnTaskBuilderProperty.cs" />
+    <Compile Include="Settings\ServiceBuilderProperty.cs" />
+    <Compile Include="Settings\SetRunProgramAsAdminFlagBuilderProperty.cs" />
+    <Compile Include="Settings\WatchdogBuilderProperty.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PostSettings.targets" />-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,70 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.CreateSystemRestorePointWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:extensions1="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:systemRestore="clr-namespace:Orcus.Shared.Commands.SystemRestore;assembly=Orcus.Shared"
+                      xmlns:systemRestore1="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.SystemRestore;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource CreateSystemRestorePoint}"
+                      Width="500"
+                      d:DataContext="{d:DesignInstance systemRestore1:CreateSystemRestorePointViewModel}"
+                      extensions1:WindowService.DialogResult="{Binding DialogResult}"
+                      extensions1:WindowService.EscapeClosesWindow="True"
+                      ResizeMode="NoResize"
+                      ShowIconOnTitleBar="False"
+                      ShowInTaskbar="False"
+                      SizeToContent="Height"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <StackPanel Margin="10">
+        <TextBlock Text="{StaticResource Type}" />
+        <ComboBox Width="200"
+                  Margin="0,2,0,0"
+                  HorizontalAlignment="Left"
+                  DisplayMemberPath="Description"
+                  ItemsSource="{Binding Source={extensions:Enumeration {x:Type systemRestore:RestoreType}}}"
+                  SelectedIndex="0"
+                  SelectedValue="{Binding RestoreType}"
+                  SelectedValuePath="Value" />
+        <TextBlock Margin="0,10,0,0" Text="{StaticResource Event}" />
+        <ComboBox Width="200"
+                  Margin="0,2,0,0"
+                  HorizontalAlignment="Left"
+                  DisplayMemberPath="Description"
+                  ItemsSource="{Binding Source={extensions:Enumeration {x:Type systemRestore:EventType}}}"
+                  SelectedIndex="0"
+                  SelectedValue="{Binding EventType}"
+                  SelectedValuePath="Value" />
+        <TextBlock Margin="0,10,0,0" Text="{StaticResource Description}" />
+        <TextBox x:Name="DescriptionTextBox"
+                 Margin="0,2,0,0"
+                 Text="{Binding Description}" />
+        <StackPanel Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button MinWidth="75"
+                    Command="{Binding CancelCommand}"
+                    Content="{StaticResource Cancel}"
+                    IsCancel="True" />
+            <Button MinWidth="75"
+                    Margin="10,0,0,0"
+                    Command="{Binding CreateCommand}"
+                    Content="{StaticResource Create}"
+                    IsDefault="True">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=DescriptionTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</controls:MetroWindow>

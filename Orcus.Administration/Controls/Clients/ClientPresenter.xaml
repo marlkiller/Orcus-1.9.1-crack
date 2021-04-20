@@ -1,0 +1,341 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.Clients.ClientPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Orcus.Administration.Controls.Clients"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="316.216"
+             d:DesignWidth="632.432"
+             mc:Ignorable="d">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Margin="10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBox Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=CurrentSearchText, UpdateSourceTrigger=PropertyChanged, Delay=100}" />
+                <Button x:Name="KeywordsButton"
+                        Width="16"
+                        Height="16"
+                        Margin="3,3,5,3"
+                        HorizontalAlignment="Right">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+                            <Setter Property="Foreground" Value="#FF999999" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup Name="CommonStates">
+                                                    <VisualState Name="Normal">
+                                                        <Storyboard>
+                                                            <ColorAnimation Duration="0:0:0.2"
+                                                                            Storyboard.TargetName="InfoPath"
+                                                                            Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                                            To="#FF999999" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState Name="MouseOver">
+                                                        <Storyboard>
+                                                            <ColorAnimation Duration="0:0:0.2"
+                                                                            Storyboard.TargetName="InfoPath"
+                                                                            Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                                            To="{StaticResource Gray2}" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <Viewbox>
+                                                <Path x:Name="InfoPath"
+                                                      Data="{StaticResource VectorQuestion}"
+                                                      Fill="{TemplateBinding Foreground}" />
+                                            </Viewbox>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Popup x:Name="KeywordsPopup"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       HorizontalOffset="{Binding ElementName=KeywordsButton,
+                                                  Path=ActualWidth}"
+                       IsHitTestVisible="False"
+                       IsOpen="{Binding ElementName=KeywordsButton,
+                                        Path=IsMouseOver,
+                                        Mode=OneWay}"
+                       Placement="Left"
+                       PlacementTarget="{Binding ElementName=KeywordsButton}"
+                       PopupAnimation="Fade"
+                       VerticalOffset="20">
+                    <Border Margin="5"
+                            HorizontalAlignment="Stretch"
+                            Background="{StaticResource WhiteBrush}"
+                            BorderBrush="{DynamicResource ComboBoxPopupBrush}"
+                            BorderThickness="1"
+                            IsHitTestVisible="False">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="5"
+                                              Opacity=".4"
+                                              ShadowDepth="0" />
+                        </Border.Effect>
+                        <StackPanel Margin="5">
+                            <StackPanel x:Name="MainStackPanel">
+                                <TextBlock FontSize="14"
+                                           FontWeight="Bold"
+                                           Text="{DynamicResource BooleanConditions}" />
+                                <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="[" /><Run Background="#4C27AE60" Text="is" /><Run Text="|" /><Run Background="#4CE74C3C" Text="isnot" /><Run Text="]" /><Run Text=":online" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource OnlineQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="[" /><Run Background="#4C27AE60" Text="is" /><Run Text="|" /><Run Background="#4CE74C3C" Text="isnot" /><Run Text="]" /><Run Text=":administrator" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource AdministratorQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="[" /><Run Background="#4C27AE60" Text="is" /><Run Text="|" /><Run Background="#4CE74C3C" Text="isnot" /><Run Text="]" /><Run Text=":compatible" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource CompatibleQueryCondition}" />
+                                </StackPanel>
+                                <TextBlock Margin="0,12,0,0"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Text="{DynamicResource PropertyConditions}" />
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="username:" /><Run Background="#4C3498DB" Text="query" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource UsernameQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="osname:" /><Run Background="#4C3498DB" Text="query" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource OperatingSystemQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="language:" /><Run Background="#4C3498DB" Text="query" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource LanguageQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="country:" /><Run Background="#4C3498DB" Text="query" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource CountryQueryCondition}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="clientid:" /><Run Background="#4C3498DB" Text="query" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource IdSpecialQuery}" />
+                                </StackPanel>
+                                <TextBlock Margin="0,12,0,0"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Text="{DynamicResource SpecialQueries}" />
+                                <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                                    <TextBlock Width="150">
+                                        <Run Text="CI-" /><Run Background="#4C3498DB" Text="####" />
+                                    </TextBlock>
+                                    <TextBlock FontStyle="Italic" Text="{DynamicResource IdSpecialQuery}" />
+                                </StackPanel>
+                                <TextBlock Margin="0,12,0,0"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Text="{DynamicResource DefaultQuery}" />
+                                <TextBlock Margin="0,2,0,0"
+                                           FontStyle="Italic"
+                                           Text="{DynamicResource DefaultQueryDescription}" />
+                            </StackPanel>
+                            <TextBlock Margin="0,12,0,0"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Text="{DynamicResource Examples}" />
+                            <Grid Width="{Binding ElementName=MainStackPanel, Path=ActualWidth}" Margin="0,2,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="210" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Top" Background="#0C808080">
+                                    <Run Background="#4C27AE60" Text="is" /><Run Text=":online" />
+                                    <Run Background="#4C27AE60" Text="is" /><Run Text=":administrator" />
+                                    <Run Text="language:" /><Run Background="#4C3498DB" Text="us" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                           FontStyle="Italic"
+                                           Text="{DynamicResource Example1Description}"
+                                           TextWrapping="Wrap" />
+                            </Grid>
+                            <Grid Width="{Binding ElementName=MainStackPanel, Path=ActualWidth}" Margin="0,2,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="210" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Top" Background="#0C808080">
+                                    <Run Background="#4CE74C3C" Text="isnot" /><Run Text=":online" />
+                                    <Run Text="&quot;username:" /><Run Background="#4C3498DB" Text="Alan Wake" /><Run Text="&quot;" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                           FontStyle="Italic"
+                                           TextWrapping="Wrap">
+                                    <Run Text="{DynamicResource Example2Description1}" />
+                                    <Run FontWeight="Bold" Text="Alan Wake" /><Run Text="{DynamicResource Example2Description2}" />
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <RadioButton Width="20"
+                             Height="20"
+                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                 Path=ViewMode,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static local:ViewMode.DefaultList}}">
+                    <RadioButton.Style>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+                            <Setter Property="Foreground" Value="#FF999999" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="RadioButton">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <Viewbox Margin="3">
+                                                <Path x:Name="VectorPath"
+                                                      Data="{StaticResource VectorList}"
+                                                      Fill="{TemplateBinding Foreground}" />
+                                            </Viewbox>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="true" />
+                                                    <Condition Property="IsChecked" Value="false" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="#FFCCCCCC" />
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsChecked" Value="true" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="{DynamicResource DarkColorBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </RadioButton.Style>
+                </RadioButton>
+                <RadioButton Width="20"
+                             Height="20"
+                             Margin="5,0,0,0"
+                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                 Path=ViewMode,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static local:ViewMode.Thumbnails}}">
+                    <RadioButton.Style>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+                            <Setter Property="Foreground" Value="#FF999999" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="RadioButton">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <Viewbox Margin="3">
+                                                <Path x:Name="VectorPath"
+                                                      Data="{StaticResource VectorTiles}"
+                                                      Fill="{TemplateBinding Foreground}" />
+                                            </Viewbox>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="true" />
+                                                    <Condition Property="IsChecked" Value="false" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="#FFCCCCCC" />
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsChecked" Value="true" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="{DynamicResource DarkColorBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </RadioButton.Style>
+                </RadioButton>
+                <RadioButton Width="20"
+                             Height="20"
+                             Margin="5,0,0,0"
+                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                 Path=ViewMode,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static local:ViewMode.SmallList}}">
+                    <RadioButton.Style>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+                            <Setter Property="Foreground" Value="#FF999999" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="RadioButton">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <Viewbox Margin="3">
+                                                <Path x:Name="VectorPath"
+                                                      Data="{StaticResource VectorMenu}"
+                                                      Fill="{TemplateBinding Foreground}" />
+                                            </Viewbox>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="true" />
+                                                    <Condition Property="IsChecked" Value="false" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="#FFCCCCCC" />
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsChecked" Value="true" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="VectorPath" Property="Fill" Value="{DynamicResource DarkColorBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </RadioButton.Style>
+                </RadioButton>
+            </StackPanel>
+        </Grid>
+        <ContentControl x:Name="MainListContentControl" Grid.Row="1" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="Orcus.Chat.Modern.Controls.ConversationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:Orcus.Chat.Modern.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Orcus.Chat.Modern.Core"
+             xmlns:extensions="clr-namespace:Orcus.Chat.Modern.Extensions"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:DateTimeToString x:Key="DateTimeToString" />
+
+        <SolidColorBrush x:Key="MeBrush" Color="#FFF8FDFF" />
+        <SolidColorBrush x:Key="YouBrush" Color="#FFEBF7FF" />
+
+        <Style x:Key="TimestampStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style x:Key="MessageViewerStyle" TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Text" Value="" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <DataTemplate x:Key="MeTemplate" DataType="{x:Type data:Message}">
+            <Grid Margin="30, 10, 5, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Rectangle Grid.RowSpan="2" Fill="{StaticResource MeBrush}" />
+                <TextBox Grid.Row="0"
+                         Margin="5"
+                         Background="{StaticResource MeBrush}"
+                         Style="{StaticResource MessageViewerStyle}"
+                         Text="{Binding Content,
+                                        Mode=TwoWay}"
+                         TextWrapping="Wrap" />
+                <TextBlock Grid.Row="1"
+                           Style="{StaticResource TimestampStyle}"
+                           Text="{Binding Timestamp,
+                                          Converter={StaticResource DateTimeToString}}" />
+                <Path Grid.Row="2"
+                      Margin="0,-1,5,0"
+                      HorizontalAlignment="Right"
+                      Data="m 0,0 l 16,0 l 0,16 l -16,-16"
+                      Fill="{StaticResource MeBrush}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="YouTemplate" DataType="{x:Type data:Message}">
+            <Grid Margin="5, 10, 30, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Path Margin="5,0,0,-1"
+                      HorizontalAlignment="Left"
+                      Data="m 0,0 l 0,16 l 16,0 l -16,-16"
+                      Fill="{StaticResource YouBrush}" />
+                <Rectangle Grid.Row="1"
+                           Grid.RowSpan="2"
+                           Fill="{StaticResource YouBrush}" />
+                <TextBox Grid.Row="1"
+                         Margin="5"
+                         Background="{StaticResource YouBrush}"
+                         Style="{StaticResource MessageViewerStyle}"
+                         Text="{Binding Content,
+                                        Mode=TwoWay}" />
+                <TextBlock Grid.Row="2"
+                           Style="{StaticResource TimestampStyle}"
+                           Text="{Binding Timestamp,
+                                          Converter={StaticResource DateTimeToString}}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <ScrollViewer>
+            <i:Interaction.Behaviors>
+                <extensions:AutoScrollBehavior />
+            </i:Interaction.Behaviors>
+            <ItemsControl Margin="10,0,5,0" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Messages}">
+                <ItemsControl.ItemTemplateSelector>
+                    <extensions:MessageTemplateSelector x:Name="MessageTemplateSelector"
+                                                        MeTemplate="{StaticResource MeTemplate}"
+                                                        YouTemplate="{StaticResource YouTemplate}" />
+                </ItemsControl.ItemTemplateSelector>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter" d:DataContext="{d:DesignInstance data:Message}">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.4"
+                                                             From="0"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To=".8">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CircleEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

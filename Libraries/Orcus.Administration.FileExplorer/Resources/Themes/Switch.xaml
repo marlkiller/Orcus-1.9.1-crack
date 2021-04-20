@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Orcus.Administration.FileExplorer.Controls">
+    <ControlTemplate x:Key="SwitchTemplate" TargetType="controls:Switch">
+        <Grid x:Name="PART_Background"
+              Background="Transparent"
+              Focusable="False"
+              IsHitTestVisible="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter Grid.Column="0"
+                              Content="{TemplateBinding Header}"
+                              ContentTemplate="{TemplateBinding HeaderTemplate}" />
+            <ContentPresenter x:Name="PART_ContentOn"
+                              Grid.Column="1"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              Content="{TemplateBinding ContentOn}">
+                <ContentPresenter.Style>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSwitched}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentPresenter.Style>
+            </ContentPresenter>
+            <ContentPresenter x:Name="PART_ContentOff"
+                              Grid.Column="1"
+                              Content="{TemplateBinding ContentOff}">
+                <ContentPresenter.Style>
+                    <Style TargetType="ContentPresenter">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSwitched}" Value="true">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentPresenter.Style>
+            </ContentPresenter>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="controls:Switch">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template" Value="{StaticResource SwitchTemplate}" />
+    </Style>
+</ResourceDictionary>

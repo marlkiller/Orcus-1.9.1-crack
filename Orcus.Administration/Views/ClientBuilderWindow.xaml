@@ -1,0 +1,528 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.ClientBuilderWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+                      xmlns:builder="clr-namespace:Orcus.Administration.Controls.Builder"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:localExtensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      xmlns:clientBuilder="clr-namespace:Orcus.Administration.ViewModels.ClientBuilder;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource ClientBuilder}"
+                      Width="850"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance viewModels:ClientBuilderViewModel}"
+                      localExtensions:WindowService.EscapeClosesWindow="True"
+                      Icon="/Resources/Images/VisualStudio/BuildSelection.ico"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource BuildSelectionIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <controls:MetroWindow.Resources>
+        <converter:CollapsedOnZeroConverter x:Key="CollapsedOnZeroConverter" />
+    </controls:MetroWindow.Resources>
+    <controls:MetroWindow.InputBindings>
+        <KeyBinding Key="B"
+                    Command="{Binding BuildCommand}"
+                    Modifiers="Control" />
+    </controls:MetroWindow.InputBindings>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands ShowSeparators="False">
+            <controls:WindowCommands.ItemContainerStyle>
+                <Style TargetType="{x:Type controls:WindowCommandsItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type controls:WindowCommandsItem}">
+                                <StackPanel HorizontalAlignment="{Binding HorizontalContentAlignment,
+                                                                          Mode=OneWay,
+                                                                          RelativeSource={RelativeSource AncestorType={x:Type controls:WindowCommands}}}"
+                                            VerticalAlignment="{Binding VerticalContentAlignment,
+                                                                        Mode=OneWay,
+                                                                        RelativeSource={RelativeSource AncestorType={x:Type controls:WindowCommands}}}"
+                                            Orientation="Horizontal">
+                                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                                      Margin="0"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </controls:WindowCommands.ItemContainerStyle>
+            <Button Command="{Binding OpenConfigurationManagerCommand}" Content="{StaticResource ConfigurationManager}" />
+            <Button x:Name="LoadConfigurationButton"
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    behavior:DropDownButtonBehavior.Popup="{Binding ElementName=ConfigurationPopup}"
+                    ContextMenuService.IsEnabled="false"
+                    Visibility="{Binding BuildConfigurationManager.BuildConfigurations.Count,
+                                         Converter={StaticResource CollapsedOnZeroConverter}}">
+                <i:Interaction.Behaviors>
+                    <behavior:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Grid>
+                    <Popup x:Name="ConfigurationPopup"
+                           AllowsTransparency="True"
+                           StaysOpen="False">
+                        <Border>
+                            <Border Margin="5" Background="{StaticResource WhiteBrush}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="6"
+                                                      Direction="0"
+                                                      Opacity=".4"
+                                                      ShadowDepth="0"
+                                                      Color="Black" />
+                                </Border.Effect>
+                                <ItemsControl ItemsSource="{Binding BuildConfigurationManager.BuildConfigurations}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button MinWidth="150"
+                                                    Background="{StaticResource MenuItemBackgroundBrush}"
+                                                    PreviewMouseLeftButtonUp="BuildConfigurationButto_OnPreviewMouseLeftButtonUp">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <!--<Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.LoadBuildConfigurationCommand}" />
+                                                        <Setter Property="CommandParameter" Value="{Binding}" />-->
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border x:Name="PART_Border">
+                                                                        <TextBlock Margin="5" Text="{Binding Name}" />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource AccentColorBrush2}" />
+                                                                            <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsPressed" Value="True">
+                                                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource AccentColorBrush}" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Border>
+                        </Border>
+                    </Popup>
+                    <iconPacks:PackIconMaterial Width="8"
+                                                Height="8"
+                                                Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button},
+                                                                     Path=Foreground}"
+                                                Kind="MenuDown" />
+                </Grid>
+            </Button>
+            <Rectangle Width="1"
+                       Height="11"
+                       Margin="8,0"
+                       Fill="{StaticResource BlackBrush}"
+                       IsHitTestVisible="False"
+                       Opacity="0.25"
+                       SnapsToDevicePixels="True"
+                       UseLayoutRounding="True" />
+            <Button Margin="0,0,5,0"
+                    Command="{Binding SaveCurrentConfigurationCommand}"
+                    ToolTip="{StaticResource Save}">
+                <iconPacks:PackIconMaterial Width="12"
+                                            Height="12"
+                                            VerticalAlignment="Center"
+                                            Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button},
+                                                                 Path=Foreground}"
+                                            Kind="ContentSave" />
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="PropertyItemStyle" TargetType="ContentPresenter">
+                <Setter Property="Margin" Value="0,15,0,0" />
+            </Style>
+        </Grid.Resources>
+        <TabControl x:Name="MainTabControl"
+                    Background="{StaticResource WhiteBrush}"
+                    BorderBrush="{StaticResource TabItemBorderBrush}"
+                    TabStripPlacement="Left">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Margin="0,0,-2,0">
+                                    <Border x:Name="Border"
+                                            Margin="2,0,1,0"
+                                            Background="{StaticResource TabItemBackgroundBrush}"
+                                            BorderBrush="{StaticResource TabItemBorderBrush}"
+                                            BorderThickness="1,1,0,1" />
+                                    <ContentPresenter x:Name="ContentSite"
+                                                      Margin="12,0"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      ContentSource="Header"
+                                                      IsHitTestVisible="False"
+                                                      RecognizesAccessKey="True"
+                                                      TextBlock.Foreground="{StaticResource BlackBrush}" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TabItemMouseOverBorderBrush}" />
+                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemMouseOverBackgroundBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemSelectedBackgroundBrush}" />
+                                        <Setter TargetName="Border" Property="Margin" Value="0" />
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TabItemBorderBrush}" />
+                                        <Setter TargetName="ContentSite" Property="Margin" Value="11,0,13,0" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsBuilding}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Opacity" Value=".6" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.Resources>
+            <TabControl.Style>
+                <Style TargetType="TabControl" />
+            </TabControl.Style>
+            <TabItem MinWidth="150" Header="{StaticResource GeneralSettings}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <builder:BuilderPropertiesItemsControl x:Name="GeneralSettingsItemsControl"
+                                                           Margin="10,-5,10,10"
+                                                           BuilderCategory="GeneralSettings"
+                                                           BuilderInfo="{Binding}"
+                                                           BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}"
+                                                           ItemContainerStyle="{StaticResource PropertyItemStyle}" />
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{StaticResource Connection}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <builder:BuilderPropertiesItemsControl Margin="10,-5,10,10"
+                                                           BuilderCategory="Connection"
+                                                           BuilderInfo="{Binding}"
+                                                           BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}"
+                                                           ItemContainerStyle="{StaticResource PropertyItemStyle}" />
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{StaticResource Protection}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <builder:BuilderPropertiesItemsControl Margin="10,-5,10,10"
+                                                           BuilderCategory="Protection"
+                                                           BuilderInfo="{Binding}"
+                                                           BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}"
+                                                           ItemContainerStyle="{StaticResource PropertyItemStyle}" />
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{StaticResource Installation}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <builder:BuilderGroupControl Margin="10,10,10,5"
+                                                     BuilderCategory="Installation"
+                                                     BuilderGroup="Install"
+                                                     BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}" />
+                        <builder:BuilderPropertiesItemsControl Margin="10,0,10,10"
+                                                               BuilderCategory="Installation"
+                                                               BuilderInfo="{Binding}"
+                                                               BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}"
+                                                               ItemContainerStyle="{StaticResource PropertyItemStyle}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{StaticResource Assembly}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <builder:BuilderPropertiesItemsControl Margin="10,-5,10,10"
+                                                           BuilderCategory="Assembly"
+                                                           BuilderInfo="{Binding}"
+                                                           BuilderProperties="{Binding BuilderSettingsManager.BuilderSettings}"
+                                                           ItemContainerStyle="{StaticResource PropertyItemStyle}" />
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{StaticResource Plugins}">
+                <Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox Margin="5"
+                                 controls:TextBoxHelper.Watermark="{StaticResource Search}"
+                                 Text="{Binding PluginsSearchText,
+                                                UpdateSourceTrigger=PropertyChanged}" />
+                        <ListView Grid.Row="1"
+                                  extensions:GridViewSort.AutoSort="True"
+                                  listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+                                  BorderThickness="0"
+                                  ItemsSource="{Binding Plugins}"
+                                  ScrollViewer.IsDeferredScrollingEnabled="False"
+                                  SelectionMode="Multiple"
+                                  Style="{DynamicResource VirtualisedMetroListView}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Name"
+                                                    listViewLayoutManager:ProportionalColumn.Width="3"
+                                                    Header="{StaticResource Name}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type clientBuilder:PluginViewModel}">
+                                                <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
+                                                    <CheckBox Margin="0,0,5,0"
+                                                              VerticalAlignment="Center"
+                                                              IsChecked="{Binding IsSelected}" />
+                                                    <Image Width="100"
+                                                           Height="56"
+                                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                                           Source="{Binding Plugin.Thumbnail}"
+                                                           Stretch="UniformToFill" />
+                                                    <TextBlock Margin="10,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding Plugin.PluginInfo.Name}"
+                                                               TextTrimming="CharacterEllipsis" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="100"
+                                                    extensions:GridViewSort.PropertyName="Author"
+                                                    listViewLayoutManager:FixedColumn.Width="100"
+                                                    Header="{StaticResource Author}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type clientBuilder:PluginViewModel}">
+                                                <TextBlock>
+                                                    <Hyperlink Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                                                 Path=DataContext.OpenUrlCommand}"
+                                                               CommandParameter="{Binding Plugin.PluginInfo.AuthorUrl}"
+                                                               NavigateUri="{Binding Plugin.PluginInfo.AuthorUrl}">
+                                                        <TextBlock Text="{Binding Plugin.PluginInfo.Author}">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                                            <Setter Property="Foreground" Value="White" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Hyperlink>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="60"
+                                                    listViewLayoutManager:FixedColumn.Width="60"
+                                                    Header="{StaticResource Size}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type clientBuilder:ClientPluginViewModel}">
+                                                <TextBlock Text="{Binding Size, Converter={StaticResource FormatBytesConverter}}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsBuildPlugin}" Value="true">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="110"
+                                                    listViewLayoutManager:FixedColumn.Width="110"
+                                                    Header="{StaticResource Settings}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type clientBuilder:PluginViewModel}">
+                                                <Grid>
+                                                    <Button Command="{Binding OpenSettingsCommand}">
+                                                        <Button.Style>
+                                                            <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding PluginSettings}" Value="{x:Static clientBuilder:PluginSettings.BuilderSettings}">
+                                                                        <Setter Property="Content" Value="{StaticResource Show}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding PluginSettings}" Value="{x:Static clientBuilder:PluginSettings.PropertyGrid}">
+                                                                        <Setter Property="Content" Value="{StaticResource Open}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding PluginSettings}" Value="{x:Static clientBuilder:PluginSettings.Window}">
+                                                                        <Setter Property="Content" Value="{StaticResource Open}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding PluginSettings}" Value="{x:Static clientBuilder:PluginSettings.None}">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
+                                                    <TextBlock Text="{StaticResource NoSettings}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding PluginSettings}" Value="{x:Static clientBuilder:PluginSettings.None}">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition Height="1" />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <DockPanel>
+                                                                <TextBlock Margin="10,0,0,0"
+                                                                           FontSize="13"
+                                                                           Foreground="{DynamicResource DarkColorBrush}">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="true">
+                                                                                    <Setter Property="Text" Value="{StaticResource BuildPlugin}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="false">
+                                                                                    <Setter Property="Text" Value="{StaticResource ClientPlugin}" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                                <Rectangle Height="1"
+                                                                           Margin="10,0,0,0"
+                                                                           VerticalAlignment="Center"
+                                                                           Fill="{DynamicResource DarkColorBrush}"
+                                                                           SnapsToDevicePixels="True" />
+                                                            </DockPanel>
+                                                            <ItemsPresenter Grid.Row="2" />
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                        </ListView>
+                    </Grid>
+                    <Grid Background="{StaticResource WhiteBrush}">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Plugins.SourceCollection.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{StaticResource NoPluginsAvailable}" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{StaticResource Build}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DockPanel Margin="5">
+                        <CheckBox x:Name="EulaCheckBox">
+                            <CheckBox.Style>
+                                <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsBuilding}" Value="true">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </CheckBox.Style>
+                            <TextBlock>
+                                <Run Text="{StaticResource AgreeToEula1}" />
+                                <Hyperlink Command="{Binding OpenEulaCommand}">
+                                    <Run Text="{StaticResource AgreeToEula2}" />
+                                </Hyperlink>
+                                <Run Text="{StaticResource AgreeToEula3}" />
+                            </TextBlock>
+                        </CheckBox>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <controls:ProgressRing Width="22"
+                                                   Height="22"
+                                                   Margin="0,0,5,0"
+                                                   IsActive="{Binding IsBuilding}" />
+                            <Button MinWidth="100"
+                                    Command="{Binding BuildCommand}"
+                                    Content="{StaticResource Build}">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="{Binding ElementName=EulaCheckBox, Path=IsChecked}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsBuilding}" Value="true">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                    </DockPanel>
+                    <Border Grid.Row="1"
+                            BorderBrush="{StaticResource GrayBrush8}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="True">
+                        <builder:BuildingLogControl BuildLogger="{Binding BuildLogger}" />
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</controls:MetroWindow>

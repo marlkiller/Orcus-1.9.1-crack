@@ -1,0 +1,8 @@
+Remove line 355 in Flyout.cs
+https://github.com/MahApps/MahApps.Metro/issues/2745
+
+Replace line 165 in BaseMetroDialog.cs
+
+this.SetValue(BackgroundProperty, Application.Current.Resources["WhiteColorBrush"]);
+
+this.SetValue(ForegroundProperty, Application.Current.Resources["BlackBrush"]);

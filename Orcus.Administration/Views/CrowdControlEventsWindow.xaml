@@ -1,0 +1,143 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CrowdControlEventsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:shared="clr-namespace:Orcus.Shared.DynamicCommands;assembly=Orcus.Shared"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Title="CrowdControlEventsWindow"
+                      Width="653"
+                      Height="384"
+                      d:DataContext="{d:DesignInstance viewModels:CrowdControlEventsViewModel}"
+                      Icon="/Resources/Images/VisualStudio/EventLog.ico"
+                      Style="{StaticResource NormalWindow}"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource EventLogIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <controls:MetroWindow.Resources>
+        <converter:CrowdControlActivityToStringConverter x:Key="CrowdControlActivityToStringConverter" />
+    </controls:MetroWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel Margin="10,0,10,5">
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="{StaticResource Items}" /><Run Text=":" />
+                <Run Text="{Binding EventsCollectionView.Count, Mode=OneWay}" />
+            </TextBlock>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <RadioButton Content="{StaticResource All}" IsChecked="{Binding EventsFilterType, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static viewModels:EventsFilterType.All}}" />
+                <RadioButton Margin="10,0"
+                             Content="{StaticResource Succeeded}"
+                             IsChecked="{Binding EventsFilterType,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static viewModels:EventsFilterType.Succeeded}}" />
+                <RadioButton Content="{StaticResource Failed}" IsChecked="{Binding EventsFilterType, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static viewModels:EventsFilterType.Failed}}" />
+            </StackPanel>
+        </DockPanel>
+        <ListView x:Name="MainListView"
+                  Grid.Row="1"
+                  listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                  ItemsSource="{Binding EventsCollectionView}">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                Path=DataContext.CopyMessageCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},
+                                                         Path=SelectedItems}"
+                              Header="{StaticResource CopyMessage}" />
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="100"
+                                    listViewLayoutManager:FixedColumn.Width="100"
+                                    Header="{StaticResource Status}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type shared:DynamicCommandEvent}">
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Sent}">
+                                                    <Setter Property="Text" Value="{StaticResource Sent}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Succeeded}">
+                                                    <Setter Property="Text" Value="{StaticResource Succeeded}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Failed}">
+                                                    <Setter Property="Text" Value="{StaticResource Failed}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Active}">
+                                                    <Setter Property="Text" Value="{StaticResource Active}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Stopped}">
+                                                    <Setter Property="Text" Value="{StaticResource Stopped}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="75"
+                                    listViewLayoutManager:FixedColumn.Width="75"
+                                    DisplayMemberBinding="{Binding ClientId}"
+                                    Header="{StaticResource ClientId}" />
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1" Header="{StaticResource Message}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type shared:DynamicCommandEvent}">
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{Binding Message}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Message, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                    <Setter Property="FontStyle" Value="Italic" />
+                                                    <Setter Property="Text" Value="{Binding Status, Converter={StaticResource CrowdControlActivityToStringConverter}}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="140"
+                                    listViewLayoutManager:FixedColumn.Width="140"
+                                    DisplayMemberBinding="{Binding Timestamp,
+                                                                   Converter={StaticResource DateTimeToStringConverter}}"
+                                    Header="{StaticResource Timestamp}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Succeeded}">
+                            <Setter Property="Foreground" Value="#27ae60" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Failed}">
+                            <Setter Property="Foreground" Value="#c0392b" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static shared:ActivityType.Active}">
+                            <Setter Property="Foreground" Value="#2980b9" />
+                        </DataTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</controls:MetroWindow>

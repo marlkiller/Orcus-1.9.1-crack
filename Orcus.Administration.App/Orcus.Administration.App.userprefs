@@ -1,0 +1,19 @@
+﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{7BB0201E-4D9A-4F80-A817-F67FEBA5FF3C}|Default" StartupItem="Orcus.Administration.App\Orcus.Administration.App.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Android_Accelerated_x86" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="D:\Dokumente\Visual Studio 2015\Projects\Orcus\MainSource\Orcus.Administration.App\Orcus.Administration.App\Resources\values\styles.xml" line="12" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Orcus.Administration.App\Core\ConnectionManager.cs">
+    <Files>
+      <File FileName="Orcus.Administration.App\packages.config" Line="12" Column="12" />
+      <File FileName="Orcus.Administration.App\app.config" Line="1" Column="1" />
+      <File FileName="Orcus.Administration.App\Activities\ClientsActivity.cs" Line="83" Column="4" />
+      <File FileName="Orcus.Administration.App\Core\CommandManagement\StaticCommander.cs" Line="7" Column="30" />
+      <File FileName="Orcus.Administration.App\Core\ConnectionManager.cs" Line="26" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Orcus.Administration.App PreferredExecutionTarget="Android.Android_Accelerated_x86" />
+</Properties>

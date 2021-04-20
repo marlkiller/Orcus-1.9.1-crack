@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<style name="AppTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+    <item name="android:colorPrimary">#2196F3</item>
+    <item name="android:colorPrimaryDark">#1976D2</item>
+    <item name="android:colorAccent">#03A9F4</item>
+</style>
+
+<style name="DrawerAppTheme" parent="MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus">
+	<item name="android:colorPrimary">#2196F3</item>
+    <item name="android:colorPrimaryDark">#1976D2</item>
+    <item name="android:colorAccent">#03A9F4</item>
+</style>
+</resources>

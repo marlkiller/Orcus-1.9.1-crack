@@ -1,0 +1,235 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.UserInteractionCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Orcus.Shared.Commands.UserInteraction;assembly=Orcus.Shared"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:extensions1="clr-namespace:Sorzus.Wpf.Toolkit.Extensions;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             d:DataContext="{d:DesignInstance commandViewModels:UserInteractionViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <extensions:ComboBoxDataTemplateSelector x:Key="VoiceTemplateChooser" />
+    </UserControl.Resources>
+    <ScrollViewer>
+        <StackPanel Margin="10" IsEnabled="{Binding IsInitialized}">
+            <TextBlock FontFamily="Source Sans Pro Light"
+                       FontSize="20"
+                       Text="{DynamicResource TextToSpeech}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" MaxWidth="300" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" MinWidth="75" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{DynamicResource Text}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="2"
+                           Text="{DynamicResource Voice}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="4"
+                           Text="{DynamicResource Speed}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="6"
+                           Text="{DynamicResource Volume}" />
+                <TextBox x:Name="TextToSpeechTextBox"
+                         Grid.Row="2"
+                         Grid.Column="0" />
+                <ComboBox x:Name="VoiceComboBox"
+                          Grid.Row="2"
+                          Grid.Column="2"
+                          ItemTemplateSelector="{StaticResource VoiceTemplateChooser}"
+                          ItemsSource="{Binding SpeechVoices}"
+                          SelectedIndex="0">
+                    <extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                        <DataTemplate DataType="{x:Type data:SpeechVoice}">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </extensions:ComboBoxDataTemplateSelector.SelectedTemplate>
+                    <extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                        <DataTemplate DataType="{x:Type data:SpeechVoice}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="Segoe UI Light"
+                                           FontSize="26"
+                                           Text="{Binding Culture}" />
+                                <StackPanel Grid.Column="2" Orientation="Vertical">
+                                    <TextBlock FontSize="14"
+                                               FontWeight="Bold"
+                                               Text="{Binding Name}" />
+                                    <TextBlock Margin="0,1,0,0">
+                                        <Run Text="{DynamicResource Gender}" /><Run Text=":" />
+                                        <Run Text="{Binding VoiceGender}" />
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <Run Text="{DynamicResource Age}" /><Run Text=":" />
+                                        <Run Text="{Binding VoiceAge}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </extensions:ComboBoxDataTemplateSelector.DropDownTemplate>
+                </ComboBox>
+                <Slider x:Name="VoiceSpeedSlider"
+                        Grid.Row="2"
+                        Grid.Column="4"
+                        AutoToolTipPlacement="BottomRight"
+                        LargeChange="2"
+                        Maximum="10"
+                        Minimum="-10"
+                        SmallChange="1"
+                        TickPlacement="BottomRight" />
+                <Slider x:Name="VoiceVolumeSlider"
+                        Grid.Row="2"
+                        Grid.Column="6"
+                        AutoToolTipPlacement="BottomRight"
+                        AutoToolTipPrecision="1"
+                        LargeChange="10"
+                        Maximum="100"
+                        Minimum="0"
+                        SmallChange="1"
+                        Value="75" />
+                <Button Grid.Row="2"
+                        Grid.Column="8"
+                        VerticalAlignment="Center"
+                        Command="{Binding TextToSpeechCommand}"
+                        Content="{DynamicResource Send}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                            <Binding ElementName="TextToSpeechTextBox" Path="Text" />
+                            <Binding ElementName="VoiceComboBox" Path="SelectedItem" />
+                            <Binding ElementName="VoiceSpeedSlider" Path="Value" />
+                            <Binding ElementName="VoiceVolumeSlider" Path="Value" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=TextToSpeechTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+            <TextBlock Margin="0,20,0,0"
+                       FontFamily="Source Sans Pro Light"
+                       FontSize="20"
+                       Text="{DynamicResource Notepad}" />
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="NotepadTitleTextBox" controls:TextBoxHelper.Watermark="{DynamicResource Title}" />
+                <Button Grid.Column="2"
+                        MinWidth="75"
+                        Command="{Binding OpenTextInNotepadCommand}"
+                        Content="{DynamicResource Open}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                            <Binding ElementName="NotepadTitleTextBox" Path="Text" />
+                            <Binding ElementName="NotepadContentTextBox" Path="Text" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=NotepadTitleTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=NotepadContentTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+            <TextBox x:Name="NotepadContentTextBox"
+                     Height="150"
+                     Margin="0,5,0,0"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     VerticalScrollBarVisibility="Visible"
+                     controls:TextBoxHelper.Watermark="{DynamicResource Text}" />
+            <TextBlock Margin="0,20,0,0"
+                       FontFamily="Source Sans Pro Light"
+                       FontSize="20"
+                       Text="{DynamicResource BalloonToolTip}" />
+            <DockPanel Margin="0,5,0,0">
+                <ComboBox x:Name="BalloonToolTipIconComboBox"
+                          Width="100"
+                          DisplayMemberPath="Description"
+                          ItemsSource="{Binding Source={extensions1:Enumeration {x:Type data:NotifyToolTipIcon}}}"
+                          SelectedIndex="0"
+                          SelectedValuePath="Value" />
+                <TextBox x:Name="BalloonToolTipTitleTextBox"
+                         Margin="10,0,0,0"
+                         controls:TextBoxHelper.Watermark="{DynamicResource Title}" />
+            </DockPanel>
+            <TextBox x:Name="BalloonToolTipContentTextBox"
+                     Height="100"
+                     Margin="0,5,0,0"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     VerticalScrollBarVisibility="Visible"
+                     controls:TextBoxHelper.Watermark="{DynamicResource Text}" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <controls:NumericUpDown x:Name="BalloonToolTipTimeoutNumericUpDown"
+                                        Width="150"
+                                        Minimum="0"
+                                        StringFormat="0 ms"
+                                        Value="10000" />
+                <Button MinWidth="75"
+                        Margin="5,0,0,0"
+                        Command="{Binding OpenBalloonToolTipCommand}"
+                        Content="{DynamicResource Show}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                            <Binding ElementName="BalloonToolTipIconComboBox" Path="SelectedValue" />
+                            <Binding ElementName="BalloonToolTipTitleTextBox" Path="Text" />
+                            <Binding ElementName="BalloonToolTipContentTextBox" Path="Text" />
+                            <Binding ElementName="BalloonToolTipTimeoutNumericUpDown" Path="Value" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=BalloonToolTipTitleTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=BalloonToolTipContentTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

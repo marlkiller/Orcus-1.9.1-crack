@@ -1,0 +1,49 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.ProxyBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:ProxyBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:ProxyBuilderProperty"
+                                            mc:Ignorable="d">
+    <DockPanel>
+        <RadioButton Margin="0,0,10,0"
+                     Content="{StaticResource DontUseProxy}"
+                     IsChecked="{Binding ProxyOption,
+                                         Converter={StaticResource EnumBooleanConverter},
+                                         ConverterParameter={x:Static builderSettings:ProxyOption.None}}" />
+        <RadioButton Margin="0,0,10,0"
+                     Content="{StaticResource DetectDefaultProxy}"
+                     IsChecked="{Binding ProxyOption,
+                                         Converter={StaticResource EnumBooleanConverter},
+                                         ConverterParameter={x:Static builderSettings:ProxyOption.AutomaticDetection}}" />
+        <RadioButton HorizontalContentAlignment="Stretch" IsChecked="{Binding ProxyOption, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static builderSettings:ProxyOption.CustomProxy}}">
+            <Grid IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=IsChecked}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Width="90"
+                          IsEditable="False"
+                          SelectedIndex="{Binding ProxyType}">
+                    <ComboBoxItem Content="SOCKS 4" />
+                    <ComboBoxItem Content="SOCKS 4a" />
+                    <ComboBoxItem Content="SOCKS 5" />
+                </ComboBox>
+                <TextBox Grid.Column="2" Text="{Binding ProxyAddress}" />
+                <controls:NumericUpDown Grid.Column="4"
+                                        Maximum="65535"
+                                        Minimum="0"
+                                        Value="{Binding ProxyPort}" />
+            </Grid>
+        </RadioButton>
+    </DockPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

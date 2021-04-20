@@ -1,0 +1,754 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+                      xmlns:clientManagement="clr-namespace:Orcus.Administration.Core.ClientManagement;assembly=Orcus.Administration.Core"
+                      xmlns:clients="clr-namespace:Orcus.Administration.Controls.Clients"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      xmlns:views="clr-namespace:Orcus.Administration.Views"
+                      Title="Orcus Administration"
+                      Width="950"
+                      Height="600"
+                      MinWidth="1000"
+                      MinHeight="600"
+                      d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+                      Icon="Resources/Icon.ico"
+                      ShowIconOnTitleBar="False"
+                      Style="{StaticResource NormalWindow}"
+                      TitleAlignment="Center"
+                      TitleCharacterCasing="Upper"
+                      TitlebarHeight="30"
+                      WindowStartupLocation="CenterScreen"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.Resources>
+        <converter:SubtractMenuConverter x:Key="SubtractMenuConverter" />
+        <converter:ObjectToTypeStringConverter x:Key="ObjectToTypeStringConverter" />
+        <extensions:NotNullDataTemplateSelector x:Key="NotNullDataTemplateSelector" />
+    </controls:MetroWindow.Resources>
+    <controls:MetroWindow.DataContext>
+        <viewModels:MainViewModel />
+    </controls:MetroWindow.DataContext>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Command="{Binding OpenPluginsCommand}" Content="{DynamicResource Plugins}" />
+            <Button Command="{Binding OpenSettingsCommand}" Content="{DynamicResource Settings}" />
+            <Button Command="{Binding LogoutCommand}" ToolTip="{DynamicResource Logout}">
+                <iconPacks:PackIconMaterial Width="14"
+                                            Height="14"
+                                            Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button},
+                                                                 Path=Foreground}"
+                                            Kind="Logout" />
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Margin="8 -1 0 0"
+                       VerticalAlignment="Center"
+                       FontFamily="{DynamicResource HeaderFontFamily}"
+                       FontSize="{DynamicResource WindowTitleFontSize}"
+                       Text="{TemplateBinding Content}"
+                       TextTrimming="CharacterEllipsis" />
+        </DataTemplate>
+    </controls:MetroWindow.TitleTemplate>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout AnimateOpacity="True"
+                             IsOpen="{Binding IsLoggedIn}"
+                             Theme="Adapt">
+                <controls:Flyout.Style>
+                    <Style TargetType="controls:Flyout">
+                        <Setter Property="Position" Value="Bottom" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="true">
+                                <Setter Property="Height" Value="{Binding ElementName=WorkingSpaceGrid, Path=ActualHeight, Converter={StaticResource SubtractMenuConverter}}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="false">
+                                <Setter Property="Margin" Value="0,30.5,0,76" />
+                                <Setter Property="SnapsToDevicePixels" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:Flyout.Style>
+                <ContentControl Content="{Binding ClientControllerViewModel}" ContentTemplateSelector="{StaticResource NotNullDataTemplateSelector}">
+                    <extensions:NotNullDataTemplateSelector.NotNullDataTemplate>
+                        <DataTemplate>
+                            <views:CommandListView />
+                        </DataTemplate>
+                    </extensions:NotNullDataTemplateSelector.NotNullDataTemplate>
+                </ContentControl>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <controls:MetroWindow.InputBindings>
+        <KeyBinding Key="B"
+                    Command="{Binding BuildCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="M"
+                    Command="{Binding OpenClientMapCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="A"
+                    Command="{Binding OpenActivityMonitorCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="D"
+                    Command="{Binding OpenDataManagerCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="E"
+                    Command="{Binding OpenExceptionsCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="C"
+                    Command="{Binding OpenCrowdControlCommand}"
+                    Modifiers="Control" />
+        <KeyBinding Key="J"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                      Path=ChangeSizeCommand}"
+                    Modifiers="Alt" />
+    </controls:MetroWindow.InputBindings>
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="150" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="WorkingSpaceGrid">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="true">
+                            <Setter Property="Grid.Row" Value="2" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="false">
+                            <Setter Property="Grid.Row" Value="0" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <converter:ApiVersionChecker x:Key="ApiVersionChecker" />
+                <extensions:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <converter:ListViewSelectedItemsCountFromChildConverter x:Key="ListViewSelectedItemsCountFromListViewItemConverter" />
+                <converter:ListViewSelectedItemsFromChildConverter x:Key="ListViewSelectedItemsFromChildConverter" />
+                <converter:StringComparisonConverter x:Key="StringComparisonConverter" />
+
+                <ContextMenu x:Key="ItemContextMenu" d:DataContext="{d:DesignInstance clientManagement:ClientViewModel}">
+                    <MenuItem CommandParameter="{Binding}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Header" Value="{DynamicResource LogIn}" />
+                                <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.LogInCommand}" />
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsOnline}" Value="true" />
+                                            <Condition Binding="{Binding ApiVersion, Converter={StaticResource ApiVersionChecker}}" Value="UpdateRequired" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Header" Value="{DynamicResource Update}" />
+                                        <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.OpenCrowdControlCommand}" />
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsOnline}" Value="true" />
+                                            <Condition Binding="{Binding ApiVersion, Converter={StaticResource ApiVersionChecker}}" Value="UpdateOfAdministrationRequired" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Header" Value="{DynamicResource UpdateAdministration}" />
+                                    </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <Separator>
+                        <Separator.Style>
+                            <Style BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}" TargetType="Separator">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Separator.Style>
+                    </Separator>
+                    <MenuItem Header="{DynamicResource Data}" Icon="{StaticResource DatabaseIcon}">
+                        <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                    Path=Data.OpenDataManagerOfClientsCommand}"
+                                  Header="{DynamicResource All}"
+                                  Icon="{StaticResource DataTableIcon}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                             Path="PlacementTarget"
+                                             RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                    <Binding Source="" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                    Path=Data.OpenDataManagerOfClientsCommand}"
+                                  Header="{DynamicResource KeyLogs}"
+                                  Icon="{StaticResource TextIcon}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                             Path="PlacementTarget"
+                                             RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                    <Binding Source="Keylog" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                    Path=Data.OpenDataManagerOfClientsCommand}"
+                                  Header="{DynamicResource Passwords}"
+                                  Icon="{StaticResource PasswordRecoveryIcon}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                             Path="PlacementTarget"
+                                             RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                    <Binding Source="Passwords" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                    Path=Data.OpenDataManagerOfClientsCommand}"
+                                  Header="{DynamicResource Files}"
+                                  Icon="{StaticResource FileGroupIcon}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                             Path="PlacementTarget"
+                                             RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                    <Binding Source="File" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource Actions}" Icon="{StaticResource EventIcon}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                        <Setter Property="ItemsSource">
+                                            <Setter.Value>
+                                                <CompositeCollection>
+                                                    <CollectionContainer Collection="{Binding Source={StaticResource BindingProxy}, Path=Data.StaticCommandGroups}" />
+                                                    <Separator />
+                                                    <system:String>SC</system:String>
+                                                    <system:String>CC</system:String>
+                                                </CompositeCollection>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                        <Setter Property="ItemsSource">
+                                            <Setter.Value>
+                                                <CompositeCollection>
+                                                    <CollectionContainer Collection="{Binding Source={StaticResource BindingProxy}, Path=Data.OfflineStaticCommandGroups}" />
+                                                    <Separator />
+                                                    <system:String>CC</system:String>
+                                                </CompositeCollection>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                        <MenuItem.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding}" Value="CC">
+                                        <Setter Property="Header" Value="{DynamicResource CreateTask}" />
+                                        <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ClientsCrowdControlCommand}" />
+                                        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsFromChildConverter}}" />
+                                        <Setter Property="Icon" Value="{StaticResource AddEventIcon}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding}" Value="SC">
+                                        <Setter Property="Header" Value="{DynamicResource CommandPresets}" />
+                                        <Setter Property="ItemsSource" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.CommandPresets.View}" />
+                                        <Setter Property="Visibility" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.CommandPresets.View.IsEmpty, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, ConverterParameter=invert}" />
+                                        <Setter Property="Icon" Value="{StaticResource EventBlueIcon}" />
+                                        <Setter Property="ItemContainerStyle">
+                                            <Setter.Value>
+                                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                                    <Setter Property="Header" Value="{Binding Name}" />
+                                                    <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ExecuteCommandPresetCommand}" />
+                                                    <Setter Property="CommandParameter">
+                                                        <Setter.Value>
+                                                            <MultiBinding Converter="{StaticResource CloneConverter}">
+                                                                <Binding Path="." />
+                                                                <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                                                         Path="PlacementTarget"
+                                                                         RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeStringConverter}}" Value="StaticCommandGroup">
+                                        <Setter Property="Header" Value="{Binding Name}" />
+                                        <Setter Property="ItemsSource" Value="{Binding StaticCommands}" />
+                                        <Setter Property="ItemContainerStyle">
+                                            <Setter.Value>
+                                                <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                                    <Setter Property="Header" Value="{Binding Name}" />
+                                                    <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ExecuteStaticCommand}" />
+                                                    <Setter Property="CommandParameter">
+                                                        <Setter.Value>
+                                                            <MultiBinding Converter="{StaticResource CloneConverter}">
+                                                                <Binding Path="StaticCommandType" />
+                                                                <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                                                         Path="PlacementTarget"
+                                                                         RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource Plugins}" Icon="{StaticResource ExtensionIcon}">
+                        <MenuItem.Resources>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ClientPluginClickedCommand}" />
+                                <Setter Property="CommandParameter">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                                            <Binding Path="." />
+                                            <Binding RelativeSource="{RelativeSource Self}" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <converter:ListCountVisibilityConverter x:Key="ListCountVisibilityConverter" />
+                        </MenuItem.Resources>
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                        <Setter Property="ItemsSource" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.UiModifier.OnlineClientMenuItems}" />
+                                        <Setter Property="Visibility" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.UiModifier.OnlineClientMenuItems, Converter={StaticResource ListCountVisibilityConverter}}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                        <Setter Property="ItemsSource" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.UiModifier.OfflineClientMenuItems}" />
+                                        <Setter Property="Visibility" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.UiModifier.OfflineClientMenuItems, Converter={StaticResource ListCountVisibilityConverter}}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <Separator>
+                        <Separator.Style>
+                            <Style BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}" TargetType="Separator">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Separator.Style>
+                    </Separator>
+                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                Path=Data.GetComputerInformationCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource ComputerInformation}"
+                              Icon="{StaticResource ComputerSystemIcon}"
+                              IsEnabled="{Binding IsComputerInformationAvailable}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                Path=Data.GetPasswordsCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Passwords}"
+                              Icon="{StaticResource PasswordRecoveryIcon}"
+                              IsEnabled="{Binding IsPasswordDataAvailable}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="{DynamicResource Move}"
+                              Icon="{StaticResource MoveFieldIcon}"
+                              ItemsSource="{Binding Source={StaticResource BindingProxy},
+                                                    Path=Data.ConnectionManager.ClientProvider.Groups}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Source={StaticResource BindingProxy}, Path=Data.ConnectionManager.ClientProvider.Groups.Count}" Value="1">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                        <MenuItem.Resources>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Header" Value="{Binding}" />
+                                <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ChangeGroupCommand}" />
+                                <Setter Property="CommandParameter">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                                            <Binding Path="." />
+                                            <Binding Converter="{StaticResource ListViewSelectedItemsFromChildConverter}"
+                                                     Path="PlacementTarget"
+                                                     RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ., Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                        <Setter Property="Header" Value="{DynamicResource Default}" />
+                                    </DataTrigger>
+                                    <DataTrigger Value="true">
+                                        <DataTrigger.Binding>
+                                            <MultiBinding Converter="{StaticResource StringComparisonConverter}">
+                                                <Binding Path="." />
+                                                <Binding Path="DataContext.Group" RelativeSource="{RelativeSource AncestorType=ContextMenu}" />
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Resources>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                Path=Data.ChangeGroupNewCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+                                                         Path=PlacementTarget,
+                                                         Converter={StaticResource ListViewSelectedItemsFromChildConverter}}"
+                              Header="{DynamicResource MoveToNewGroup}"
+                              Icon="{StaticResource NewFieldIcon}" />
+                    <Separator />
+                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                Path=Data.CopyClientCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource CloneClientSettings}"
+                              Icon="{StaticResource CopyItemIcon}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Value="true">
+                                        <DataTrigger.Binding>
+                                            <Binding Converter="{StaticResource IsSmallerThanConverter}" Path="Version">
+                                                <Binding.ConverterParameter>
+                                                    <system:Double>13</system:Double>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget, Converter={StaticResource ListViewSelectedItemsCountFromListViewItemConverter}}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                Path=Data.RemoveClientsCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+                                                         Path=PlacementTarget,
+                                                         Converter={StaticResource ListViewSelectedItemsFromChildConverter}}"
+                              Header="{DynamicResource Remove}"
+                              Icon="{StaticResource CancelIcon}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                </ContextMenu>
+            </Grid.Resources>
+            <Menu>
+                <MenuItem Command="{Binding BuildCommand}" Header="{DynamicResource Build}" />
+                <MenuItem Command="{Binding OpenCrowdControlCommand}" Header="{DynamicResource CrowdControl}">
+                    <MenuItem.Style>
+                        <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                        <Setter Property="Header" Value="{Binding Name}" />
+                                        <Setter Property="Command" Value="{Binding Source={StaticResource BindingProxy}, Path=Data.ExecuteCommandPresetWithTargetCommand}" />
+                                        <Setter Property="CommandParameter" Value="{Binding}" />
+                                        <Setter Property="Icon" Value="{StaticResource EventBlueIcon}" />
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CommandPresetsWithTarget.View.IsEmpty}" Value="false">
+                                    <Setter Property="ItemsSource" Value="{Binding CommandPresetsWithTarget.View}" />
+                                    <Setter Property="Template" Value="{StaticResource ArrowTopLevelHeaderTemplate}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+                <MenuItem Height="30"
+                          Command="{Binding OpenExceptionsCommand}"
+                          Padding="7,0,8,0">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,5,0,6"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource Exceptions}" />
+                            <Border Height="17"
+                                    Margin="4,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Background="{DynamicResource AccentColorBrush}"
+                                    CornerRadius="2">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ConnectionManager.ExceptionsCount}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <TextBlock Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                           Text="{Binding ConnectionManager.ExceptionsCount}" />
+                            </Border>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Command="{Binding OpenDataManagerCommand}" Header="{DynamicResource DataManager}" />
+                <MenuItem Command="{Binding OpenClientMapCommand}" Header="{DynamicResource WorldMap}" />
+                <MenuItem Command="{Binding OpenStatisticsCommand}" Header="{DynamicResource Statistics}" />
+                <MenuItem Command="{Binding OpenActivityMonitorCommand}" Header="{DynamicResource Activity}" />
+                <MenuItem Header="{DynamicResource Plugins}" ItemsSource="{Binding UiModifier.MainMenuItems}">
+                    <MenuItem.Style>
+                        <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding UiModifier.MainMenuItems.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                    <MenuItem.Resources>
+                        <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                            <Setter Property="Command" Value="{Binding OpenPluginCommand}" />
+                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+                        </Style>
+                    </MenuItem.Resources>
+                </MenuItem>
+                <MenuItem Command="{Binding OpenUpdaterCommand}" Header="{DynamicResource NewUpdateAvailable}">
+                    <MenuItem.Style>
+                        <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsUpdateAvailable}" Value="true">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+            </Menu>
+            <Border Grid.Row="1" SnapsToDevicePixels="true">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BorderThickness" Value="0,1,0,0" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoggedIn}" Value="true">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation BeginTime="0:0:0.2"
+                                                            Duration="0:0:0.2"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="{StaticResource BorderColor}" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.2"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="Transparent" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <clients:ClientPresenter x:Name="ClientPresenter"
+                                         ClientProvider="{Binding ConnectionManager.ClientProvider}"
+                                         DeleteCommand="{Binding RemoveClientsCommand}"
+                                         ItemContextMenu="{StaticResource ItemContextMenu}"
+                                         LogInCommand="{Binding LogInCommand}">
+                    <clients:ClientPresenter.Style>
+                        <Style TargetType="clients:ClientPresenter">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ConnectionManager}" Value="{x:Null}">
+                                    <Setter Property="IsRefreshDisabled" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsLoggedIn}" Value="true">
+                                    <Setter Property="IsRefreshDisabled" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </clients:ClientPresenter.Style>
+                </clients:ClientPresenter>
+            </Border>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       IsHitTestVisible="False"
+                       Text="{DynamicResource NoClientsConnected}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ConnectionManager.ClientProvider.Clients.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <Grid Background="{DynamicResource WhiteBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ConnectionManager}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="true">
+                            <Setter Property="Grid.Row" Value="2" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Settings.IsConsoleAtTop}" Value="false">
+                            <Setter Property="Grid.Row" Value="0" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       Text="{DynamicResource NotConnected}" />
+        </Grid>
+        <ScrollViewer Margin="0,0,0,5" CanContentScroll="True">
+            <ScrollViewer.Style>
+                <Style BasedOn="{StaticResource MetroScrollViewer}" TargetType="ScrollViewer">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsConsoleAtTop}" Value="true">
+                            <Setter Property="Grid.Row" Value="0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsConsoleAtTop}" Value="false">
+                            <Setter Property="Grid.Row" Value="2" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
+            <i:Interaction.Behaviors>
+                <behavior:AutoScrollBehavior />
+            </i:Interaction.Behaviors>
+            <ItemsControl ItemsSource="{Binding Log}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Warn">
+                                            <Setter Property="Foreground" Value="#e74c3c" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Error">
+                                            <Setter Property="Foreground" Value="#c0392b" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Fatal">
+                                            <Setter Property="Background" Value="#c0392b" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Info">
+                                            <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Send">
+                                            <Setter Property="Foreground" Value="#2980b9" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Receive">
+                                            <Setter Property="Foreground" Value="#27ae60" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Plugin">
+                                            <Setter Property="Foreground" Value="#8e44ad" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Logo">
+                                            <Setter Property="FontFamily" Value="Lucida Console" />
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <Rectangle Grid.Row="1"
+                   VerticalAlignment="Stretch"
+                   Fill="{StaticResource BorderBrush}"
+                   SnapsToDevicePixels="True" />
+    </Grid>
+</controls:MetroWindow>

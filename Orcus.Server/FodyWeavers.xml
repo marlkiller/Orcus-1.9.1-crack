@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Weavers>
+  <Costura IncludeDebugSymbols='true'>
+    <IncludeAssemblies>
+      Mono.Data.Sqlite
+      Orcus.Server.Core
+      Orcus.Shared
+      nUpdate
+      Microsoft.Threading.Tasks
+      Newtonsoft.Json
+      ICSharpCode.SharpZipLib
+      NLog
+      NLog.Windows.Forms
+    </IncludeAssemblies>
+    <Unmanaged32Assemblies>
+      sqlite3
+    </Unmanaged32Assemblies>
+  </Costura>
+</Weavers>

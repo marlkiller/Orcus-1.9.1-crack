@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Advanced" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Argumente</value>
+  </data>
+  <data name="ArgumentsDescription" xml:space="preserve">
+    <value>Definiert die Argumente, die dem Prozess beim Start übergeben werden.</value>
+  </data>
+  <data name="Client_KillCommand_Description" xml:space="preserve">
+    <value>Beendet den Client und verhindert einen Neustart durch Schutzmechanismen.</value>
+  </data>
+  <data name="Client_KillCommand_Name" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="Client_MakeAdminCommand_Description" xml:space="preserve">
+    <value>Versuche, den Prozess mit erweiterten Rechten neuzustarten. Sollte dies fehlschlagen, wird der Prozess mit eingeschränkten Rechten weiter ausgeführt.</value>
+  </data>
+  <data name="Client_MakeAdminCommand_Name" xml:space="preserve">
+    <value>Administratorberechtigungen anfordern</value>
+  </data>
+  <data name="Client_PasswordRecoveryCommand_Description" xml:space="preserve">
+    <value>Wiederherstellen von Passwörtern und Cookies auf dem PC des Clients.</value>
+  </data>
+  <data name="Client_PasswordRecoveryCommand_Name" xml:space="preserve">
+    <value>Passwort-Wiederherstellung</value>
+  </data>
+  <data name="Client_RequestKeyLogCommand_Description" xml:space="preserve">
+    <value>Erzwinge das Senden des aktuellen Key logs.</value>
+  </data>
+  <data name="Client_RequestKeyLogCommand_Name" xml:space="preserve">
+    <value>Key Log anfordern</value>
+  </data>
+  <data name="Client_UninstallCommand_Description" xml:space="preserve">
+    <value>Deinstalliere den Client, entferne alle Abhängigkeiten und entferne alle Dateien.</value>
+  </data>
+  <data name="Client_UninstallCommand_Name" xml:space="preserve">
+    <value>Deinstallieren</value>
+  </data>
+  <data name="Client_UpdateCommand_Description" xml:space="preserve">
+    <value>Deinstalliert den aktuellen Client und start die neue Datei.</value>
+  </data>
+  <data name="Client_UpdateCommand_Name" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Client_UpdateCommand_PathDescription" xml:space="preserve">
+    <value>Die Datei, mit welcher der Client aktualisiert werden soll.</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_Description" xml:space="preserve">
+    <value>Lädt die Datei von der Url herunter, deinstalliert den Client und startet die heruntergeladene Datei.</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_DownloadUrl" xml:space="preserve">
+    <value>Download URL</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_DownloadUrl_Description" xml:space="preserve">
+    <value>Der Link (HTTP(S)) der Datei, die heruntergeladen werden soll.</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_FileHash" xml:space="preserve">
+    <value>Hash-Wert</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_FileHash_Description" xml:space="preserve">
+    <value>Der SHA256-Hash-Wert der Datei. Leer lassen, wenn kein Hashvergleich erforderlich ist.</value>
+  </data>
+  <data name="Client_UpdateFromUrlCommand_Name" xml:space="preserve">
+    <value>Aktualisieren (Url)</value>
+  </data>
+  <data name="Common" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Computer_WakeOnLanCommand_Description" xml:space="preserve">
+    <value>Schicke Magic Packets an die Clients, um sie aufzuwecken. Dies funktioniert nur, wenn der Server in dem Netzwerk der Clients ist.</value>
+  </data>
+  <data name="Computer_WakeOnLanCommand_Name" xml:space="preserve">
+    <value>Wake On Lan</value>
+  </data>
+  <data name="Desktop" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="ExecutableFilesFilter" xml:space="preserve">
+    <value>Anwendungen|*.exe</value>
+  </data>
+  <data name="FileCheck" xml:space="preserve">
+    <value>Überprüfung</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Dateiname</value>
+  </data>
+  <data name="Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Interaction_OpenTextInNotepadCommand_Description" xml:space="preserve">
+    <value>Öffnet den angegebenen Text in Notepad, sodass der Benutzer es lesen und kopieren kann.</value>
+  </data>
+  <data name="Interaction_OpenTextInNotepadCommand_Name" xml:space="preserve">
+    <value>Öffne Text in Notepad</value>
+  </data>
+  <data name="Interaction_OpenTextInNotepadCommand_Text_Description" xml:space="preserve">
+    <value>Der Text, der in Notepad angezeigt werden soll.</value>
+  </data>
+  <data name="Interaction_OpenTextInNotepadCommand_Title_Description" xml:space="preserve">
+    <value>Der Titel des Fensters.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Description" xml:space="preserve">
+    <value>Zeigt eine einfache Sprechblase in Windows.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Icon_Description" xml:space="preserve">
+    <value>Das Icon der Sprechblase.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Name" xml:space="preserve">
+    <value>Öffne Sprechblase</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Text_Description" xml:space="preserve">
+    <value>Der Text, der in der Sprechblase dargestellt werden soll.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Timeout_Description" xml:space="preserve">
+    <value>Die Zeit, in der die Sprechblase sichtbar sein soll.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_Title_Description" xml:space="preserve">
+    <value>Der Titel der Sprechblase.</value>
+  </data>
+  <data name="Interaction_ShowBalloonTooltipCommand_ValidateInput_TextCannotBeEmpty" xml:space="preserve">
+    <value>Der Text darf nicht leer sein.</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Buttons" xml:space="preserve">
+    <value>Schaltflächen</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Buttons_Description" xml:space="preserve">
+    <value>Gibt an, welche Schaltflächen im Meldungsfeld angezeigt werden sollen.</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_DefaultButton" xml:space="preserve">
+    <value>Standard-Schaltfläche</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_DefaultButton_Description" xml:space="preserve">
+    <value>Gibt die Standardtaste für das Meldungsfeld an.</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Description" xml:space="preserve">
+    <value>Öffnet ein Meldungsfeld. Die Taste, die vom Benutzer gedrückt wurde, wird zurückgegeben</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Icon_Description" xml:space="preserve">
+    <value>Gibt an, welches Symbol im Meldungsfeld angezeigt werden soll.</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Name" xml:space="preserve">
+    <value>Meldungsfeld öffnen</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Text_Description" xml:space="preserve">
+    <value>Der Text, der im Meldungsfeld angezeigt wird.</value>
+  </data>
+  <data name="Interaction_ShowMessageBoxCommand_Title_Description" xml:space="preserve">
+    <value>Der Text, der in der Titelleiste des Meldungsfeldes angezeigt wird.</value>
+  </data>
+  <data name="InvalidFilename" xml:space="preserve">
+    <value>Ungültiger Dateiname</value>
+  </data>
+  <data name="InvalidSHA256HashValueHex" xml:space="preserve">
+    <value>Ungültiger Hashwert. Bitte stellen Sie sicher, dass Sie einen SHA256-Hash verwenden, der als hexadezimal formatiert ist (64 Zeichen)</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Pfad</value>
+  </data>
+  <data name="PathCannotBeEmpty" xml:space="preserve">
+    <value>Der Pfad darf nicht leer sein.</value>
+  </data>
+  <data name="Protection" xml:space="preserve">
+    <value>Schutzmaßnahmen</value>
+  </data>
+  <data name="ShowMessageBoxCommand_ValidateInput_TextCannotBeEmpty" xml:space="preserve">
+    <value>Der Text darf nicht leer sein.</value>
+  </data>
+  <data name="System_ChangeComputerStateCommand_ComputerState" xml:space="preserve">
+    <value>Computerzustand</value>
+  </data>
+  <data name="System_ChangeComputerStateCommand_ComputerState_Description" xml:space="preserve">
+    <value>Ändert den aktullen Computer-Zustand (z. B. schaltet diesen aus)</value>
+  </data>
+  <data name="System_ChangeComputerStateCommand_Description" xml:space="preserve">
+    <value>Herunterfahren, neu starten oder den Computer abmelden.</value>
+  </data>
+  <data name="System_ChangeComputerStateCommand_Name" xml:space="preserve">
+    <value>Computerzustand ändern</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_Description" xml:space="preserve">
+    <value>Ändert das Desktop-Hintergrundbild des Computers zu einem Bild von einer URL.</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_Name" xml:space="preserve">
+    <value>Desktop-Hintergrundbild ändern</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_ValidateInput_WallpaperUrlCannotBeEmpty" xml:space="preserve">
+    <value>Die Wallpaper URL darf nicht leer sein.</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_WallpaperStyle" xml:space="preserve">
+    <value>Anpassung</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_WallpaperStyle_Description" xml:space="preserve">
+    <value>Legt fest, wie die Bild auf dem Desktop angezeigt werden soll.</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_WallpaperUrl" xml:space="preserve">
+    <value>Bild-Url</value>
+  </data>
+  <data name="System_ChangeWallpaperCommand_WallpaperUrl_Description" xml:space="preserve">
+    <value>Die Url zu dem neuen Hintergrundbild.</value>
+  </data>
+  <data name="System_DownloadAndExecuteCommand_Description" xml:space="preserve">
+    <value>Lädt die angegebene Datei von dem Orcus Server herunter und führt diese aus</value>
+  </data>
+  <data name="System_DownloadAndExecuteCommand_ExecuteUsingService" xml:space="preserve">
+    <value>Mit Dienst ausführen</value>
+  </data>
+  <data name="System_DownloadAndExecuteCommand_ExecuteUsingService_Description" xml:space="preserve">
+    <value>Die Datei mit dem Orcus Dienst ausführen, sofern dieser installiert ist.</value>
+  </data>
+  <data name="System_DownloadAndExecuteCommand_Name" xml:space="preserve">
+    <value>Herunterladen und Ausführen</value>
+  </data>
+  <data name="System_DownloadAndExecuteCommand_Path_Description" xml:space="preserve">
+    <value>Der Pfad zur Datei, die auf dem entfernten System ausgeführt werden soll.</value>
+  </data>
+  <data name="System_DownloadAndExecuteFromUrlCommand_Description" xml:space="preserve">
+    <value>Lädt eine Datei von einer Url herunter und führt diese aus.</value>
+  </data>
+  <data name="System_DownloadAndExecuteFromUrlCommand_Name" xml:space="preserve">
+    <value>Herunterladen und ausführen von Url</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Administrator" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Administrator_Description" xml:space="preserve">
+    <value>Führt den Prozess mit Administratorrechten aus. Dies wird keine Wirkung haben, wenn das Verb gesetzt ist.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Arguments_Description" xml:space="preserve">
+    <value>Die Befehlszeilenargumente, die beim Starten der Anwendung verwendet werden sollen.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_CreateNoWindow" xml:space="preserve">
+    <value>Kein Fenster erstellen</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_CreateNoWindow_Description" xml:space="preserve">
+    <value>Starte den Prozess, ohne ein Fenster zu erstellen. Dies funktioniert nur mit Konsolen-Anwendungen.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Description" xml:space="preserve">
+    <value>Führt die Datei des angegebenen Dateipfads aus.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_FileName_Description" xml:space="preserve">
+    <value>Die Anwendung, die gestartet werden soll.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Name" xml:space="preserve">
+    <value>Datei ausführen</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_ShellExecute" xml:space="preserve">
+    <value>Shell Ausführung</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_ShellExecute_Description" xml:space="preserve">
+    <value>Verwende die Betriebssystem-Shell, um den Prozess zu starten.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_ValidateInput_VerbDoesNotExist" xml:space="preserve">
+    <value>Das Verb scheint nicht auf diesem Computer verfügbar zu sein. Möchten Sie fortfahren?</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Verb" xml:space="preserve">
+    <value>Verb</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_Verb_Description" xml:space="preserve">
+    <value>Das Verb, das beim Öffnen der Datei verwendet werden soll</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_WindowStyle" xml:space="preserve">
+    <value>Fensterstil</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_WindowStyle_Description" xml:space="preserve">
+    <value>Der Fensterstil, den die Anwendung übernehmen soll.</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_WorkingDirectory" xml:space="preserve">
+    <value>Arbeitsverzeichnis</value>
+  </data>
+  <data name="System_ExecuteProcessCommand_WorkingDirectory_Description" xml:space="preserve">
+    <value>Das Arbeitsverzeichnis für den Prozess. Das hat keine Wirkung, wenn Shell Ausführung an ist</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_Amount" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_Amount_Description" xml:space="preserve">
+    <value>Die Anzahl der Website-Instanzen.</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_Description" xml:space="preserve">
+    <value>Öffne eine Website x mal.</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_Name" xml:space="preserve">
+    <value>Öffne Website</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_ValidateInput_InvalidUrl" xml:space="preserve">
+    <value>This is not a valid url. Open anyway?</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_ValidateInput_Times" xml:space="preserve">
+    <value>Please use a positive not zero value for the Times property</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_WebsiteUrl" xml:space="preserve">
+    <value>Website Url</value>
+  </data>
+  <data name="System_OpenWebsiteCommand_WebsiteUrl_Description" xml:space="preserve">
+    <value>Die Url der Website, die geöffnet werden soll.</value>
+  </data>
+  <data name="System_SystemLockCommand_Background" xml:space="preserve">
+    <value>Hintergrund</value>
+  </data>
+  <data name="System_SystemLockCommand_Background_Description" xml:space="preserve">
+    <value>Die Hintergrundfarbe des Sperrbildschirms</value>
+  </data>
+  <data name="System_SystemLockCommand_CloseWindows" xml:space="preserve">
+    <value>Fenster schließen</value>
+  </data>
+  <data name="System_SystemLockCommand_CloseWindows_Description" xml:space="preserve">
+    <value>Schließe andere Fenster auf dem neu erstellten Desktop. Dies wirkt sich nur auf die Fenster des neuen Desktops aus; die Fenster des Standardesktops bleiben unverändert.</value>
+  </data>
+  <data name="System_SystemLockCommand_Description" xml:space="preserve">
+    <value>Sperrt das System und verhindert jegliche Benuzterinteratkion, bis der Command gestoppt wird.</value>
+  </data>
+  <data name="System_SystemLockCommand_DifferentDesktop" xml:space="preserve">
+    <value>Anderer Desktop</value>
+  </data>
+  <data name="System_SystemLockCommand_DifferentDesktop_Description" xml:space="preserve">
+    <value>Sperrt das System und verhindert jegliche Benuzterinteratkion, bis der Command gestoppt wird. Der ursprüngliche Desktop wird wiederhergestellt, wenn der Command gestoppt wird.</value>
+  </data>
+  <data name="System_SystemLockCommand_DisableTaskManager" xml:space="preserve">
+    <value>Task-Manager deaktivieren</value>
+  </data>
+  <data name="System_SystemLockCommand_DisableTaskManager_Description" xml:space="preserve">
+    <value>Deaktiviert den Windows Task-Manager für die Dauer des Commands, um zu verhindern, dass der Benutzer den Prozess abbricht. Diese Funktion erfordert Administratorrechte.</value>
+  </data>
+  <data name="System_SystemLockCommand_DisableUserInput" xml:space="preserve">
+    <value>Benutzereingaben deaktivieren</value>
+  </data>
+  <data name="System_SystemLockCommand_DisableUserInput_Description" xml:space="preserve">
+    <value>Deaktiviert die Maus und die Tastatur. Diese Funktion erfordert Administratorrechte.</value>
+  </data>
+  <data name="System_SystemLockCommand_Message" xml:space="preserve">
+    <value>Nachricht</value>
+  </data>
+  <data name="System_SystemLockCommand_Message_Description" xml:space="preserve">
+    <value>Zeigt eine Nachricht an.</value>
+  </data>
+  <data name="System_SystemLockCommand_Name" xml:space="preserve">
+    <value>System sperren</value>
+  </data>
+  <data name="System_SystemLockCommand_PeriodicallySetTopWindow" xml:space="preserve">
+    <value>Regelmäßig nach vorne holen</value>
+  </data>
+  <data name="System_SystemLockCommand_PeriodicallySetTopWindow_Description" xml:space="preserve">
+    <value>Es kann sein, dass das Fenster von anderen Fenstern überlappt wird. Diese Option verhindert das.</value>
+  </data>
+  <data name="System_SystemLockCommand_PreventClosing" xml:space="preserve">
+    <value>Schließen verhindern</value>
+  </data>
+  <data name="System_SystemLockCommand_PreventClosing_Description" xml:space="preserve">
+    <value>Verhindert die Tastenkombination Alt+F4 und die Schaltfläche Schließen in der Taskleiste.</value>
+  </data>
+  <data name="System_SystemLockCommand_RotateScreen" xml:space="preserve">
+    <value>Bildschirm drehen</value>
+  </data>
+  <data name="System_SystemLockCommand_RotateScreen_Description" xml:space="preserve">
+    <value>Dreht den Bildschirm, um dem Benutzer die Navigation zu erschweren. Der Bildschirm wird wiederhergestellt, wenn der Command gestoppt wird.</value>
+  </data>
+  <data name="System_SystemLockCommand_Topmost" xml:space="preserve">
+    <value>Fenster überlappen</value>
+  </data>
+  <data name="System_SystemLockCommand_Topmost_Description" xml:space="preserve">
+    <value>Bringt das Fenster dazu, andere Fenster zu überlappen.</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="TheFileDoesnotExist" xml:space="preserve">
+    <value>Die Datei {0} wurde nicht gefunden</value>
+    <comment>0: the name of the file</comment>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="UrlCannotBeEmpty" xml:space="preserve">
+    <value>The url can not be empty</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>Visibility</value>
+  </data>
+  <data name="WarningFileAbove5MiB" xml:space="preserve">
+    <value>The file {0} has a size above 5 MiB. Please be aware that this file has to be loaded in the memory and be transmitted to every client which can be very slow if a huge amount of clients are targeted. Do you want to continue?</value>
+    <comment>0: the name of the file</comment>
+  </data>
+</root>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <TextView
+            android:text="Taskbar"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Show"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/ShowTaskbarButton" />
+            <Button
+                android:text="Hide"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HideTaskbarButton" />
+        </LinearLayout>
+        <TextView
+            android:text="Desktop"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Show"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/ShowDesktopButton" />
+            <Button
+                android:text="Hide"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HideDesktopButton" />
+        </LinearLayout>
+        <TextView
+            android:text="Clock"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Show"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/ShowClockButton" />
+            <Button
+                android:text="Hide"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HideClockButton" />
+        </LinearLayout>
+        <TextView
+            android:text="Mouse"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Swap"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/SwapMouseButton" />
+            <Button
+                android:text="Restore"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/RestoreMouseButton" />
+        </LinearLayout>
+        <TextView
+            android:text="Taskmanager"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Enable"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/EnableTaskmanagerButton" />
+            <Button
+                android:text="Disable"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/DisableTaskmanagerButton" />
+        </LinearLayout>
+        <TextView
+            android:text="User Input"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <EditText
+                android:inputType="number"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/BlockUserInputTextView"
+                android:text="10" />
+            <TextView
+                android:text="Seconds"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView4"
+                android:gravity="center" />
+            <Button
+                android:text="Block"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/BlockUserInputButton"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+        <TextView
+            android:text="Mouse"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <EditText
+                android:inputType="number"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HoldMouseTextBox"
+                android:text="10" />
+            <TextView
+                android:text="Seconds"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView4"
+                android:gravity="center" />
+            <Button
+                android:text="Hold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HoldMouseButton"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+        <TextView
+            android:text="Shutdown"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Shutdown"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:id="@+id/ShutdownButton" />
+            <Button
+                android:text="Log Off"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/LogOffButton" />
+            <Button
+                android:text="Restart"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/RestartButton" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1">
+            <Button
+                android:text="Trigger Bluescreen"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/TriggerBlueScreenButton" />
+            <Button
+                android:text="Hang System"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:id="@+id/HangSystemButton" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

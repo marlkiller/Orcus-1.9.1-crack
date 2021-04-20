@@ -1,0 +1,538 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.FileExplorerPropertiesWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:fileExplorer="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.FileExplorer;assembly=Orcus.Administration.ViewModels"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:shared="clr-namespace:Orcus.Shared.Commands.FileExplorer;assembly=Orcus.Shared"
+                      Width="400"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance fileExplorer:PropertiesViewModel}"
+                      extensions:WindowService.EscapeClosesWindow="True"
+                      Icon="{Binding Icon}"
+                      ResizeMode="CanResize"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
+                      Style="{StaticResource NormalWindow}"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.Resources>
+        <Style x:Key="SeparatorStyle" TargetType="Rectangle">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Fill" Value="{StaticResource GrayBrush2}" />
+        </Style>
+    </controls:MetroWindow.Resources>
+    <TabControl Margin="5"
+                Background="{StaticResource WhiteBrush}"
+                Style="{StaticResource Windows10TabControl}">
+        <TabItem Header="{StaticResource General}">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Width="32"
+                           Height="32"
+                           Source="{Binding EntryInfo.EntryViewModel.Icon}" />
+                    <TextBox Grid.Column="2"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Bottom"
+                             IsReadOnly="True"
+                             Text="{Binding EntryInfo.EntryViewModel.Name,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Rectangle Margin="0,5,0,0" Style="{StaticResource SeparatorStyle}" />
+                <ContentControl Content="{Binding EntryInfo}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type fileExplorer:DirectoryEntryInfoViewModel}">
+                            <StackPanel Orientation="Vertical">
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding LabelIsDifferent}" Value="true">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{StaticResource LocalizedName}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding DirectoryNodeViewModel.Label,
+                                                            Mode=OneWay}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{StaticResource Type}" />
+                                    <TextBox Grid.Column="1">
+                                        <TextBox.Style>
+                                            <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DirectoryPropertiesInfo.DirectoryType}" Value="{x:Static shared:DirectoryType.Normal}">
+                                                        <Setter Property="Text" Value="{StaticResource Directory}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DirectoryPropertiesInfo.DirectoryType}" Value="{x:Static shared:DirectoryType.SpecialFolder}">
+                                                        <Setter Property="Text" Value="{StaticResource SpecialFolder}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DirectoryPropertiesInfo.DirectoryType}" Value="{x:Static shared:DirectoryType.Drive}">
+                                                        <Setter Property="Text" Value="{StaticResource Drive}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DirectoryPropertiesInfo.DirectoryType}" Value="{x:Static shared:DirectoryType.SpecialFolder}">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{StaticResource SpecialFolderType}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding DirectoryPropertiesInfo.SpecialFolderType,
+                                                            Mode=OneWay}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{StaticResource Location}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding DirectoryNodeViewModel.Value.Path,
+                                                            Mode=OneWay}" />
+                                </Grid>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DirectoryNodeViewModel.IsDrive}" Value="true">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{StaticResource DriveType}" />
+                                        <TextBox Grid.Column="1"
+                                                 Style="{StaticResource ValueText}"
+                                                 Text="{Binding DirectoryNodeViewModel.Description,
+                                                                Mode=OneWay}" />
+                                    </Grid>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{StaticResource Format}" />
+                                        <TextBox Grid.Column="1"
+                                                 Style="{StaticResource ValueText}"
+                                                 Text="{Binding DirectoryPropertiesInfo.DriveFormat,
+                                                                Mode=OneWay}" />
+                                    </Grid>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{StaticResource Capacity}" />
+                                        <TextBox Grid.Column="1"
+                                                 Style="{StaticResource ValueText}"
+                                                 Text="{Binding DirectoryNodeViewModel.Value.TotalSize,
+                                                                Converter={StaticResource FormatBytesConverter},
+                                                                Mode=OneWay}" />
+                                    </Grid>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{StaticResource UsedSpace}" />
+                                        <TextBox Grid.Column="1"
+                                                 Style="{StaticResource ValueText}"
+                                                 Text="{Binding DirectoryNodeViewModel.Value.UsedSpace,
+                                                                Converter={StaticResource FormatBytesConverter},
+                                                                Mode=OneWay}" />
+                                    </Grid>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{StaticResource FreeSpace}" />
+                                        <TextBox Grid.Column="1"
+                                                 Style="{StaticResource ValueText}"
+                                                 Text="{Binding AvailableSpace,
+                                                                Converter={StaticResource FormatBytesConverter},
+                                                                Mode=OneWay}" />
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type fileExplorer:FileEntryInfoViewModel}">
+                            <StackPanel Orientation="Vertical">
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{StaticResource Type}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding FileEntryViewModel.Description,
+                                                            Mode=OneWay}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FilePropertiesInfo.OpenWithProgramName, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Top" Text="{StaticResource OpenWith}" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBox Style="{StaticResource ValueText}" Text="{Binding FilePropertiesInfo.OpenWithProgramName, Mode=OneWay}" />
+                                        <TextBox Style="{StaticResource ValueText}" Text="{Binding FilePropertiesInfo.OpenWithProgramPath, Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Top" Text="{StaticResource Size}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding FilePropertiesInfo.Size,
+                                                            Converter={StaticResource FormatBytesConverter},
+                                                            Mode=OneWay}" />
+                                </Grid>
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Top" Text="{StaticResource SizeOnDisk}" />
+                                    <TextBox Grid.Column="1"
+                                             Style="{StaticResource ValueText}"
+                                             Text="{Binding FilePropertiesInfo.SizeOnDisk,
+                                                            Converter={StaticResource FormatBytesConverter},
+                                                            Mode=OneWay}" />
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+                <Rectangle Margin="0,10" Style="{StaticResource SeparatorStyle}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{StaticResource Created}" />
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding EntryInfo.PropertiesInfo.CreationTime,
+                                            Converter={StaticResource DateTimeToStringConverter},
+                                            ConverterParameter={x:Static converter:DateTimeFormat.FullDateLong}}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{StaticResource Modified}" />
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding EntryInfo.PropertiesInfo.LastWriteTime,
+                                            Converter={StaticResource DateTimeToStringConverter},
+                                            ConverterParameter={x:Static converter:DateTimeFormat.FullDateLong}}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{StaticResource Accessed}" />
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding EntryInfo.PropertiesInfo.LastAccessTime,
+                                            Converter={StaticResource DateTimeToStringConverter},
+                                            ConverterParameter={x:Static converter:DateTimeFormat.FullDateLong}}" />
+                </Grid>
+                <Rectangle Margin="0,10" Style="{StaticResource SeparatorStyle}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{StaticResource Attributes}" />
+                    <TextBox Grid.Column="1">
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource ValueText}" TargetType="TextBox">
+                                <Setter Property="Text" Value="{Binding EntryInfo.Attributes, Mode=OneWay}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EntryInfo.Attributes, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                        <Setter Property="Text" Value="{StaticResource None}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
+            </StackPanel>
+        </TabItem>
+        <TabItem DataContext="{Binding EntryInfo}" Header="{StaticResource FileHashes}">
+            <TabItem.Style>
+                <Style BasedOn="{StaticResource Windows10TabItem}" TargetType="TabItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDirectoryInfo}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TabItem.Style>
+            <TabItem.Resources>
+                <extensions:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+            </TabItem.Resources>
+            <ContentControl Content="{Binding}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type fileExplorer:FileEntryInfoViewModel}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ListView BorderThickness="0" ItemsSource="{Binding HashValueInfos}">
+                                <ListView.Resources>
+                                    <ContextMenu x:Key="ItemContextMenu">
+                                        <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                                    Path=Data.CopyHashValueCommand}"
+                                                  CommandParameter="{Binding}"
+                                                  Header="{StaticResource Copy}" />
+                                    </ContextMenu>
+                                </ListView.Resources>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="100"
+                                                        DisplayMemberBinding="{Binding Type}"
+                                                        Header="{StaticResource Name}" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="{StaticResource HashValue}" />
+                                    </GridView>
+                                </ListView.View>
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                            <Grid Grid.Row="1" Margin="10,10,10,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar IsIndeterminate="{Binding IsLoadingHashValues}" />
+                                <Button Grid.Column="2"
+                                        MinWidth="75"
+                                        Command="{Binding CalculateHashValuesCommand}"
+                                        Content="{StaticResource Calculate}">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsLoadingHashValues}" Value="true">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </TabItem>
+        <TabItem DataContext="{Binding EntryInfo}" Header="{StaticResource Details}">
+            <TabItem.Style>
+                <Style BasedOn="{StaticResource Windows10TabItem}" TargetType="TabItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDirectoryInfo}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TabItem.Style>
+            <TabItem.Resources>
+                <extensions:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+            </TabItem.Resources>
+            <ContentControl Content="{Binding}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type fileExplorer:FileEntryInfoViewModel}">
+                        <ListView BorderThickness="0" ItemsSource="{Binding TranslatedFileProperties}">
+                            <ListView.Resources>
+                                <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                                Path=Data.CopyPropertyCommand}"
+                                              CommandParameter="{Binding}"
+                                              Header="{StaticResource Copy}" />
+                                    <Separator />
+                                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                                Path=Data.CopyPropertyNameCommand}"
+                                              CommandParameter="{Binding}"
+                                              Header="{StaticResource CopyName}" />
+                                    <MenuItem Command="{Binding Source={StaticResource BindingProxy},
+                                                                Path=Data.CopyPropertyValueCommand}"
+                                              CommandParameter="{Binding}"
+                                              Header="{StaticResource CopyValue}" />
+                                    <Separator />
+                                    <MenuItem Command="{Binding Source={StaticResource BindingProxy}, Path=Data.CopyAllCommand}" Header="{StaticResource CopyAll}" />
+                                </ContextMenu>
+                            </ListView.Resources>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition Height="1" />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <DockPanel>
+                                                                <TextBlock Margin="10,0,0,0"
+                                                                           FontSize="13"
+                                                                           Foreground="{DynamicResource DarkColorBrush}">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Details}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Details}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Document}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Document}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Audio}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Audio}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Calendar}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Calendar}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Contact}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Contact}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Executable}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Executable}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.FileVersionInfo}">
+                                                                                    <Setter Property="Text" Value="{StaticResource FileVersion}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Image}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Image}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Media}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Media}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Message}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Message}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Music}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Music}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Note}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Note}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Photo}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Photo}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.RecordedTV}">
+                                                                                    <Setter Property="Text" Value="{StaticResource RecordedTv}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Task}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Task}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static shared:FilePropertyGroup.Video}">
+                                                                                    <Setter Property="Text" Value="{StaticResource Video}" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                                <Rectangle Height="1"
+                                                                           Margin="10,0,0,0"
+                                                                           VerticalAlignment="Center"
+                                                                           Fill="{DynamicResource DarkColorBrush}"
+                                                                           SnapsToDevicePixels="True" />
+                                                            </DockPanel>
+                                                            <ItemsPresenter Grid.Row="2" />
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="120"
+                                                    DisplayMemberBinding="{Binding Name}"
+                                                    Header="{StaticResource Name}" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="{StaticResource Value}" />
+                                </GridView>
+                            </ListView.View>
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </TabItem>
+    </TabControl>
+</controls:MetroWindow>

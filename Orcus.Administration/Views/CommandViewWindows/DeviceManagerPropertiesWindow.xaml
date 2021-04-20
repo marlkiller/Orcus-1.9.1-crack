@@ -1,0 +1,204 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.CommandViewWindows.DeviceManagerPropertiesWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:deviceManager="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.DeviceManager;assembly=Orcus.Administration.ViewModels"
+                      xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Title="DeviceManagerPropertiesWindow"
+                      Width="400"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance deviceManager:DeviceViewModel}"
+                      extensions:WindowService.EscapeClosesWindow="True"
+                      Icon="/Resources/Images/VisualStudio/Property.ico"
+                      ResizeMode="CanResize"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
+                      Style="{StaticResource NormalWindow}"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource PropertyIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <TabControl Margin="5" Style="{StaticResource Windows10TabControl}">
+        <TabItem Header="{StaticResource General}">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBox Style="{StaticResource ValueText}" Text="{Binding Caption, Mode=OneWay}" />
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Manufacturer}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.Manufacturer,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Description}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.Description,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource DeviceId}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DeviceId,
+                                            Mode=OneWay}" />
+                </Grid>
+                <TextBlock Margin="0,20,0,0" Text="{StaticResource Status}" />
+                <TextBox Height="100"
+                         Margin="0,2,0,0"
+                         AcceptsReturn="True"
+                         IsReadOnly="True"
+                         Text="{Binding StatusErrorMessage,
+                                        Mode=OneWay}"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="{StaticResource Driver}">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Name}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverName,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource FriendlyName}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverFriendlyName,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Description}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverDescription,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Provider}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverProviderName,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Signer}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverSigner,
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource Version}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverVersion}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource BuildDate}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverBuildDate,
+                                            Converter={StaticResource DateTimeToStringConverter},
+                                            ConverterParameter={x:Static converter:DateTimeFormat.FullDateLong},
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource InstallDate}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverInstallDate,
+                                            Converter={StaticResource DateTimeToStringConverter},
+                                            ConverterParameter={x:Static converter:DateTimeFormat.FullDateLong},
+                                            Mode=OneWay}" />
+                </Grid>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="{StaticResource InfName}" /><Run Text=":" />
+                    </TextBlock>
+                    <TextBox Grid.Column="1"
+                             Style="{StaticResource ValueText}"
+                             Text="{Binding DeviceInfo.DriverInfName,
+                                            Mode=OneWay}" />
+                </Grid>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</controls:MetroWindow>

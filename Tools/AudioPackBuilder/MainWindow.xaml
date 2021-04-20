@@ -1,0 +1,205 @@
+﻿<Window x:Class="AudioPackBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converter="clr-namespace:AudioPackBuilder.Converter"
+        xmlns:core="clr-namespace:AudioPackBuilder.Core"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:extensions="clr-namespace:AudioPackBuilder.Extensions"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:plugins="clr-namespace:Orcus.Administration.Plugins;assembly=Orcus.Administration.Plugins"
+        xmlns:viewModels="clr-namespace:AudioPackBuilder.ViewModels"
+        xmlns:audioPlugin="clr-namespace:Orcus.Administration.Plugins.AudioPlugin;assembly=Orcus.Administration.Plugins"
+        Title="Audio Pack Builder"
+        Width="880"
+        Height="485"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <converter:IsStringEmptyConverter x:Key="IsStringEmptyConverter" />
+
+        <ContextMenu x:Key="ItemContextMenu">
+            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},
+                                        Path=DataContext.ChangeAudioThumbnailCommand}"
+                      CommandParameter="{Binding}"
+                      Header="Change Thumbnail" />
+            <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},
+                                        Path=DataContext.RemoveAudioThumbnailCommand}"
+                      CommandParameter="{Binding}"
+                      Header="Remove Thumbnail" />
+        </ContextMenu>
+
+        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="0,0,5,0"
+                           VerticalAlignment="Center"
+                           Text="Thumbnail (240x135):" />
+                <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Text="{Binding ThumbnailPath}" />
+                <Button Grid.Column="2"
+                        Width="30"
+                        Margin="5,0,0,0"
+                        Command="{Binding SelectThumbnailPathCommand}"
+                        Content="..." />
+            </Grid>
+            <DockPanel Grid.Row="1" Margin="0,20,0,10">
+                <TextBlock Text="Audio files:" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Width="60"
+                            Margin="0,0,10,0"
+                            Command="{Binding AddAudioFileCommand}"
+                            Content="Add" />
+                    <Button Width="60"
+                            Command="{Binding RemoveAudioFilesCommand}"
+                            CommandParameter="{Binding ElementName=AudioFilesDataGrid,
+                                                       Path=SelectedItems}"
+                            Content="Remove">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=AudioFilesDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+            <DataGrid x:Name="AudioFilesDataGrid"
+                      Grid.Row="2"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding AudioFiles}"
+                      RowStyle="{StaticResource DefaultRowStyle}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <ContentPresenter Margin="5,0" VerticalAlignment="Center" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="70" Header="Thumbnail">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type core:AudioFile}">
+                                <Image Width="60"
+                                       Height="35"
+                                       Source="{Binding Thumbnail}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="*"
+                                        Binding="{Binding Name}"
+                                        Header="Name" />
+                    <DataGridComboBoxColumn Width="100"
+                                            DisplayMemberPath="Description"
+                                            Header="Genre"
+                                            ItemsSource="{Binding Source={extensions:Enumeration {x:Type audioPlugin:AudioGenre}}}"
+                                            SelectedValueBinding="{Binding AudioGenre}"
+                                            SelectedValuePath="Value" />
+                    <DataGridTextColumn Width="75"
+                                        Binding="{Binding Duration,
+                                                          Mode=OneWay}"
+                                        Header="Duration"
+                                        IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock Text="Name" />
+                <TextBox x:Name="NameTextBox"
+                         Margin="0,2,0,0"
+                         Text="{Binding PluginInfo.Name}" />
+                <TextBlock Margin="0,5,0,0" Text="Description" />
+                <TextBox x:Name="DescriptionTextBox"
+                         Margin="0,2,0,0"
+                         Text="{Binding PluginInfo.Description}" />
+                <TextBlock Margin="0,5,0,0" Text="Author" />
+                <TextBox x:Name="AuthorTextBox"
+                         Margin="0,2,0,0"
+                         Text="{Binding PluginInfo.Author}" />
+                <TextBlock Margin="0,5,0,0" Text="Author Url" />
+                <TextBox x:Name="AuthorUrlTextBox"
+                         Margin="0,2,0,0"
+                         Text="{Binding PluginInfo.AuthorUrl}" />
+                <TextBlock Margin="0,5,0,0" Text="Guid" />
+                <TextBox x:Name="GuidTextBox"
+                         Margin="0,2,0,0"
+                         Text="{Binding PluginGuid}" />
+                <TextBlock Margin="0,5,0,0" Text="Version" />
+                <TextBox x:Name="VersionTextBox" Text="{Binding Version}" />
+            </StackPanel>
+            <Button Grid.Row="1"
+                    Width="100"
+                    Height="30"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Command="{Binding CreatePluginCommand}"
+                    Content="Create">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=NameTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=DescriptionTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=AuthorTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=AuthorUrlTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=VersionTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=GuidTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AudioFiles.Count}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ThumbnailPath, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

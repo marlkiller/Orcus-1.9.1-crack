@@ -1,0 +1,118 @@
+Code
+==========================================================================================================================
+Firefox & Thunderbird: https://github.com/lclevy/firepwd (GPL 2)
+Reverse Proxy: https://github.com/quasar/QuasarRAT (GPL 3)
+NetSerializer: https://tldrlegal.com/license/mozilla-public-license-2.0-(mpl-2) (MPL-2.0)
+GridViewSort: http://www.thomaslevesque.com/2009/03/27/wpf-automatically-sort-a-gridview-when-a-column-header-is-clicked/ ("please feel free to use it")
+ListView Layout Manager: http://www.codeproject.com/Articles/25058/ListView-Layout-Manager (CPOL)
+LZF: https://csharplzfcompression.codeplex.com/ (BSD)
+
+
+Vectors
+==========================================================================================================================
+https://creativecommons.org/licenses/by/3.0/:
+- VectorTime: https://www.iconfinder.com/icons/103169/alarm_clock_time_icon (Designmodo)
+- VectorError: https://www.iconfinder.com/icons/381599/error_icon (Tahsin Tahil)
+- VectorFullscreen: http://www.flaticon.com/free-icon/expand-view_2282 (Freepik)
+- VectorCheck: https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon (Designmodo)
+- VectorCross: https://www.iconfinder.com/icons/103181/close_cross_delete_remove_icon (Designmodo)
+- VectorUSB: http://www.flaticon.com/free-icon/usb-symbol-_64172 (Freepik)
+- VectorCD: http://www.flaticon.com/free-icon/compact-disc-icon_69375 (Bogdan Rosu)
+- VectorHDD: http://www.flaticon.com/free-icon/hard-drive-interior_15655 (Freepik)
+- VectorTrue: https://www.iconfinder.com/icons/103183/accept_check_checkround_ok_yes_icon (Designmodo)
+- VectorFalse: http://www.flaticon.com/free-icon/cancel-button_1502 (Freepik)
+- VectorClock: http://www.flaticon.com/free-icon/clock-with-white-face_61227 (Google)
+- RegistryFolderVector: https://www.iconfinder.com/icons/416376/envelope_files_folder_interface_office_icon (Squid.ink)
+- VectorList: http://www.flaticon.com/free-icon/menu-button_60510 (Google)
+- VectorTiles: http://www.flaticon.com/free-icon/show-apps-button_60991 (Google)
+
+Just free (no license):
+- VectorWarning: https://www.iconfinder.com/icons/183533/warning_icon (Yannick Lung)
+- VectorUpdate: https://www.iconfinder.com/icons/183184/arrow_circle_up_icon (Yannick Lung)
+- VectorMonitor: https://www.iconfinder.com/icons/383103/monitor_icon (Design Revision)
+
+
+https://creativecommons.org/licenses/by-sa/3.0/
+- VectorRefresh: https://www.iconfinder.com/icons/126579/refresh_reload_sync_icon (Timothy Miller)
+- DataManager Expander Arrow Up/Down: https://www.iconfinder.com/icons/352466/arrow_down_keyboard_icon (Google)
+
+
+http://opensource.org/licenses/MIT
+- VectorBack: https://www.iconfinder.com/icons/211686/arrow_back_icon (ionicons)
+
+
+Free for commercial use (Include link to authors website)
+- VectorDecepticons: https://www.iconfinder.com/icons/367623/decepticon_transformers_icon (ProGlyphs)
+- VectorLinux: https://www.iconfinder.com/icons/367633/linux_tux_icon (ProGlyphs)
+- VectorOSX: https://www.iconfinder.com/icons/367618/apple_ipad_ipod_mac_macintosh_icon (ProGlyphs)
+- VectorWindows7: https://www.iconfinder.com/icons/367644/microsoft_windows_icon (ProGlyphs)
+- VectorWindows8: https://www.iconfinder.com/icons/367616/microsoft_windows_icon (ProGlyphs)
+
+
+Images
+==========================================================================================================================
+- /Resources/LanguageIcons: http://www.icondrawer.com/flag-icons.php
+Here you can download free link required icons. These icon sets are free for personal use. For commercial use on website, please place a link to www.icondrawer.com on your website. If you can't or don't want to place link, you can purchase royalty-free license. If you want to post the icons on a site that archives icons, please notify www.icondrawer.com requirements. For any questions - see contact info below.
+
+http://creativecommons.org/licenses/by/3.0/
+- /Resources/Images/OfflineComputer.png: https://www.iconfinder.com/icons/299053/computer_icon (Paomedia) //Color changed
+- /Resources/Images/OnlineComputer.png: https://www.iconfinder.com/icons/299053/computer_icon (Paomedia) //Color changed
+- /Resources/Images/Registry/Folder.png: https://www.iconfinder.com/icons/416376/envelope_files_folder_interface_office_icon (Squid.ink)
+
+
+https://creativecommons.org/licenses/by-sa/3.0/
+- /Resources/Images/Keyboard.png: https://www.iconfinder.com/icons/71878/keyboard_icon (Icons8)
+- /Resources/Images/Folder.png: https://www.iconfinder.com/icons/299060/folder_icon (Paomedia)
+- /Resources/Images/Error.ico: https://www.iconfinder.com/icons/299045/error_sign_icon (Paomedia)
+
+Free for commercial use
+- /Resources/Images/ArrowDown.png: https://www.iconfinder.com/icons/186411/arrow_down_icon (Designerz Base)
+- /Resources/Images/ArrowUp.png: https://www.iconfinder.com/icons/186407/arrow_up_icon (Designerz Base)
+- Tools\OrcusPluginStudio\Resources\Icon.ico: https://www.iconfinder.com/icons/728987/chemistry_experiment_lab_laboratory_research_science_test_icon (Recep Kütük)
+- /Resources/Images/key.png: https://www.iconfinder.com/icons/379501/key_icon (Webalys)
+
+Free for commercial use (Include link to authors website)
+- /Resources/Images/file.png: https://www.iconfinder.com/icons/199323/extension_file_format_txt_icon
+
+VS2015 Image Library
+- /Resources/Images/VisualStudio/
+
+
+Libraries
+==========================================================================================================================
+- AForge.NET Framework - https://www.gnu.org/licenses/lgpl.html (LGPL)
+- AvalonEdit - http://opensource.org/licenses/MIT (MIT)
+- Be.HexEditor - http://sourceforge.net/projects/hexbox/ (MIT)
+- CSCore - https://github.com/filoe/cscore/blob/master/license.md (Ms-PL)
+- FirePwd.Net - https://github.com/lclevy/firepwd (GPL 2)
+- GridViewSort - Free to use
+- Json.Net - https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md (MIT)
+- ListViewLayoutManager - CPOL
+- MahApps.Metro - https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE (Ms-PL)
+- Mono.Cecil - https://github.com/jbevain/cecil/blob/master/LICENSE.md (MIT)
+- NetSerializer - https://github.com/tomba/netserializer/blob/master/LICENSE (MPL)
+- Ookii.Dialogs - https://github.com/marklagendijk/WinLess/blob/master/packages/Ookii.Dialogs.1.0/license.txt
+- ResourceLib - https://github.com/dblock/resourcelib/blob/master/LICENSE (MIT)
+- StreamLibrary - https://github.com/AnguisCaptor/StreamLibrary (MIT)
+- Exceptionless - https://exceptionless.com/ (Apache 2.0)
+- Sparrow Toolkit - https://sparrowtoolkit.codeplex.com/license (Ms-PL)
+- Extended.Wpf.Toolkit - https://wpftoolkit.codeplex.com/license (Ms-PL)
+- UpdateSystem.Net
+
+
+Sounds
+==========================================================================================================================
+- Slender.mp3: https://freesound.org/people/CommanderDerp/sounds/167921/ (https://creativecommons.org/licenses/by/3.0/)
+- Fly.mp3: https://freesound.org/people/Benboncan/sounds/81970/ (http://creativecommons.org/licenses/by/3.0/)
+- TornadoSirens.mp3: http://soundbible.com/1937-Tornado-Siren-II.html (Attribution 3.0)
+- DemonGirlsMockingbird.mp3: http://soundbible.com/2038-Demon-Girls-Mockingbird.html (Public Domain)
+- ZombieHorde.mp3: http://soundbible.com/1833-Zombie-Horde.html (Attribution 3.0)
+- Death.mp3: http://soundbible.com/1570-Death.html (Public Domain)
+- Growl.mp3: http://soundbible.com/1483-Lion-Growling.html (Attribution 3.0)
+- Wtf.mp3: https://freesound.org/people/evilsqirrel/sounds/132424/ (Public Domain)
+- Mosquito.mp3: https://freesound.org/people/Zywx/sounds/188708/ (Public Domain)
+- CameraShutter.mp3: https://freesound.org/people/thecheeseman/sounds/51360/ (https://creativecommons.org/licenses/by/3.0/)
+- CartoonLaugh.mp3: https://freesound.org/people/JohnsonBrandEditing/sounds/173933/ (CC 0)
+- ComeOutAndPlayWithMe.mp3: https://www.freesound.org/people/AlucardsBride/sounds/179659/ (CC 0)
+- HellMarch.mp3: https://www.freesound.org/people/dingo1/sounds/171555/ (https://creativecommons.org/licenses/by/3.0/)
+- GhostOutOfMirror.mp3: https://www.freesound.org/people/gio%20td/sounds/148874/ (CC 0)

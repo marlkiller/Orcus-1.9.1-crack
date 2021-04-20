@@ -1,0 +1,32 @@
+﻿<Application x:Class="OrcusPluginStudio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:Sorzus.Wpf.Toolkit.Converter;assembly=Sorzus.Wpf.Toolkit">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="DarkColor">#2980b9</Color>
+            <Color x:Key="LightColor">#3498db</Color>
+            <Color x:Key="TransparentLightColor">#303498db</Color>
+
+            <SolidColorBrush x:Key="LightColorBrush" Color="{StaticResource LightColor}" />
+            <SolidColorBrush x:Key="DarkColorBrush" Color="{StaticResource DarkColor}" />
+            <SolidColorBrush x:Key="TransparentLightColorBrush" Color="{StaticResource TransparentLightColor}" />
+
+            <SolidColorBrush x:Key="KeyBackgroundBrush" Color="#34495e" />
+            <SolidColorBrush x:Key="KeyBorderBrush" Color="#FFBFE5FF" />
+            <SolidColorBrush x:Key="KeyForegroundBrush" Color="#3498db" />
+
+            <converter:IsStringEmptyConverter x:Key="IsStringEmptyConverter" />
+            <converter:CloneConverter x:Key="CloneConverter" />
+            <converter:FormatBytesConverter x:Key="FormatBytesConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

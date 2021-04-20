@@ -1,0 +1,121 @@
+﻿<UserControl
+    x:Class="Orcus.Administration.Views.CommandViews.ReverseProxyCommandView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance commandViewModels:ReverseProxyViewModel}"
+    d:DesignHeight="420"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="ValueForeground" Color="{DynamicResource DarkColor}" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="0,0,5,0" VerticalAlignment="Center">
+                    <Run Text="{DynamicResource LocalServerPort}" /><Run Text=":" />
+                </TextBlock>
+                <controls:NumericUpDown
+                    x:Name="PortNumericUpDown"
+                    Width="100"
+                    Margin="0,0,15,0"
+                    Maximum="65535"
+                    Minimum="1"
+                    ValueChanged="PortNumericUpDownOnValueChanged"
+                    Value="3128">
+                    <controls:NumericUpDown.Style>
+                        <Style TargetType="controls:NumericUpDown">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRunning}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:NumericUpDown.Style>
+                </controls:NumericUpDown>
+                <Grid Grid.IsSharedSizeScope="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="buttons" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition SharedSizeGroup="buttons" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Command="{Binding StartServerCommand}"
+                        CommandParameter="{Binding ElementName=PortNumericUpDown, Path=Value}"
+                        Content="{DynamicResource StartListening}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsRunning}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button
+                        Grid.Column="2"
+                        Command="{Binding StopServerCommand}"
+                        Content="{DynamicResource StopListening}"
+                        IsEnabled="{Binding IsRunning}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource ConnectToSocks5Proxy}" />
+                <TextBox
+                    x:Name="ConnectionDetailsTextBox"
+                    controls:TextBoxHelper.SelectAllOnFocus="True"
+                    Foreground="{DynamicResource ValueForeground}"
+                    Style="{StaticResource ValueText}"
+                    Text="127.0.0.1:3128" />
+                <TextBlock>
+                    <Run Text="(" /><Run Text="{DynamicResource NoUsernamePassword}" /><Run Text=")" />
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <ListView
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            listViewLayoutManager:ListViewLayoutManager.Enabled="True"
+            ItemsSource="{Binding ReverseProxyClients}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        listViewLayoutManager:ProportionalColumn.Width="1"
+                        DisplayMemberBinding="{Binding TargetServer}"
+                        Header="{DynamicResource TargetServer}" />
+                    <GridViewColumn
+                        Width="100"
+                        listViewLayoutManager:FixedColumn.Width="100"
+                        DisplayMemberBinding="{Binding TargetPort}"
+                        Header="{DynamicResource TargetPort}" />
+                    <GridViewColumn
+                        Width="120"
+                        listViewLayoutManager:FixedColumn.Width="120"
+                        DisplayMemberBinding="{Binding BytesReceived, Converter={StaticResource FormatBytesConverter}}"
+                        Header="{DynamicResource TotalReceived}" />
+                    <GridViewColumn
+                        Width="120"
+                        listViewLayoutManager:FixedColumn.Width="120"
+                        DisplayMemberBinding="{Binding BytesSent, Converter={StaticResource FormatBytesConverter}}"
+                        Header="{DynamicResource TotalSent}" />
+                    <GridViewColumn
+                        Width="150"
+                        listViewLayoutManager:FixedColumn.Width="150"
+                        DisplayMemberBinding="{Binding Type}"
+                        Header="{DynamicResource ProxyType}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.Licensing.Pages.PageError"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:licensing="clr-namespace:Orcus.Administration.Licensing"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:steps="clr-namespace:Orcus.Administration.Views.Licensing.Steps"
+             d:DataContext="{d:DesignInstance steps:StepError}"
+             d:DesignHeight="550"
+             d:DesignWidth="390"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Margin="20,50,20,20">
+        <TextBlock FontSize="16"
+                   Foreground="#e74c3c"
+                   Text="{DynamicResource Failed}" />
+        <TextBlock Margin="0,5,0,0"
+                   Foreground="{StaticResource BlackBrush}"
+                   TextWrapping="Wrap">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding LicenseRequestResult}" Value="{x:Static licensing:LicenseRequestResult.MaximumComputersReached}">
+                            <Setter Property="Text" Value="{DynamicResource LicensingFailedNoRegistrations}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LicenseRequestResult}" Value="{x:Static licensing:LicenseRequestResult.LicenseBanned}">
+                            <Setter Property="Text" Value="{DynamicResource LicensingFailedLicenseBanned}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LicenseRequestResult}" Value="{x:Static licensing:LicenseRequestResult.LicenseNotFound}">
+                            <Setter Property="Text" Value="{DynamicResource LicensingFailedLicenseNotFound}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LicenseRequestResult}" Value="{x:Static licensing:LicenseRequestResult.ServerUnavailable}">
+                            <Setter Property="Text" Value="{DynamicResource LicensingFailedWebserverNotResponsing}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </StackPanel>
+</UserControl>

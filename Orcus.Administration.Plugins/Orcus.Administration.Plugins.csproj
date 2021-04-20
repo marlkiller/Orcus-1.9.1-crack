@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BEE3B0EA-ABAE-43F3-A377-763E1A28C967}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Administration.Plugins</RootNamespace>
+    <AssemblyName>Orcus.Administration.Plugins</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !-->
+  <ItemGroup>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administration\AdministrationColumnInfo.cs" />
+    <Compile Include="AudioPlugin\AudioGenre.cs" />
+    <Compile Include="BuildPlugin\BuilderEvent.cs" />
+    <Compile Include="BuildPluginBase.cs" />
+    <Compile Include="BuildPlugin\BuilderPropertyViewUserControl.cs" />
+    <Compile Include="BuildPlugin\ClientBuildCompletedBuilderEvent.cs" />
+    <Compile Include="BuildPlugin\ClientFileCreatedBuilderEvent.cs" />
+    <Compile Include="BuildPlugin\ClientFileModifiedBuilderEvent.cs" />
+    <Compile Include="BuildPlugin\IBuilderArguments.cs" />
+    <Compile Include="BuildPlugin\IBuilderInformation.cs" />
+    <Compile Include="BuildPlugin\IProvideWindowSettings.cs" />
+    <Compile Include="BuildPlugin\LoadStreamBuilderEvent.cs" />
+    <Compile Include="BuildPlugin\ModifyAssemblyBuilderEvent.cs" />
+    <Compile Include="BuildPlugin\OutputFile.cs" />
+    <Compile Include="BuildPlugin\OutputFileType.cs" />
+    <Compile Include="BuildPlugin\SaveDialogType.cs" />
+    <Compile Include="CommandViewPlugin\CommandAndViewPlugin.cs" />
+    <Compile Include="CommandViewPlugin\CommandView.cs" />
+    <Compile Include="CommandViewPlugin\DescribeCommandByEnumAttribute.cs" />
+    <Compile Include="CommandViewPlugin\IWindowService.cs" />
+    <Compile Include="CommandViewPlugin\ProvideLibraryAttribute.cs" />
+    <Compile Include="DataManager\DataViewer.cs" />
+    <Compile Include="BuildPlugin\IBuildLogger.cs" />
+    <Compile Include="CommandViewPlugin\ICrossViewManager.cs" />
+    <Compile Include="DataManager\IDataConnection.cs" />
+    <Compile Include="DataManager\IDataManagerType.cs" />
+    <Compile Include="Administration\OfflineClientMenuItemClickedEventArgs.cs" />
+    <Compile Include="Administration\OnlineClientMenuItemClickedEventArgs.cs" />
+    <Compile Include="CommandViewPlugin\Command.cs" />
+    <Compile Include="Administration\IAdministrationConnectionManager.cs" />
+    <Compile Include="Administration\IAdministrationControl.cs" />
+    <Compile Include="IAdministrationPlugin.cs" />
+    <Compile Include="AudioPlugin\IAudioFile.cs" />
+    <Compile Include="IAudioPlugin.cs" />
+    <Compile Include="CommandViewPlugin\IClientCommands.cs" />
+    <Compile Include="CommandViewPlugin\IClientController.cs" />
+    <Compile Include="ICommandAndViewPlugin.cs" />
+    <Compile Include="CommandViewPlugin\ICommander.cs" />
+    <Compile Include="CommandViewPlugin\ICommandView.cs" />
+    <Compile Include="CommandViewPlugin\IConnectionInfo.cs" />
+    <Compile Include="CommandViewPlugin\IConnectionManager.cs" />
+    <Compile Include="CommandViewPlugin\ISender.cs" />
+    <Compile Include="Administration\IServerConnection.cs" />
+    <Compile Include="Administration\IStaticCommander.cs" />
+    <Compile Include="IViewPlugin.cs" />
+    <Compile Include="LogService.cs" />
+    <Compile Include="Administration\MenuItemClickedEventArgs.cs" />
+    <Compile Include="NewLogMesssageEventArgs.cs" />
+    <Compile Include="CommandViewPlugin\PackageCompression.cs" />
+    <Compile Include="PluginException.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Administration\IUiModifier.cs" />
+    <Compile Include="ViewPlugin\ViewPlugin.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0d743e5d-0d5f-4b9b-b2df-1f607b5031c4}</Project>
+      <Name>Orcus.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sorzus.Wpf.Toolkit\Sorzus.Wpf.Toolkit.csproj">
+      <Project>{bf0e0718-3e64-4246-a17f-594dcf19edfc}</Project>
+      <Name>Sorzus.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Publish call "$(SolutionDir)signApp.bat" "$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

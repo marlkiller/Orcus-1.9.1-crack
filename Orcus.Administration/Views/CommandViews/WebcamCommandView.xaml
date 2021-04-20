@@ -1,0 +1,166 @@
+﻿<UserControl
+    x:Class="Orcus.Administration.Views.CommandViews.WebcamCommandView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sharedData="clr-namespace:Orcus.Shared.Commands.Webcam;assembly=Orcus.Shared"
+    d:DataContext="{d:DesignInstance commandViewModels:WebcamViewModel}"
+    d:DesignHeight="420"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Margin="5">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsStarting}" Value="true">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <Button
+                Width="25"
+                Height="25"
+                VerticalAlignment="Center"
+                Command="{Binding RefreshWebcamsCommand}">
+                <Viewbox Width="12" Height="12">
+                    <Path Data="{StaticResource VectorRefresh}" Fill="{StaticResource BlackBrush}" />
+                </Viewbox>
+            </Button>
+            <DockPanel Margin="10,0,0,0">
+                <DockPanel.Style>
+                    <Style TargetType="DockPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Webcams.Count}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Webcams}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DockPanel.Style>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=WebcamToggleSwitch, Path=IsChecked}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <ComboBox
+                        x:Name="WebcamComboBox"
+                        Width="200"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Webcams}"
+                        SelectedItem="{Binding SelectedWebcam}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox
+                        Width="150"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding ElementName=WebcamComboBox, Path=SelectedItem.AvailableResolutions}"
+                        SelectedItem="{Binding SelectedResolution}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type sharedData:WebcamResolution}">
+                                <TextBlock>
+                                    <Run Text="{Binding Width}" />
+                                    <Run Text="x" />
+                                    <Run Text="{Binding Heigth}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <TextBlock Margin="10,0,5,0" VerticalAlignment="Center">
+                    <Run Text="{DynamicResource Quality}" /><Run Text=":" />
+                </TextBlock>
+                <Slider
+                    Width="150"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Minimum="1"
+                    Value="{Binding Quality}" />
+                <TextBlock
+                    Margin="15,0,5,0"
+                    VerticalAlignment="Center"
+                    Text="FPS:" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding CurrentFps}" />
+                <controls:ToggleSwitchButton
+                    x:Name="WebcamToggleSwitch"
+                    HorizontalAlignment="Right"
+                    IsChecked="{Binding IsEnabled}"
+                    ToolTip="{DynamicResource AutoRefresh}" />
+            </DockPanel>
+        </DockPanel>
+        <Image Grid.Row="1" Source="{Binding WebcamImage, Mode=OneWay}">
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding StartWebcamCommand}" Header="{DynamicResource Start}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="true">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem
+                        Command="{Binding StopWebcamCommand}"
+                        Header="{DynamicResource Stop}"
+                        IsEnabled="{Binding IsEnabled}" />
+                    <Separator />
+                    <MenuItem Command="{Binding SaveCurrentFrameCommand}" Header="{DynamicResource SaveCurrentImage}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WebcamImage}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontFamily="Segoe WP SemiLight"
+            FontSize="17">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Setter Property="Text" Value="{DynamicResource HitStart}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WebcamImage}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Webcams.Count}" Value="0">
+                            <Setter Property="Text" Value="{DynamicResource NoWebcamsFound}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </Grid>
+</UserControl>

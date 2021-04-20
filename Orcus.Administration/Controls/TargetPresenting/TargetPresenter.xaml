@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.TargetPresenting.TargetPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dataManagement="clr-namespace:Orcus.Administration.Core.ClientManagement;assembly=Orcus.Administration.Core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:targetPresenting="clr-namespace:Orcus.Administration.Controls.TargetPresenting"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ClientItemTemplate" DataType="{x:Type dataManagement:ClientViewModel}">
+            <CheckBox VerticalAlignment="Center" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+                <CheckBox.Style>
+                    <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                        <Setter Property="Content" Value="{Binding UserName}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true">
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+        </DataTemplate>
+        <DataTemplate x:Key="GroupItemTemplate">
+            <CheckBox VerticalAlignment="Center" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+                <CheckBox.Style>
+                    <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                        <Setter Property="Content" Value="{Binding}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true">
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ., Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                <Setter Property="Content" Value="{StaticResource Default}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+        </DataTemplate>
+
+        <targetPresenting:TargetItemTemplateSelector x:Key="TargetItemTemplateSelector"
+                                                     ClientTemplate="{StaticResource ClientItemTemplate}"
+                                                     GroupTemplate="{StaticResource GroupItemTemplate}" />
+    </UserControl.Resources>
+    <Grid>
+        <ListBox x:Name="DataListBox"
+                 BorderThickness="1"
+                 ItemTemplateSelector="{StaticResource TargetItemTemplateSelector}"
+                 ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                       Path=PossibleTarget.Targets}"
+                 SelectionChanged="DataListBox_OnSelectionChanged"
+                 SelectionMode="Multiple" />
+    </Grid>
+</UserControl>

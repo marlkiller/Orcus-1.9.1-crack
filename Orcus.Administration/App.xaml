@@ -1,0 +1,47 @@
+﻿<Application x:Class="Orcus.Administration.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:Sorzus.Wpf.Toolkit.Converter;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:localConverter="clr-namespace:Orcus.Administration.Converter">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.IconPacks.Material;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Orcus.Administration.FileExplorer;component/Resources/ControlThemes.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Toolkit/ButtonSpinner.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Toolkit/TimeSpanUpDown.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Toolkit/TimePicker.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Toolkit/DateTimeUpDown.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Toolkit/DateTimePicker.xaml" />
+                <ResourceDictionary Source="Resources/Styles/RoundButton.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Windows10WindowButtonCommands.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Window.xaml" />
+                <ResourceDictionary Source="Resources/Styles/MahAppsImprovements.xaml" />
+                <ResourceDictionary Source="Resources/Styles/TreeListView.xaml" />
+                <ResourceDictionary Source="Resources/VectorGraphics.xaml" />
+                <ResourceDictionary Source="Resources/VisualStudioVectorGraphics.xaml" />
+                <ResourceDictionary Source="Resources/Styles/PathBox.xaml" />
+                <ResourceDictionary Source="Resources/Styles/PropertyGrid/PropertyGrid.xaml" />
+                <ResourceDictionary Source="Resources/Languages/OrcusAdministration.en-us.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Controls.xaml" />
+                <ResourceDictionary Source="Resources/Themes/Accents/Blue.xaml" />
+                <ResourceDictionary Source="Resources/Themes/Light.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converter:FormatBytesConverter x:Key="FormatBytesConverter" />
+            <converter:IsStringEmptyConverter x:Key="IsStringEmptyConverter" />
+            <converter:CloneConverter x:Key="CloneConverter" />
+            <converter:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+            <localConverter:ToUpperConverter x:Key="ToUpperConverter" />
+            <localConverter:StringFormatConverter x:Key="StringFormatConverter" />
+            <localConverter:DateTimeUtcToLocal x:Key="DateTimeUtcToLocal" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <localConverter:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+            <localConverter:IsSmallerThanConverter x:Key="IsSmallerThanConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,507 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CrowdControlWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:converter="clr-namespace:Orcus.Administration.Converter"
+    xmlns:crowdControl="clr-namespace:Orcus.Administration.ViewModels.CrowdControl;assembly=Orcus.Administration.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dynamicCommands="clr-namespace:Orcus.Shared.DynamicCommands;assembly=Orcus.Shared"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+    Title="{StaticResource CrowdControl}"
+    Width="900"
+    Height="500"
+    d:DataContext="{d:DesignInstance viewModels:CrowdControlViewModel}"
+    Icon="/Resources/Images/VisualStudio/Event.ico"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Style="{StaticResource NormalWindow}"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource EventIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="{StaticResource Tasks}">
+                <MenuItem
+                    Command="{Binding CreateTaskCommand}"
+                    Header="{StaticResource CreateNewTask}"
+                    Icon="{StaticResource AddEventIcon}" />
+                <Separator />
+                <MenuItem
+                    Command="{Binding RemoveTasksCommand}"
+                    CommandParameter="{Binding ElementName=TasksListView, Path=SelectedItems}"
+                    Header="{StaticResource RemoveSelectedTasks}"
+                    Icon="{StaticResource EventDeletedIcon}">
+                    <MenuItem.Style>
+                        <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=TasksListView, Path=SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding RemoveAllFinishedTasksCommand}"
+                    Header="{StaticResource RemoveAllFinishedTasks}"
+                    Icon="{StaticResource EventFilterIcon}" />
+            </MenuItem>
+            <MenuItem Header="{StaticResource PresetCommands}">
+                <MenuItem
+                    Command="{Binding OpenPresetManagerCommand}"
+                    Header="{StaticResource ManagePresetCommands}"
+                    Icon="{StaticResource EventSessionBlueIcon}" />
+                <Separator />
+                <MenuItem
+                    Command="{Binding CreatePresetWithTargetCommand}"
+                    Header="{StaticResource CreatePresetCommandWithTarget}"
+                    Icon="{StaticResource AddEventBlueIcon}" />
+                <MenuItem
+                    Command="{Binding CreatePresetCommand}"
+                    Header="{StaticResource CreatePresetCommand}"
+                    Icon="{StaticResource AddEventBlueIcon}" />
+            </MenuItem>
+        </Menu>
+        <ListView
+            x:Name="TasksListView"
+            Grid.Row="1"
+            listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+            ItemsSource="{Binding CommandsCollectionView}">
+            <ListView.InputBindings>
+                <KeyBinding
+                    Key="Delete"
+                    Command="{Binding RemoveTasksCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}" />
+            </ListView.InputBindings>
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemMenu" d:DataContext="{d:DesignInstance crowdControl:DynamicCommandViewModel}">
+                    <MenuItem
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.StopCommandsCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                        Header="{DynamicResource StopCommand}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ShowExecutingClientsCommand}"
+                        CommandParameter="{Binding}"
+                        Header="{DynamicResource ShowExecutingClients}">
+                        <MenuItem.Style>
+                            <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <Separator>
+                        <Separator.Style>
+                            <Style TargetType="Separator">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Separator.Style>
+                    </Separator>
+                    <MenuItem
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ViewDynamicCommandCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"
+                        FontWeight="Bold"
+                        Header="{StaticResource Events}" />
+                    <MenuItem
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RemoveTasksCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                        Header="{StaticResource Remove}" />
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="1" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <DockPanel>
+                                                <TextBlock
+                                                    Margin="10,0,0,0"
+                                                    FontSize="13"
+                                                    Foreground="{DynamicResource DarkColorBrush}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text" Value="{Binding Name}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Done}">
+                                                                    <Setter Property="Text" Value="{StaticResource Done}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Pending}">
+                                                                    <Setter Property="Text" Value="{StaticResource Pending}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Transmitting}">
+                                                                    <Setter Property="Text" Value="{StaticResource Transmitting}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                                                    <Setter Property="Text" Value="{StaticResource Active}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Name}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Stopped}">
+                                                                    <Setter Property="Text" Value="{StaticResource ManuallyStopped}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <Rectangle
+                                                    Height="1"
+                                                    Margin="10,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Fill="{DynamicResource DarkColorBrush}"
+                                                    SnapsToDevicePixels="True" />
+                                            </DockPanel>
+                                            <ItemsPresenter Grid.Row="2" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn listViewLayoutManager:ProportionalColumn.Width="1" Header="{StaticResource Command}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type crowdControl:DynamicCommandViewModel}">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Width="16" Height="16">
+                                        <iconPacks:PackIconMaterial.Style>
+                                            <Style BasedOn="{StaticResource MahApps.Metro.Styles.PackIconMaterial}" TargetType="iconPacks:PackIconMaterial">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                        <Setter Property="Foreground" Value="White" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Done}">
+                                                        <Setter Property="Kind" Value="Check" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Pending}">
+                                                        <Setter Property="Kind" Value="Clock" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Transmitting}">
+                                                        <Setter Property="Kind" Value="NotificationClearAll" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Stopped}">
+                                                        <Setter Property="Kind" Value="Check" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                                        <Setter Property="Kind" Value="FastForward" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </iconPacks:PackIconMaterial.Style>
+                                    </iconPacks:PackIconMaterial>
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding CommandType}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn
+                        Width="150"
+                        listViewLayoutManager:FixedColumn.Width="200"
+                        DisplayMemberBinding="{Binding Target}"
+                        Header="{StaticResource Target}" />
+                    <GridViewColumn
+                        Width="150"
+                        listViewLayoutManager:FixedColumn.Width="200"
+                        DisplayMemberBinding="{Binding TransmissionType}"
+                        Header="{StaticResource Trigger}" />
+                    <GridViewColumn
+                        Width="280"
+                        listViewLayoutManager:FixedColumn.Width="280"
+                        Header="{StaticResource SentSucceededFailed}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type crowdControl:DynamicCommandViewModel}">
+                                <!--  Use Grid to always have the some width of the text fragments  -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="{Binding Sent}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Sent}" Value="0">
+                                                        <Setter Property="Text" Value="-" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" Text=" / " />
+                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#27ae60" />
+                                                <Setter Property="Text" Value="{Binding Succeeded}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Sent}" Value="0">
+                                                        <Setter Property="Text" Value="-" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                        <Setter Property="Foreground" Value="White" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="3" Text=" / " />
+                                    <TextBlock Grid.Column="4" HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#e74c3c" />
+                                                <Setter Property="Text" Value="{Binding Failed}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Sent}" Value="0">
+                                                        <Setter Property="Text" Value="-" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                        <Setter Property="Foreground" Value="White" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="5" Text=" / ">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="6" Margin="4,0,0,0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#2980b9" />
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="true">
+                                                        <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DynamicCommandStatus}" Value="{x:Static dynamicCommands:DynamicCommandStatus.Active}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <Run Text="{Binding ExecutingClients.Count, Mode=OneWay}" />
+                                        <Run Text="(" /><Run Text="{StaticResource Currently}"></Run><Run Text=")" />
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemMenu}" />
+                    <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ViewDynamicCommandCommand}" />
+                    <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+                    <Setter Property="extensions:ControlExtensions.DoubleClickSetHandled" Value="True" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Grid
+            Grid.Row="2"
+            Margin="10"
+            d:DataContext="{d:DesignInstance crowdControl:DynamicCommandViewModel}"
+            DataContext="{Binding ElementName=TasksListView, Path=SelectedItem}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Rectangle
+                Grid.ColumnSpan="4"
+                Height="1"
+                Fill="{StaticResource BlackBrush}"
+                SnapsToDevicePixels="True" />
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="0"
+                Orientation="Vertical">
+                <TextBlock Text="{StaticResource Command}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding CommandType}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+                <TextBlock Margin="0,5,0,0" Text="{StaticResource Target}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding Target}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Orientation="Vertical">
+                <TextBlock Text="{StaticResource Trigger}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding TransmissionType}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+                <TextBlock Margin="0,5,0,0" Text="{StaticResource Execution}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding ExecutionEvent}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="2"
+                Orientation="Vertical">
+                <TextBlock Text="{StaticResource Conditions}" />
+                <TextBlock Margin="0,1,0,0" FontWeight="Bold">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="{Binding DynamicCommand.Conditions.Count}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DynamicCommand.Conditions}" Value="{x:Null}">
+                                    <Setter Property="Text" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Margin="0,5,0,0" Text="{StaticResource Source}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding CommandSource}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="3"
+                Orientation="Vertical">
+                <TextBlock Text="{StaticResource Events}" />
+                <TextBlock Margin="0,1,0,0" FontWeight="Bold">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                    <Hyperlink Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ViewDynamicCommandCommand}" CommandParameter="{Binding}">
+                        <TextBlock>
+                            <Run Text="{Binding DynamicCommandEvents.Count, Mode=OneWay}" />
+                            <Run>
+                                <Run.Style>
+                                    <Style TargetType="Run">
+                                        <Setter Property="Text" Value="{StaticResource Events}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DynamicCommandEvents.Count}" Value="1">
+                                                <Setter Property="Text" Value="{StaticResource Event}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Run.Style>
+                            </Run>
+                        </TextBlock>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="0,5,0,0" Text="{StaticResource Timestamp}" />
+                <TextBlock
+                    Margin="0,1,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding DynamicCommand.Timestamp, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter={x:Static converter:DateTimeFormat.GeneralLong}}">
+                    <i:Interaction.Behaviors>
+                        <behavior:TextBlockAutoToolTipBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

@@ -1,0 +1,86 @@
+﻿<UserControl
+    x:Class="Orcus.Administration.Views.CommandViews.WindowsDriversCommandView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:windowsDrivers="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels.WindowsDrivers;assembly=Orcus.Administration.ViewModels"
+    d:DataContext="{d:DesignInstance commandViewModels:WindowsDriversViewModel}"
+    d:DesignHeight="420"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="WindowsDriverConfigurationTemplate" DataType="{x:Type windowsDrivers:DriverConfigurationViewModel}">
+            <TextBox
+                Margin="5,0,5,5"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                BorderThickness="0"
+                ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+                        <Setter Property="SelectionBrush" Value="{DynamicResource LightColorBrush}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.CanEdit}" Value="false">
+                                <Setter Property="IsReadOnly" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource AccentColorBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CanEdit}" Value="false">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <TextBlock
+                Margin="10,5"
+                Foreground="{StaticResource IdealForegroundColorBrush}"
+                Text="{DynamicResource CantEditBecauseNotAdministrator}" />
+        </Grid>
+        <Menu Grid.Row="1" Margin="0,5,0,0">
+            <MenuItem
+                Command="{Binding SaveFileCommand}"
+                CommandParameter="{Binding ElementName=MainTabControl, Path=SelectedItem.WindowsDriversFile}"
+                Header="{DynamicResource Save}"
+                IsEnabled="{Binding CanEdit}" />
+            <MenuItem
+                Command="{Binding RefreshCommand}"
+                CommandParameter="{Binding ElementName=MainTabControl, Path=SelectedItem.WindowsDriversFile}"
+                Header="{DynamicResource Refresh}" />
+        </Menu>
+        <TabControl
+            x:Name="MainTabControl"
+            Grid.Row="2"
+            ItemsSource="{Binding DriverConfigurationViewModels}">
+            <TabControl.ItemContainerStyle>
+                <Style
+                    d:DataContext="{d:DesignInstance windowsDrivers:DriverConfigurationViewModel}"
+                    BasedOn="{StaticResource MetroTabItem}"
+                    TargetType="TabItem">
+                    <Setter Property="Header" Value="{Binding WindowsDriversFile}" />
+                    <Setter Property="ContentTemplate" Value="{StaticResource WindowsDriverConfigurationTemplate}" />
+                    <Setter Property="Content" Value="{Binding}" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+    </Grid>
+</UserControl>

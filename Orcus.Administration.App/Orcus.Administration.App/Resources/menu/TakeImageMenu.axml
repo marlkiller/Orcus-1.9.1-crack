@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <item
+        android:id="@+id/action_filter"
+        android:title="Get"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/shareItem"
+        android:title="Share"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_menu_share_holo_dark"
+        app:showAsAction="ifRoom" />
+</menu>

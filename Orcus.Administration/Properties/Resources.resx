@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BatchSample" xml:space="preserve">
+    <value>@echo off
+color 6
+Title Orcus Batch Execution
+
+set something=World
+echo Hello %something%
+
+pause</value>
+  </data>
+  <data name="BatchSyntax" xml:space="preserve">
+    <value>&lt;SyntaxDefinition name="Batch"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"&gt;
+    &lt;Color name="Comment" foreground="Green" /&gt;
+    &lt;Color name="String" foreground="Blue" /&gt;
+	&lt;Color name="SpecialLine" foreground="Red" background="Yellow" /&gt;
+	&lt;Color name="Variable" foreground="Orange" /&gt;
+	&lt;Color name="Operator" foreground="Red" /&gt;
+	&lt;Color name="Keyword" foreground="#44a0de" fontWeight="bold" /&gt;
+	
+    &lt;!-- This is the main ruleset. --&gt;
+    &lt;RuleSet ignoreCase="true"&gt;
+		&lt;Rule color="Variable"&gt;
+			%.*?[\s%$]
+		&lt;/Rule&gt;
+		&lt;Rule color="SpecialLine"&gt;
+			^:.*
+		&lt;/Rule&gt;
+		&lt;Span color="Comment" begin="REM" /&gt;
+		
+		&lt;Keywords  color="Keyword"&gt;
+            &lt;Word&gt;echo&lt;/Word&gt;
+            &lt;Word&gt;cls&lt;/Word&gt;
+            &lt;Word&gt;exit&lt;/Word&gt;
+			&lt;Word&gt;goto&lt;/Word&gt;
+			&lt;Word&gt;if&lt;/Word&gt;
+			&lt;Word&gt;set&lt;/Word&gt;
+			&lt;Word&gt;for&lt;/Word&gt;
+			&lt;Word&gt;else&lt;/Word&gt;
+			&lt;Word&gt;cd&lt;/Word&gt;
+			&lt;Word&gt;date&lt;/Word&gt;
+			&lt;Word&gt;del&lt;/Word&gt;
+			&lt;Word&gt;dir&lt;/Word&gt;
+			&lt;Word&gt;find&lt;/Word&gt;
+			&lt;Word&gt;help&lt;/Word&gt;
+			&lt;Word&gt;md&lt;/Word&gt;
+			&lt;Word&gt;more&lt;/Word&gt;
+			&lt;Word&gt;move&lt;/Word&gt;
+			&lt;Word&gt;rd&lt;/Word&gt;
+			&lt;Word&gt;ren&lt;/Word&gt;
+			&lt;Word&gt;sort&lt;/Word&gt;
+			&lt;Word&gt;type&lt;/Word&gt;
+			&lt;Word&gt;copy&lt;/Word&gt;
+			&lt;Word&gt;pause&lt;/Word&gt;
+			&lt;Word&gt;not&lt;/Word&gt;
+			&lt;Word&gt;defined&lt;/Word&gt;
+			&lt;Word&gt;errorlevel&lt;/Word&gt;
+			&lt;Word&gt;shift&lt;/Word&gt;
+			&lt;Word&gt;cd&lt;/Word&gt;
+        &lt;/Keywords&gt;
+		
+		&lt;Keywords color="Operator"&gt;
+			&lt;Word&gt;=&lt;/Word&gt;
+			&lt;Word&gt;@&lt;/Word&gt;
+			&lt;Word&gt;+&lt;/Word&gt;
+			&lt;Word&gt;EQU&lt;/Word&gt;
+			&lt;Word&gt;NEQ&lt;/Word&gt;
+			&lt;Word&gt;LSS&lt;/Word&gt;
+			&lt;Word&gt;LEQ&lt;/Word&gt;
+			&lt;Word&gt;GTR&lt;/Word&gt;
+			&lt;Word&gt;GEQ&lt;/Word&gt;
+		&lt;/Keywords&gt;
+    &lt;/RuleSet&gt;
+&lt;/SyntaxDefinition&gt;</value>
+  </data>
+  <data name="CSharpSyntax" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;
+&lt;SyntaxDefinition name="C#" extensions=".cs" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"&gt;
+	&lt;!-- The named colors 'Comment' and 'String' are used in SharpDevelop to detect if a line is inside a multiline string/comment --&gt;
+	&lt;Color name="Comment" foreground="Green" exampleText="// comment" /&gt;
+	&lt;Color name="String" foreground="#e67e22" exampleText="string text = &amp;quot;Hello, World!&amp;quot;"/&gt;
+	&lt;Color name="Char" foreground="Magenta" exampleText="char linefeed = '\n';"/&gt;
+	&lt;Color name="Preprocessor" foreground="Green" exampleText="#region Title" /&gt;
+	&lt;Color name="Punctuation" exampleText="a(b.c);" /&gt;
+	&lt;Color name="ValueTypeKeywords" fontWeight="bold" foreground="#2980b9" exampleText="bool b = true;" /&gt;
+	&lt;Color name="ReferenceTypeKeywords" fontWeight="bold" foreground="#2980b9" exampleText="object o;" /&gt;
+	&lt;Color name="MethodCall" foreground="#44a0de" fontWeight="bold" exampleText="o.ToString();"/&gt;
+	&lt;Color name="NumberLiteral" foreground="#e67e22" exampleText="3.1415f"/&gt;
+	&lt;Color name="ThisOrBaseReference" fontWeight="bold" exampleText="this.Do(); base.Do();"/&gt;
+	&lt;Color name="NullOrValueKeywords" fontWeight="bold" exampleText="if (value == null)"/&gt;
+	&lt;Color name="Keywords" fontWeight="bold" foreground="#2a84bf" exampleText="if (a) {} else {}"/&gt;
+	&lt;Color name="GotoKeywords" foreground="#8e44ad" exampleText="continue; return null;"/&gt;
+	&lt;Color name="ContextKeywords" foreground="#8e44ad" exampleText="var a = from x in y select z;"/&gt;
+	&lt;Color name="ExceptionKeywords" fontWeight="bold" foreground="Teal" exampleText="try {} catch {} finally {}"/&gt;
+	&lt;Color name="CheckedKeyword" fontWeight="bold" foreground="DarkGray" exampleText="checked {}"/&gt;
+	&lt;Color name="UnsafeKeywords" foreground="Olive" exampleText="unsafe { fixed (..) {} }"/&gt;
+	&lt;Color name="OperatorKeywords" fontWeight="bold" foreground="Pink" exampleText="public static implicit operator..."/&gt;
+	&lt;Color name="ParameterModifiers" fontWeight="bold" foreground="DeepPink" exampleText="(ref int a, params int[] b)"/&gt;
+	&lt;Color name="Modifiers" foreground="Brown" exampleText="static readonly int a;"/&gt;
+	&lt;Color name="Visibility" fontWeight="bold" foreground="#2a84bf" exampleText="public override void ToString();"/&gt;
+	&lt;Color name="NamespaceKeywords" fontWeight="bold" foreground="Green" exampleText="namespace A.B { using System; }"/&gt;
+	&lt;Color name="GetSetAddRemove" foreground="SaddleBrown" exampleText="int Prop { get; set; }"/&gt;
+	&lt;Color name="TrueFalse" fontWeight="bold" foreground="DarkCyan" exampleText="b = false; a = true;" /&gt;
+	&lt;Color name="TypeKeywords" fontWeight="bold" foreground="DarkCyan" exampleText="if (x is int) { a = x as int; type = typeof(int); size = sizeof(int); c = new object(); }"/&gt;
+	
+	&lt;Property name="DocCommentMarker" value="///" /&gt;
+	
+	&lt;RuleSet name="CommentMarkerSet"&gt;
+		&lt;Keywords fontWeight="bold" foreground="Red"&gt;
+			&lt;Word&gt;TODO&lt;/Word&gt;
+			&lt;Word&gt;FIXME&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords fontWeight="bold" foreground="#E0E000"&gt;
+			&lt;Word&gt;HACK&lt;/Word&gt;
+			&lt;Word&gt;UNDONE&lt;/Word&gt;
+		&lt;/Keywords&gt;
+	&lt;/RuleSet&gt;
+	
+	&lt;!-- This is the main ruleset. --&gt;
+	&lt;RuleSet&gt;
+		&lt;Span color="Preprocessor"&gt;
+			&lt;Begin&gt;\#&lt;/Begin&gt;
+			&lt;RuleSet name="PreprocessorSet"&gt;
+				&lt;Span&gt; &lt;!-- preprocessor directives that allows comments --&gt;
+					&lt;Begin fontWeight="bold"&gt;
+						(define|undef|if|elif|else|endif|line)\b
+					&lt;/Begin&gt;
+					&lt;RuleSet&gt;
+						&lt;Span color="Comment" ruleSet="CommentMarkerSet"&gt;
+							&lt;Begin&gt;//&lt;/Begin&gt;
+						&lt;/Span&gt;
+					&lt;/RuleSet&gt;
+				&lt;/Span&gt;
+				&lt;Span&gt; &lt;!-- preprocessor directives that don't allow comments --&gt;
+					&lt;Begin fontWeight="bold"&gt;
+						(region|endregion|error|warning|pragma)\b
+					&lt;/Begin&gt;
+				&lt;/Span&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="Comment"&gt;
+			&lt;Begin color="XmlDoc/DocComment"&gt;///(?!/)&lt;/Begin&gt;
+			&lt;RuleSet&gt;
+				&lt;Import ruleSet="XmlDoc/DocCommentSet"/&gt;
+				&lt;Import ruleSet="CommentMarkerSet"/&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="Comment" ruleSet="CommentMarkerSet"&gt;
+			&lt;Begin&gt;//&lt;/Begin&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="Comment" ruleSet="CommentMarkerSet" multiline="true"&gt;
+			&lt;Begin&gt;/\*&lt;/Begin&gt;
+			&lt;End&gt;\*/&lt;/End&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="String"&gt;
+			&lt;Begin&gt;"&lt;/Begin&gt;
+			&lt;End&gt;"&lt;/End&gt;
+			&lt;RuleSet&gt;
+				&lt;!-- span for escape sequences --&gt;
+				&lt;Span begin="\\" end="."/&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="Char"&gt;
+			&lt;Begin&gt;'&lt;/Begin&gt;
+			&lt;End&gt;'&lt;/End&gt;
+			&lt;RuleSet&gt;
+				&lt;!-- span for escape sequences --&gt;
+				&lt;Span begin="\\" end="."/&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		
+		&lt;Span color="String" multiline="true"&gt;
+			&lt;Begin&gt;@"&lt;/Begin&gt;
+			&lt;End&gt;"&lt;/End&gt;
+			&lt;RuleSet&gt;
+				&lt;!-- span for escape sequences --&gt;
+				&lt;Span begin='""' end=""/&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		
+		&lt;!-- don't highlight "@int" as keyword --&gt;
+		&lt;Rule&gt;
+			@[\w\d_]+
+		&lt;/Rule&gt;
+		
+		&lt;Keywords color="ThisOrBaseReference"&gt;
+			&lt;Word&gt;this&lt;/Word&gt;
+			&lt;Word&gt;base&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="TypeKeywords"&gt;
+			&lt;Word&gt;as&lt;/Word&gt;
+			&lt;Word&gt;is&lt;/Word&gt;
+			&lt;Word&gt;new&lt;/Word&gt;
+			&lt;Word&gt;sizeof&lt;/Word&gt;
+			&lt;Word&gt;typeof&lt;/Word&gt;
+			&lt;Word&gt;stackalloc&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="TrueFalse"&gt;
+			&lt;Word&gt;true&lt;/Word&gt;
+			&lt;Word&gt;false&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="Keywords"&gt;
+			&lt;Word&gt;else&lt;/Word&gt;
+			&lt;Word&gt;if&lt;/Word&gt;
+			&lt;Word&gt;switch&lt;/Word&gt;
+			&lt;Word&gt;case&lt;/Word&gt;
+			&lt;Word&gt;default&lt;/Word&gt;
+			&lt;Word&gt;do&lt;/Word&gt;
+			&lt;Word&gt;for&lt;/Word&gt;
+			&lt;Word&gt;foreach&lt;/Word&gt;
+			&lt;Word&gt;in&lt;/Word&gt;
+			&lt;Word&gt;while&lt;/Word&gt;
+			&lt;Word&gt;lock&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="GotoKeywords"&gt;
+			&lt;Word&gt;break&lt;/Word&gt;
+			&lt;Word&gt;continue&lt;/Word&gt;
+			&lt;Word&gt;goto&lt;/Word&gt;
+			&lt;Word&gt;return&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="ContextKeywords"&gt;
+			&lt;Word&gt;yield&lt;/Word&gt;
+			&lt;Word&gt;partial&lt;/Word&gt;
+			&lt;Word&gt;global&lt;/Word&gt;
+			&lt;Word&gt;where&lt;/Word&gt;
+			&lt;Word&gt;select&lt;/Word&gt;
+			&lt;Word&gt;group&lt;/Word&gt;
+			&lt;Word&gt;by&lt;/Word&gt;
+			&lt;Word&gt;into&lt;/Word&gt;
+			&lt;Word&gt;from&lt;/Word&gt;
+			&lt;Word&gt;ascending&lt;/Word&gt;
+			&lt;Word&gt;descending&lt;/Word&gt;
+			&lt;Word&gt;orderby&lt;/Word&gt;
+			&lt;Word&gt;let&lt;/Word&gt;
+			&lt;Word&gt;join&lt;/Word&gt;
+			&lt;Word&gt;on&lt;/Word&gt;
+			&lt;Word&gt;equals&lt;/Word&gt;
+			&lt;Word&gt;var&lt;/Word&gt;
+			&lt;Word&gt;dynamic&lt;/Word&gt;
+			&lt;Word&gt;await&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="ExceptionKeywords"&gt;
+			&lt;Word&gt;try&lt;/Word&gt;
+			&lt;Word&gt;throw&lt;/Word&gt;
+			&lt;Word&gt;catch&lt;/Word&gt;
+			&lt;Word&gt;finally&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="CheckedKeyword"&gt;
+			&lt;Word&gt;checked&lt;/Word&gt;
+			&lt;Word&gt;unchecked&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="UnsafeKeywords"&gt;
+			&lt;Word&gt;fixed&lt;/Word&gt;
+			&lt;Word&gt;unsafe&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="ValueTypeKeywords"&gt;
+			&lt;Word&gt;bool&lt;/Word&gt;
+			&lt;Word&gt;byte&lt;/Word&gt;
+			&lt;Word&gt;char&lt;/Word&gt;
+			&lt;Word&gt;decimal&lt;/Word&gt;
+			&lt;Word&gt;double&lt;/Word&gt;
+			&lt;Word&gt;enum&lt;/Word&gt;
+			&lt;Word&gt;float&lt;/Word&gt;
+			&lt;Word&gt;int&lt;/Word&gt;
+			&lt;Word&gt;long&lt;/Word&gt;
+			&lt;Word&gt;sbyte&lt;/Word&gt;
+			&lt;Word&gt;short&lt;/Word&gt;
+			&lt;Word&gt;struct&lt;/Word&gt;
+			&lt;Word&gt;uint&lt;/Word&gt;
+			&lt;Word&gt;ushort&lt;/Word&gt;
+			&lt;Word&gt;ulong&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="ReferenceTypeKeywords"&gt;
+			&lt;Word&gt;class&lt;/Word&gt;
+			&lt;Word&gt;interface&lt;/Word&gt;
+			&lt;Word&gt;delegate&lt;/Word&gt;
+			&lt;Word&gt;object&lt;/Word&gt;
+			&lt;Word&gt;string&lt;/Word&gt;
+			&lt;Word&gt;void&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="OperatorKeywords"&gt;
+			&lt;Word&gt;explicit&lt;/Word&gt;
+			&lt;Word&gt;implicit&lt;/Word&gt;
+			&lt;Word&gt;operator&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="ParameterModifiers"&gt;
+			&lt;Word&gt;params&lt;/Word&gt;
+			&lt;Word&gt;ref&lt;/Word&gt;
+			&lt;Word&gt;out&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="Modifiers"&gt;
+			&lt;Word&gt;abstract&lt;/Word&gt;
+			&lt;Word&gt;const&lt;/Word&gt;
+			&lt;Word&gt;event&lt;/Word&gt;
+			&lt;Word&gt;extern&lt;/Word&gt;
+			&lt;Word&gt;override&lt;/Word&gt;
+			&lt;Word&gt;readonly&lt;/Word&gt;
+			&lt;Word&gt;sealed&lt;/Word&gt;
+			&lt;Word&gt;static&lt;/Word&gt;
+			&lt;Word&gt;virtual&lt;/Word&gt;
+			&lt;Word&gt;volatile&lt;/Word&gt;
+			&lt;Word&gt;async&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="Visibility"&gt;
+			&lt;Word&gt;public&lt;/Word&gt;
+			&lt;Word&gt;protected&lt;/Word&gt;
+			&lt;Word&gt;private&lt;/Word&gt;
+			&lt;Word&gt;internal&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="NamespaceKeywords"&gt;
+			&lt;Word&gt;namespace&lt;/Word&gt;
+			&lt;Word&gt;using&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="GetSetAddRemove"&gt;
+			&lt;Word&gt;get&lt;/Word&gt;
+			&lt;Word&gt;set&lt;/Word&gt;
+			&lt;Word&gt;add&lt;/Word&gt;
+			&lt;Word&gt;remove&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;Keywords color="NullOrValueKeywords"&gt;
+			&lt;Word&gt;null&lt;/Word&gt;
+			&lt;Word&gt;value&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		
+		&lt;!-- Mark previous rule--&gt;
+		&lt;Rule color="MethodCall"&gt;
+		\b
+		[\d\w_]+  # an identifier
+		(?=\s*\() # followed by (
+		&lt;/Rule&gt;
+		
+		&lt;!-- Digits --&gt;
+		&lt;Rule color="NumberLiteral"&gt;
+			\b0[xX][0-9a-fA-F]+  # hex number
+		|	
+			(	\b\d+(\.[0-9]+)?   #number with optional floating point
+			|	\.[0-9]+           #or just starting with floating point
+			)
+			([eE][+-]?[0-9]+)? # optional exponent
+		&lt;/Rule&gt;
+		
+		&lt;Rule color="Punctuation"&gt;
+			[?,.;()\[\]{}+\-/%*&amp;lt;&amp;gt;^+~!|&amp;amp;]+
+		&lt;/Rule&gt;
+	&lt;/RuleSet&gt;
+&lt;/SyntaxDefinition&gt;</value>
+  </data>
+  <data name="ExportValueSyntax" xml:space="preserve">
+    <value>&lt;SyntaxDefinition name="ExportValueSyntax"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"&gt;
+    &lt;!-- This is the main ruleset. --&gt;
+    &lt;RuleSet ignoreCase="true"&gt;
+        &lt;Keywords fontWeight="bold" foreground="#e67e22"&gt;
+		[KEYWORDS]
+        &lt;/Keywords&gt;
+        &lt;Keywords fontWeight="bold" foreground="#e74c3c"&gt;
+            &lt;Word&gt;Auto_Increment&lt;/Word&gt;
+        &lt;/Keywords&gt;
+    &lt;/RuleSet&gt;
+&lt;/SyntaxDefinition&gt;</value>
+  </data>
+  <data name="VisualBasicSyntax" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;
+
+&lt;!-- Syntaxdefinition for VB.NET, v0.1 Rev 1 by Christian Holm --&gt;
+&lt;!-- Updated 2005 by Daniel Grunwald for VB.NET 2.0 --&gt;
+&lt;!-- Converted to AvalonEdit format by Daniel Grunwald in 2010 --&gt;
+&lt;!-- Updated 2010 by Siegfried Oleg Pammer for VB.NET 9 and 10 --&gt;
+&lt;!-- Updated 2011 by Siegfried Oleg Pammer for VB 11 CTP --&gt;
+&lt;SyntaxDefinition name="VB" extensions=".vb" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"&gt;
+	&lt;Color name="Comment" foreground="Green" exampleText="' comment" /&gt;
+	&lt;Color name="String" foreground="#e67e22" exampleText="text = &amp;quot;Hello, World!&amp;quot;" /&gt;
+	
+	&lt;Color name="DateLiteral" foreground="#8e44ad" exampleText="endOfWorld = #2012-12-21#" /&gt;
+	&lt;Color name="Preprocessor" foreground="Green" exampleText="#Region &amp;quot;Title&amp;quot;" /&gt;
+	&lt;Color name="DataTypes" foreground="#2980b9" fontWeight="bold" exampleText="Dim b As Boolean = True" /&gt;
+	&lt;Color name="Operators" foreground="#FF8515EA" fontWeight="bold" exampleText="If a OrElse b Then"/&gt;
+	&lt;Color name="Constants" foreground="#2980b9" fontWeight="bold" exampleText="b = False" /&gt;
+	&lt;Color name="Keywords" foreground="#2980b9" exampleText="If a OrElse b Then" /&gt;
+	&lt;Color name="FunctionKeywords" foreground="#3498db" fontWeight="bold" exampleText="CInt(a)" /&gt;
+	&lt;Color name="ContextKeywords" foreground="#27ae60" exampleText="Declare Unicode Sub SomeMethod" /&gt;
+	
+	&lt;Property name="DocCommentMarker" value="'''" /&gt;
+	
+	&lt;RuleSet ignoreCase="true"&gt;
+		&lt;Span color="String"&gt;
+			&lt;Begin&gt;"&lt;/Begin&gt;
+			&lt;End&gt;"&lt;/End&gt;
+			&lt;RuleSet&gt;
+				&lt;Span begin="&amp;quot;&amp;quot;" end="" /&gt;
+			&lt;/RuleSet&gt;
+		&lt;/Span&gt;
+		&lt;Span color="Preprocessor" ruleSet="PreprocessorSet"&gt;
+			&lt;Begin&gt;(?&amp;lt;=(^\s*))\#&lt;/Begin&gt;
+		&lt;/Span&gt;
+		&lt;Span color="DateLiteral"&gt;
+			&lt;Begin&gt;(?&amp;lt;!(^\s*))\#&lt;/Begin&gt;
+			&lt;End&gt;\#&lt;/End&gt;
+		&lt;/Span&gt;
+		&lt;Span color="Comment" ruleSet="XmlDoc/DocCommentSet"&gt;
+			&lt;Begin color="XmlDoc/DocComment"&gt;'''&lt;/Begin&gt;
+		&lt;/Span&gt;
+		&lt;Span color="Comment"&gt;
+			&lt;Begin&gt;'&lt;/Begin&gt;
+		&lt;/Span&gt;
+		&lt;Span color="Comment"&gt;
+			&lt;Begin&gt;\bREM\b&lt;/Begin&gt;
+		&lt;/Span&gt;
+		&lt;Keywords color="DataTypes"&gt;
+			&lt;Word&gt;Boolean&lt;/Word&gt;
+			&lt;Word&gt;Byte&lt;/Word&gt;
+			&lt;Word&gt;Char&lt;/Word&gt;
+			&lt;Word&gt;Date&lt;/Word&gt;
+			&lt;Word&gt;Decimal&lt;/Word&gt;
+			&lt;Word&gt;Double&lt;/Word&gt;
+			&lt;Word&gt;Integer&lt;/Word&gt;
+			&lt;Word&gt;Long&lt;/Word&gt;
+			&lt;Word&gt;Object&lt;/Word&gt;
+			&lt;Word&gt;SByte&lt;/Word&gt;
+			&lt;Word&gt;Short&lt;/Word&gt;
+			&lt;Word&gt;Single&lt;/Word&gt;
+			&lt;Word&gt;String&lt;/Word&gt;
+			&lt;Word&gt;UInteger&lt;/Word&gt;
+			&lt;Word&gt;ULong&lt;/Word&gt;
+			&lt;Word&gt;UShort&lt;/Word&gt;
+			&lt;Word&gt;Variant&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords color="Operators"&gt;
+			&lt;Word&gt;AddressOf&lt;/Word&gt;
+			&lt;Word&gt;And&lt;/Word&gt;
+			&lt;Word&gt;AndAlso&lt;/Word&gt;
+			&lt;Word&gt;Await&lt;/Word&gt;
+			&lt;Word&gt;Is&lt;/Word&gt;
+			&lt;Word&gt;IsNot&lt;/Word&gt;
+			&lt;Word&gt;Like&lt;/Word&gt;
+			&lt;Word&gt;Mod&lt;/Word&gt;
+			&lt;Word&gt;New&lt;/Word&gt;
+			&lt;Word&gt;Not&lt;/Word&gt;
+			&lt;Word&gt;Or&lt;/Word&gt;
+			&lt;Word&gt;OrElse&lt;/Word&gt;
+			&lt;Word&gt;Xor&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords color="Constants"&gt;
+			&lt;Word&gt;False&lt;/Word&gt;
+			&lt;Word&gt;Me&lt;/Word&gt;
+			&lt;Word&gt;MyBase&lt;/Word&gt;
+			&lt;Word&gt;MyClass&lt;/Word&gt;
+			&lt;Word&gt;Nothing&lt;/Word&gt;
+			&lt;Word&gt;True&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords color="FunctionKeywords"&gt;
+			&lt;Word&gt;CBool&lt;/Word&gt;
+			&lt;Word&gt;CByte&lt;/Word&gt;
+			&lt;Word&gt;CChar&lt;/Word&gt;
+			&lt;Word&gt;CDate&lt;/Word&gt;
+			&lt;Word&gt;CDbl&lt;/Word&gt;
+			&lt;Word&gt;CDec&lt;/Word&gt;
+			&lt;Word&gt;CInt&lt;/Word&gt;
+			&lt;Word&gt;CLng&lt;/Word&gt;
+			&lt;Word&gt;CObj&lt;/Word&gt;
+			&lt;Word&gt;CSByte&lt;/Word&gt;
+			&lt;Word&gt;CShort&lt;/Word&gt;
+			&lt;Word&gt;CSng&lt;/Word&gt;
+			&lt;Word&gt;CStr&lt;/Word&gt;
+			&lt;Word&gt;CType&lt;/Word&gt;
+			&lt;Word&gt;CUInt&lt;/Word&gt;
+			&lt;Word&gt;CULng&lt;/Word&gt;
+			&lt;Word&gt;CUShort&lt;/Word&gt;
+			&lt;Word&gt;DirectCast&lt;/Word&gt;
+			&lt;Word&gt;GetType&lt;/Word&gt;
+			&lt;Word&gt;GetXmlNamespace&lt;/Word&gt;
+			&lt;Word&gt;IIf&lt;/Word&gt;
+			&lt;Word&gt;TryCast&lt;/Word&gt;
+			&lt;Word&gt;TypeOf&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords color="Keywords"&gt;
+			&lt;Word&gt;AddHandler&lt;/Word&gt;
+			&lt;Word&gt;Alias&lt;/Word&gt;
+			&lt;Word&gt;As&lt;/Word&gt;
+			&lt;Word&gt;ByRef&lt;/Word&gt;
+			&lt;Word&gt;ByVal&lt;/Word&gt;
+			&lt;Word&gt;Call&lt;/Word&gt;
+			&lt;Word&gt;Case&lt;/Word&gt;
+			&lt;Word&gt;Catch&lt;/Word&gt;
+			&lt;Word&gt;Class&lt;/Word&gt;
+			&lt;Word&gt;Const&lt;/Word&gt;
+			&lt;Word&gt;Continue&lt;/Word&gt;
+			&lt;Word&gt;Declare&lt;/Word&gt;
+			&lt;Word&gt;Default&lt;/Word&gt;
+			&lt;Word&gt;Delegate&lt;/Word&gt;
+			&lt;Word&gt;Dim&lt;/Word&gt;
+			&lt;Word&gt;Do&lt;/Word&gt;
+			&lt;Word&gt;Each&lt;/Word&gt;
+			&lt;Word&gt;Else&lt;/Word&gt;
+			&lt;Word&gt;ElseIf&lt;/Word&gt;
+			&lt;Word&gt;End&lt;/Word&gt;
+			&lt;Word&gt;EndIf&lt;/Word&gt;
+			&lt;Word&gt;Enum&lt;/Word&gt;
+			&lt;Word&gt;Erase&lt;/Word&gt;
+			&lt;Word&gt;Error&lt;/Word&gt;
+			&lt;Word&gt;Event&lt;/Word&gt;
+			&lt;Word&gt;Exit&lt;/Word&gt;
+			&lt;Word&gt;Finally&lt;/Word&gt;
+			&lt;Word&gt;For&lt;/Word&gt;
+			&lt;Word&gt;Friend&lt;/Word&gt;
+			&lt;Word&gt;Function&lt;/Word&gt;
+			&lt;Word&gt;Get&lt;/Word&gt;
+			&lt;Word&gt;Global&lt;/Word&gt;
+			&lt;Word&gt;GoSub&lt;/Word&gt;
+			&lt;Word&gt;GoTo&lt;/Word&gt;
+			&lt;Word&gt;Handles&lt;/Word&gt;
+			&lt;Word&gt;If&lt;/Word&gt;
+			&lt;Word&gt;Implements&lt;/Word&gt;
+			&lt;Word&gt;Imports&lt;/Word&gt;
+			&lt;Word&gt;In&lt;/Word&gt;
+			&lt;Word&gt;Inherits&lt;/Word&gt;
+			&lt;Word&gt;Interface&lt;/Word&gt;
+			&lt;Word&gt;Let&lt;/Word&gt;
+			&lt;Word&gt;Lib&lt;/Word&gt;
+			&lt;Word&gt;Loop&lt;/Word&gt;
+			&lt;Word&gt;Module&lt;/Word&gt;
+			&lt;Word&gt;MustInherit&lt;/Word&gt;
+			&lt;Word&gt;MustOverride&lt;/Word&gt;
+			&lt;Word&gt;Namespace&lt;/Word&gt;
+			&lt;Word&gt;Narrowing&lt;/Word&gt;
+			&lt;Word&gt;New&lt;/Word&gt;
+			&lt;Word&gt;Next&lt;/Word&gt;
+			&lt;Word&gt;NotInheritable&lt;/Word&gt;
+			&lt;Word&gt;NotOverridable&lt;/Word&gt;
+			&lt;Word&gt;Of&lt;/Word&gt;
+			&lt;Word&gt;On&lt;/Word&gt;
+			&lt;Word&gt;Operator&lt;/Word&gt;
+			&lt;Word&gt;Option&lt;/Word&gt;
+			&lt;Word&gt;Optional&lt;/Word&gt;
+			&lt;Word&gt;Overloads&lt;/Word&gt;
+			&lt;Word&gt;Overridable&lt;/Word&gt;
+			&lt;Word&gt;Overrides&lt;/Word&gt;
+			&lt;Word&gt;ParamArray&lt;/Word&gt;
+			&lt;Word&gt;Partial&lt;/Word&gt;
+			&lt;Word&gt;Private&lt;/Word&gt;
+			&lt;Word&gt;Property&lt;/Word&gt;
+			&lt;Word&gt;Protected&lt;/Word&gt;
+			&lt;Word&gt;Public&lt;/Word&gt;
+			&lt;Word&gt;RaiseEvent&lt;/Word&gt;
+			&lt;Word&gt;ReadOnly&lt;/Word&gt;
+			&lt;Word&gt;ReDim&lt;/Word&gt;
+			&lt;Word&gt;RemoveHandler&lt;/Word&gt;
+			&lt;Word&gt;Resume&lt;/Word&gt;
+			&lt;Word&gt;Return&lt;/Word&gt;
+			&lt;Word&gt;Select&lt;/Word&gt;
+			&lt;Word&gt;Set&lt;/Word&gt;
+			&lt;Word&gt;Shadows&lt;/Word&gt;
+			&lt;Word&gt;Shared&lt;/Word&gt;
+			&lt;Word&gt;Static&lt;/Word&gt;
+			&lt;Word&gt;Step&lt;/Word&gt;
+			&lt;Word&gt;Stop&lt;/Word&gt;
+			&lt;Word&gt;Structure&lt;/Word&gt;
+			&lt;Word&gt;Sub&lt;/Word&gt;
+			&lt;Word&gt;SyncLock&lt;/Word&gt;
+			&lt;Word&gt;Then&lt;/Word&gt;
+			&lt;Word&gt;Throw&lt;/Word&gt;
+			&lt;Word&gt;To&lt;/Word&gt;
+			&lt;Word&gt;Try&lt;/Word&gt;
+			&lt;Word&gt;Using&lt;/Word&gt;
+			&lt;Word&gt;Wend&lt;/Word&gt;
+			&lt;Word&gt;When&lt;/Word&gt;
+			&lt;Word&gt;While&lt;/Word&gt;
+			&lt;Word&gt;Widening&lt;/Word&gt;
+			&lt;Word&gt;With&lt;/Word&gt;
+			&lt;Word&gt;WithEvents&lt;/Word&gt;
+			&lt;Word&gt;WriteOnly&lt;/Word&gt;
+		&lt;/Keywords&gt;
+		&lt;Keywords color="ContextKeywords"&gt;
+			&lt;Word&gt;Aggregate&lt;/Word&gt;
+			&lt;Word&gt;Ansi&lt;/Word&gt;
+			&lt;Word&gt;Ascending&lt;/Word&gt;
+			&lt;Word&gt;Async&lt;/Word&gt;
+			&lt;Word&gt;Auto&lt;/Word&gt;
+			&lt;Word&gt;Binary&lt;/Word&gt;
+			&lt;Word&gt;By&lt;/Word&gt;
+			&lt;Word&gt;Compare&lt;/Word&gt;
+			&lt;Word&gt;Custom&lt;/Word&gt;
+			&lt;Word&gt;Descending&lt;/Word&gt;
+			&lt;Word&gt;Distinct&lt;/Word&gt;
+			&lt;Word&gt;Equals&lt;/Word&gt;
+			&lt;Word&gt;Explicit&lt;/Word&gt;
+			&lt;Word&gt;From&lt;/Word&gt;
+			&lt;Word&gt;Group&lt;/Word&gt;
+			&lt;Word&gt;Infer&lt;/Word&gt;
+			&lt;Word&gt;Into&lt;/Word&gt;
+			&lt;Word&gt;Iterator&lt;/Word&gt;
+			&lt;Word&gt;Join&lt;/Word&gt;
+			&lt;Word&gt;Key&lt;/Word&gt;
+			&lt;Word&gt;Off&lt;/Word&gt;
+			&lt;Word&gt;Preserve&lt;/Word&gt;
+			&lt;Word&gt;Skip&lt;/Word&gt;
+			&lt;Word&gt;Strict&lt;/Word&gt;
+			&lt;Word&gt;Take&lt;/Word&gt;
+			&lt;Word&gt;Unicode&lt;/Word&gt;
+			&lt;Word&gt;Until&lt;/Word&gt;
+			&lt;Word&gt;Where&lt;/Word&gt;
+			&lt;Word&gt;Yield&lt;/Word&gt;
+		&lt;/Keywords&gt;
+	&lt;/RuleSet&gt;
+	&lt;RuleSet name="PreprocessorSet" ignoreCase="true"&gt;
+		&lt;Keywords fontWeight="bold"&gt;
+			&lt;Word&gt;Const&lt;/Word&gt;
+			&lt;Word&gt;Else&lt;/Word&gt;
+			&lt;Word&gt;ElseIf&lt;/Word&gt;
+			&lt;Word&gt;End&lt;/Word&gt;
+			&lt;Word&gt;ExternalChecksum&lt;/Word&gt;
+			&lt;Word&gt;ExternalSource&lt;/Word&gt;
+			&lt;Word&gt;If&lt;/Word&gt;
+			&lt;Word&gt;Region&lt;/Word&gt;
+		&lt;/Keywords&gt;
+	&lt;/RuleSet&gt;
+&lt;/SyntaxDefinition&gt;</value>
+  </data>
+</root>

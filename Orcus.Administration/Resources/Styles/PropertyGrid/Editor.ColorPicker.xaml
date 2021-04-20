@@ -1,0 +1,148 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:local="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:editors="clr-namespace:Orcus.Administration.Controls.PropertyGrid.Editors">
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <Style x:Key="MetroColorPickerDropDownToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid x:Name="ToggleButtonRootGrid">
+                        <Border x:Name="PART_Background"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                       Path=(controls:ControlsHelper.CornerRadius),
+                                                       Mode=OneWay}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter />
+
+                            <Grid x:Name="BtnArrowBackground"
+                                  Grid.Column="1"
+                                  Margin="1"
+                                  Background="Transparent">
+                                <Path x:Name="BtnArrow"
+                                      Width="8"
+                                      Height="4"
+                                      HorizontalAlignment="Center"
+                                      Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                      Fill="{DynamicResource GrayBrush1}"
+                                      IsHitTestVisible="false"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Stretch="Uniform" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource GrayBrush3}" />
+                            <Setter TargetName="PART_Background" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ColorPicker" TargetType="{x:Type local:ColorPicker}">
+        <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BlackBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,1" />
+        <Setter Property="ButtonStyle" Value="{StaticResource MetroColorPickerDropDownToggleButtonStyle}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorPicker}">
+                    <ToggleButton x:Name="PART_ColorPickerToggleButton"
+                                  MinHeight="20"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  controls:TextBoxHelper.ClearTextButton="False"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="0"
+                                  IsChecked="{Binding IsOpen,
+                                                      RelativeSource={RelativeSource TemplatedParent},
+                                                      Mode=TwoWay}"
+                                  IsHitTestVisible="True"
+                                  IsTabStop="True"
+                                  Padding="{TemplateBinding Padding}"
+                                  Style="{TemplateBinding ButtonStyle}">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle x:Name="ColorOnly"
+                                           Width="20"
+                                           Margin="5">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <TextBlock Margin="1"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding SelectedColorText,
+                                                          RelativeSource={RelativeSource TemplatedParent}}" />
+                            </StackPanel>
+
+                            <Popup x:Name="PART_ColorPickerPalettePopup"
+                                   VerticalAlignment="Bottom"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   HorizontalOffset="1"
+                                   IsOpen="{Binding ElementName=PART_ColorPickerToggleButton,
+                                                    Path=IsChecked}"
+                                   PopupAnimation="None"
+                                   VerticalOffset="1">
+                                <Border Background="{StaticResource WhiteBrush}"
+                                        BorderBrush="{StaticResource GrayBrush7}"
+                                        BorderThickness="1"
+                                        Padding="3">
+                                    <Grid x:Name="_colorCanvasHost">
+                                        <local:ColorCanvas Background="Transparent"
+                                                           BorderThickness="0"
+                                                           SelectedColor="{Binding SelectedColor,
+                                                                                   RelativeSource={RelativeSource TemplatedParent}}"
+                                                           UsingAlphaChannel="{Binding UsingAlphaChannel,
+                                                                                       RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Grid>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ToggleButton>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="DisplayColorAndName" Value="True">
+                            <Setter TargetName="ColorOnly" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowDropDownButton" Value="False">
+                            <Setter Property="BorderThickness" Value="1" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOpen}" Value="true">
+                            <Setter TargetName="PART_ColorPickerToggleButton" Property="IsHitTestVisible" Value="False" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource ColorPicker}" TargetType="editors:PropertyGridEditorColorPicker" />
+</ResourceDictionary>

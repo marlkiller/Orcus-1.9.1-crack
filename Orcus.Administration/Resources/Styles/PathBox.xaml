@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Orcus.Administration.Controls.PropertyGrid.Controls"
+                    xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls">
+    <Style BasedOn="{StaticResource MetroTextBox}" TargetType="controls:PathBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:PathBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox MinHeight="{TemplateBinding MinHeight}"
+                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                 controls1:TextBoxHelper.Watermark="{TemplateBinding controls1:TextBoxHelper.Watermark}"
+                                 Background="{TemplateBinding Background}"
+                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                 CaretBrush="{TemplateBinding CaretBrush}"
+                                 ContextMenu="{TemplateBinding ContextMenu}"
+                                 FontFamily="{TemplateBinding FontFamily}"
+                                 FontSize="{TemplateBinding FontSize}"
+                                 Foreground="{TemplateBinding Foreground}"
+                                 SelectionBrush="{TemplateBinding SelectionBrush}"
+                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                 Text="{TemplateBinding Text}"
+                                 Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}" />
+                        <Button x:Name="PART_OpenDialog"
+                                Grid.Column="1"
+                                Height="20"
+                                MinWidth="30"
+                                MinHeight="20"
+                                Margin="5,2,2,2"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Top"
+                                Content="..."
+                                Padding="5,3" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

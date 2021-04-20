@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{46180263-0BAB-4292-A405-7686A2104F62}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OrcusPluginStudio</RootNamespace>
+    <AssemblyName>OrcusPluginStudio</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controls\ChangableImage.xaml.cs">
+      <DependentUpon>ChangableImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Builder.cs" />
+    <Compile Include="Core\CommandLineSettings.cs" />
+    <Compile Include="Core\LibraryWatcher.cs" />
+    <Compile Include="Core\OrcusPluginProjectUtilities.cs" />
+    <Compile Include="Core\OrcusPluginProject.cs" />
+    <Compile Include="Core\PluginInformation.cs" />
+    <Compile Include="Core\Settings\OrcusPluginStudioSettings.cs" />
+    <Compile Include="Core\Settings\RecentEntry.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\ClientCommands.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\ClientController.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\Commander.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\ConnectionInfo.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\ConnectionManager.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\CrossViewManager.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\Sender.cs" />
+    <Compile Include="Core\Test\AdministrationVirtualisation\StaticCommander.cs" />
+    <Compile Include="Core\Test\ClientVirtualisation\ConnectionInfo.cs" />
+    <Compile Include="Core\Test\ClientVirtualisation\ServerConnection.cs" />
+    <Compile Include="Core\Test\ClientVirtualisation\ClientStartupInformation.cs" />
+    <Compile Include="Core\Test\ClientVirtualisation\ToolBase.cs" />
+    <Compile Include="Core\Test\ClientVirtualizer.cs" />
+    <Compile Include="Core\Test\IManualTest.cs" />
+    <Compile Include="Core\Test\ManualTests\AudioPluginTest.cs" />
+    <Compile Include="Core\Test\ManualTests\BuildPluginTest.cs" />
+    <Compile Include="Core\Test\ManualTests\ClientPluginTest.cs" />
+    <Compile Include="Core\Test\ManualTests\CommandViewTest.cs" />
+    <Compile Include="Core\Test\Tester.cs" />
+    <Compile Include="Core\Test\TestResultEntry.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PropertiesViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="Views\ManualTest\AudioPluginTest.xaml.cs">
+      <DependentUpon>AudioPluginTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManualTest\BuildPluginTest.xaml.cs">
+      <DependentUpon>BuildPluginTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManualTest\ClientPluginTest.xaml.cs">
+      <DependentUpon>ClientPluginTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManualTest\CommandViewTest.xaml.cs">
+      <DependentUpon>CommandViewTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManualTest\ViewManager.cs" />
+    <Compile Include="Views\ProjectPropertiesWindow.xaml.cs">
+      <DependentUpon>ProjectPropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeWindow.xaml.cs">
+      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\ChangableImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\ManualTest\AudioPluginTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManualTest\BuildPluginTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManualTest\ClientPluginTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManualTest\CommandViewTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectPropertiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WelcomeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Orcus.Administration.Plugins\Orcus.Administration.Plugins.csproj">
+      <Project>{bee3b0ea-abae-43f3-a377-763e1a28c967}</Project>
+      <Name>Orcus.Administration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0d743e5d-0d5f-4b9b-b2df-1f607b5031c4}</Project>
+      <Name>Orcus.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Orcus.Shared.Utilities\Orcus.Shared.Utilities.csproj">
+      <Project>{e23e8c6f-6f71-4954-8a42-fba873b86e5e}</Project>
+      <Name>Orcus.Shared.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030f3bd-8f20-483b-b87b-c1be34dbebfc}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sorzus.Wpf.Toolkit\Sorzus.Wpf.Toolkit.csproj">
+      <Project>{bf0e0718-3e64-4246-a17f-594dcf19edfc}</Project>
+      <Name>Sorzus.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release call "$(SolutionDir)signApp.bat" "$(TargetFileName)" true</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

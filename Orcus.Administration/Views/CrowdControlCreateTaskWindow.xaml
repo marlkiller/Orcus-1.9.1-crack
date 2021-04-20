@@ -1,0 +1,654 @@
+<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CrowdControlCreateTaskWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:clientData="clr-namespace:Orcus.Administration.Core.ClientManagement;assembly=Orcus.Administration.Core"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="{Binding Title}"
+    Width="750"
+    Height="450"
+    d:DataContext="{d:DesignInstance viewModels:CrowdControlCreateTaskViewModel}"
+    extensions:WindowService.DialogResult="{Binding DialogResult}"
+    extensions:WindowService.EscapeClosesWindow="True"
+    Background="{StaticResource WhiteBrush}"
+    Icon="/Resources/Images/VisualStudio/AddEvent_16x.png"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <controls:MetroWindow.Style>
+        <Style BasedOn="{StaticResource NormalWindow}" TargetType="controls:MetroWindow">
+            <Setter Property="IconTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{StaticResource AddEventIcon}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RequestName}" Value="true">
+                    <Setter Property="IconTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{StaticResource AddEventBlueIcon}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </controls:MetroWindow.Style>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl
+            Margin="0,10,0,0"
+            Background="{StaticResource WhiteBrush}"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="0,1,0,0"
+            Style="{StaticResource Windows10TabControl}">
+            <TabItem Header="{StaticResource Command}">
+                <controls1:StaticCommandSelectionControl Margin="10" SelectedStaticCommand="{Binding SelectedCommand}" />
+            </TabItem>
+            <TabItem Header="{StaticResource Active}">
+                <TabItem.Style>
+                    <Style BasedOn="{StaticResource Windows10TabItem}" TargetType="TabItem">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelectedCommandTypeActive}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="{StaticResource ActiveDescription}" TextWrapping="Wrap" />
+                    <TextBlock Margin="5,20,0,0" Text="{StaticResource StopEventShutdown}" />
+                    <RadioButton
+                        x:Name="SystemShutdownStopEventRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource SystemShutdown}"
+                        IsChecked="True" />
+                    <TextBlock Margin="5,10,0,0" Text="{StaticResource StopEventNever}" />
+                    <RadioButton
+                        x:Name="NeverStopEventRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource Never}" />
+                    <TextBlock Margin="5,10,0,0" Text="{StaticResource StopEventDuration}" />
+                    <RadioButton
+                        x:Name="DurationEventRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource Duration}" />
+                    <Grid Margin="0,5,0,0" Visibility="{Binding ElementName=DurationEventRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center">
+                            <Run Text="{StaticResource Duration}" /><Run Text=":" />
+                        </TextBlock>
+                        <xctk:TimeSpanUpDown
+                            x:Name="DurationStopTimeSpanUpDown"
+                            Grid.Column="1"
+                            Width="150"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource BlackBrush}"
+                            Minimum="0:1:0" />
+                    </Grid>
+                    <TextBlock Margin="5,10,0,0" Text="{StaticResource StopEventDateTime}" />
+                    <RadioButton
+                        x:Name="DateTimeStopEventRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource DateAndTime}" />
+                    <Grid Margin="0,5,0,0" Visibility="{Binding ElementName=DateTimeStopEventRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center">
+                            <Run Text="{StaticResource Time}" /><Run Text=":" />
+                        </TextBlock>
+                        <xctk:DateTimePicker
+                            x:Name="StopEventDateAndTimePicker"
+                            Grid.Column="1"
+                            Width="320"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource BlackBrush}" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="{StaticResource Trigger}">
+                <ScrollViewer>
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <TextBlock Text="{StaticResource TriggerDescription}" TextWrapping="Wrap" />
+                        <TextBlock Margin="5,20,0,0" Text="{StaticResource TransmissionImmediately}" />
+                        <RadioButton
+                            x:Name="ImmediatelyEventRadioButton"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource Immediately}"
+                            IsChecked="True" />
+                        <TextBlock Margin="5,10,0,0" Text="{StaticResource TramsmissionDateAndTime}" />
+                        <RadioButton
+                            x:Name="DateTimeEventRadioButton"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource DateAndTime}" />
+                        <Grid Margin="0,5,0,0" Visibility="{Binding ElementName=DateTimeEventRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="{StaticResource Time}" /><Run Text=":" />
+                            </TextBlock>
+                            <xctk:DateTimePicker
+                                x:Name="DateAndTimePicker"
+                                Grid.Column="1"
+                                Width="320"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource BlackBrush}" />
+                        </Grid>
+                        <TextBlock Margin="5,10,0,0" Text="{StaticResource TransmissionOnJoin}" />
+                        <RadioButton
+                            x:Name="OnJoinEventRadioButton"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource OnJoin}" />
+                        <TextBlock
+                            Margin="5,10,0,0"
+                            Text="{StaticResource TransmissionEveryClientOnce}"
+                            TextWrapping="Wrap" />
+                        <RadioButton
+                            x:Name="EveryClientOnceRadioButton"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource EveryClientOnce}" />
+                        <TextBlock
+                            Margin="5,10,0,0"
+                            Text="{StaticResource TransmissionRepeating}"
+                            TextWrapping="Wrap" />
+                        <RadioButton
+                            x:Name="RepeatingEventRadioButton"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource Repeating}" />
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            Orientation="Vertical"
+                            Visibility="{Binding ElementName=RepeatingEventRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid Margin="0,3,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="{StaticResource StartTime}" /><Run Text=":" />
+                                </TextBlock>
+                                <xctk:DateTimePicker
+                                    x:Name="RepeatingDateTimePicker"
+                                    Grid.Column="1"
+                                    Width="320"
+                                    Height="24"
+                                    HorizontalAlignment="Left"
+                                    Foreground="{StaticResource BlackBrush}" />
+                            </Grid>
+                            <Grid Margin="0,5,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="{StaticResource Frequency}" /><Run Text=":" />
+                                </TextBlock>
+                                <xctk:TimeSpanUpDown
+                                    x:Name="RepeatingTimeSpanUpDown"
+                                    Grid.Column="1"
+                                    Width="150"
+                                    Height="24"
+                                    HorizontalAlignment="Left"
+                                    Foreground="{StaticResource BlackBrush}"
+                                    Minimum="0:1:0" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem x:Name="ConditionsTabItem" Header="{StaticResource Conditions}">
+                <TabItem.Style>
+                    <Style BasedOn="{StaticResource Windows10TabItem}" TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NoTarget}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{StaticResource ConditionsDescription}" TextWrapping="Wrap" />
+                    <ListView
+                        x:Name="ConditionsListView"
+                        Grid.Row="1"
+                        Margin="0,10,0,0"
+                        listViewLayoutManager:ListViewLayoutManager.Enabled="true"
+                        ItemsSource="{Binding Conditions}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectedItem="{Binding SelectedCondition}">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.RemoveConditionCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                                    Header="{StaticResource Remove}" />
+                            </ContextMenu>
+                        </ListView.Resources>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    Command="{Binding AddConditionCommand}"
+                                    Header="{StaticResource AddCondition}"
+                                    Icon="{StaticResource AddConditionalRuleIcon}" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.EditConditionCommand}" />
+                                <Setter Property="extensions:ControlExtensions.DoubleClickCommandParameter" Value="{Binding}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn
+                                    Width="150"
+                                    listViewLayoutManager:FixedColumn.Width="150"
+                                    DisplayMemberBinding="{Binding ConditionType}"
+                                    Header="{StaticResource Type}" />
+                                <GridViewColumn
+                                    listViewLayoutManager:ProportionalColumn.Width="1"
+                                    DisplayMemberBinding="{Binding DisplayString}"
+                                    Header="{DynamicResource ValueName}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel
+                        Grid.Row="2"
+                        Margin="0,10,0,0"
+                        Orientation="Horizontal">
+                        <Button
+                            Width="75"
+                            Command="{Binding AddConditionCommand}"
+                            Content="{StaticResource Add}" />
+                        <Button
+                            Width="75"
+                            Margin="10,0,0,0"
+                            Command="{Binding RemoveConditionCommand}"
+                            CommandParameter="{Binding ElementName=ConditionsListView, Path=SelectedItems}"
+                            Content="{StaticResource Remove}">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ConditionsListView, Path=SelectedItem}" Value="{x:Null}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{StaticResource Execution}">
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="{StaticResource ExecutionDescription}" TextWrapping="Wrap" />
+                    <TextBlock Margin="5,20,0,0" Text="{StaticResource ExecutionImmediately}" />
+                    <RadioButton
+                        x:Name="ImmediatelyExecutionRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource Immediately}"
+                        IsChecked="True" />
+                    <TextBlock Margin="5,10,0,0" Text="{StaticResource ExecutionDateAndTime}" />
+                    <RadioButton
+                        x:Name="DateTimeExecutionRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource DateAndTime}" />
+                    <StackPanel
+                        Margin="0,5,0,0"
+                        Orientation="Vertical"
+                        Visibility="{Binding ElementName=DateTimeExecutionRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="{StaticResource Time}" /><Run Text=":" />
+                            </TextBlock>
+                            <xctk:DateTimePicker
+                                x:Name="DateAndTimeExecutionPicker"
+                                Grid.Column="1"
+                                Width="320"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource BlackBrush}" />
+                        </Grid>
+                        <CheckBox
+                            x:Name="DateAndTimeExecutionCheckBox"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource ExecutionDateAndTimeCondition}" />
+                    </StackPanel>
+                    <TextBlock Margin="5,10,0,0" Text="{StaticResource ExecutionIdle}" />
+                    <RadioButton
+                        x:Name="IdleExecutionRadioButton"
+                        Margin="0,5,0,0"
+                        Content="{StaticResource Idle}" />
+                    <StackPanel
+                        Margin="0,5,0,0"
+                        Orientation="Vertical"
+                        Visibility="{Binding ElementName=IdleExecutionRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="{StaticResource IdleTime}" /><Run Text=":" />
+                            </TextBlock>
+                            <controls:NumericUpDown
+                                x:Name="IdleTimeNumericUpDown"
+                                Grid.Column="1"
+                                Width="150"
+                                HorizontalAlignment="Left"
+                                Minimum="15"
+                                StringFormat="0 s"
+                                Value="300" />
+                        </Grid>
+                        <CheckBox
+                            x:Name="IdleDateAndTimeExecutionCheckBox"
+                            Margin="0,5,0,0"
+                            Content="{StaticResource IdleExecuteAtDateTime}" />
+                        <Grid Margin="10,5,0,0" IsEnabled="{Binding ElementName=IdleDateAndTimeExecutionCheckBox, Path=IsChecked}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="{StaticResource Time}" /><Run Text=":" />
+                            </TextBlock>
+                            <xctk:DateTimePicker
+                                x:Name="IdleDateAndTimeExecutionPicker"
+                                Grid.Column="1"
+                                Width="320"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource BlackBrush}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="TargetTabItem" Header="{StaticResource Target}">
+                <TabItem.Style>
+                    <Style BasedOn="{StaticResource Windows10TabItem}" TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NoTarget}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid Margin="10">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Clients.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton
+                                x:Name="GroupsRadioButton"
+                                Content="{StaticResource Groups}"
+                                IsChecked="True" />
+                            <RadioButton
+                                x:Name="ClientsRadioButton"
+                                Margin="20,0,0,0"
+                                Content="{StaticResource Clients}" />
+                            <RadioButton
+                                x:Name="AllRadioButton"
+                                Margin="20,0,0,0"
+                                Content="{StaticResource All}">
+                                <RadioButton.Style>
+                                    <Style BasedOn="{StaticResource MetroRadioButton}" TargetType="RadioButton">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NoTarget}" Value="true">
+                                                <Setter Property="IsChecked" Value="True" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                        </StackPanel>
+                        <Grid Grid.Row="1" Margin="0,10,0,0">
+                            <ListBox
+                                x:Name="GroupsListBox"
+                                Background="{StaticResource WhiteBrush}"
+                                BorderThickness="0,1,0,0"
+                                ItemsSource="{Binding Groups}"
+                                SelectionMode="Multiple">
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                                        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+                                        <Setter Property="VirtualizingStackPanel.IsVirtualizingWhenGrouping" Value="True" />
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=GroupsRadioButton, Path=IsChecked}" Value="true">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.Style>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+                                            <CheckBox.Style>
+                                                <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                                                    <Setter Property="Content" Value="{Binding}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true">
+                                                            <Setter Property="Foreground" Value="White" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ., Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                            <Setter Property="Content" Value="{StaticResource Default}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <ListView
+                                x:Name="ClientsListView"
+                                BorderThickness="0,1,0,0"
+                                ItemsSource="{Binding Clients}"
+                                SelectionMode="Multiple">
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
+                                        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                                        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+                                        <Setter Property="VirtualizingStackPanel.IsVirtualizingWhenGrouping" Value="True" />
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=ClientsRadioButton, Path=IsChecked}" Value="true">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.Style>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="150" Header="{StaticResource Client}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type clientData:ClientViewModel}">
+                                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}">
+                                                        <CheckBox.Style>
+                                                            <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+                                                                <Setter Property="Content" Value="{Binding UserName}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="true">
+                                                                        <Setter Property="Foreground" Value="White" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding ., Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                                                                        <Setter Property="Content" Value="{StaticResource Default}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </CheckBox.Style>
+                                                    </CheckBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn
+                                            Width="75"
+                                            DisplayMemberBinding="{Binding Id}"
+                                            Header="{StaticResource ClientId}" />
+                                        <GridViewColumn
+                                            Width="130"
+                                            DisplayMemberBinding="{Binding Group}"
+                                            Header="{DynamicResource Group}" />
+                                        <GridViewColumn
+                                            Width="220"
+                                            DisplayMemberBinding="{Binding OsName}"
+                                            Header="{DynamicResource OperatingSystem}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="14">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=AllRadioButton, Path=IsChecked}" Value="true">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                                <Run Text="{StaticResource Clients}" /><Run Text=":" />
+                                <Run Text="{Binding Clients.Count, Mode=OneWay}" />
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{StaticResource NoClientsConnected}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Clients.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="1" Background="{StaticResource GrayBrush10}">
+            <TextBox
+                x:Name="NameTextBox"
+                Width="400"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                controls:TextBoxHelper.Watermark="{StaticResource Name}"
+                Text="{Binding CustomName}">
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RequestName}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <StackPanel
+                Margin="10"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Width="90"
+                    Margin="0,0,15,0"
+                    Command="{Binding CancelCommand}"
+                    Content="{StaticResource Cancel}"
+                    IsCancel="True" />
+                <Button
+                    Width="90"
+                    Click="OkButton_OnClick"
+                    Content="{StaticResource Ok}"
+                    IsDefault="True">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=GroupsRadioButton, Path=IsChecked}" Value="true" />
+                                        <Condition Binding="{Binding ElementName=GroupsListBox, Path=SelectedItem}" Value="{x:Null}" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=ClientsRadioButton, Path=IsChecked}" Value="true" />
+                                        <Condition Binding="{Binding ElementName=ClientsListView, Path=SelectedItem}" Value="{x:Null}" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding RequestName}" Value="true" />
+                                        <Condition Binding="{Binding ElementName=NameTextBox, Path=Text, Converter={StaticResource IsStringEmptyConverter}}" Value="true" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger>
+                                <DataTrigger Binding="{Binding SelectedCommand}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

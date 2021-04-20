@@ -1,0 +1,243 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    mc:Ignorable="options">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Color x:Key="BlackColor">#FF000000</Color>
+    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+
+    <Color x:Key="Gray1">#FF333333</Color>
+    <Color x:Key="Gray2">#FF7F7F7F</Color>
+    <Color x:Key="Gray7">#FFD8D8D9</Color>
+    <Color x:Key="Gray8">#FFE0E0E0</Color>
+    <Color x:Key="Gray10">#FFF7F7F7</Color>
+
+    <Color x:Key="GrayNormal">#FFBEBEBE</Color>
+    <Color x:Key="GrayHover">#FF333333</Color>
+
+    <Color x:Key="FlyoutColor">#FFFFFFFF</Color>
+
+    <!--  re-set brushes too  -->
+    <SolidColorBrush x:Key="BlackBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="LabelTextBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="BlackColorBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxFocusBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="MenuSeparatorBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ListBoxBorderBrush"
+                     options:Freeze="True"
+                     Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="GridSplitterBrush"
+                     options:Freeze="True"
+                     Color="#FFA59F93" />
+
+    <SolidColorBrush x:Key="ControlBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteColorBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="DisabledWhiteBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="GrayBrush1"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray1}" />
+    <SolidColorBrush x:Key="GrayBrush2"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray2}" />
+    <SolidColorBrush x:Key="GrayBrush7"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray7}" />
+    <SolidColorBrush x:Key="GrayBrush8"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray8}" />
+    <SolidColorBrush x:Key="GrayBrush10"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray10}" />
+
+    <SolidColorBrush x:Key="GrayNormalBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource GrayNormal}" />
+    <SolidColorBrush x:Key="GrayHoverBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource GrayHover}" />
+
+    <SolidColorBrush x:Key="SliderValueDisabled"
+                     options:Freeze="True"
+                     Color="#FFBABABA" />
+    <SolidColorBrush x:Key="SliderTrackDisabled"
+                     options:Freeze="True"
+                     Color="#FFDBDBDB" />
+    <SolidColorBrush x:Key="SliderThumbDisabled"
+                     options:Freeze="True"
+                     Color="#FFA0A0A0" />
+    <SolidColorBrush x:Key="SliderTrackHover"
+                     options:Freeze="True"
+                     Color="#FFD0D0D0" />
+    <SolidColorBrush x:Key="SliderTrackNormal"
+                     options:Freeze="True"
+                     Color="#FFC6C6C6" />
+
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource FlyoutColor}" />
+    <SolidColorBrush x:Key="FlyoutForegroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush"
+                     options:Freeze="True"
+                     Color="#222222" />
+
+    <!--  menu brushes  -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="ContextMenuBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="SubMenuBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="MenuItemBackgroundBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="ContextMenuBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="SubMenuBorderBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="MenuItemSelectionFill"
+                     options:Freeze="True"
+                     Color="#DEDEDE" />
+    <SolidColorBrush x:Key="MenuItemSelectionStroke"
+                     options:Freeze="True"
+                     Color="#DEDEDE" />
+
+    <SolidColorBrush x:Key="TopMenuItemPressedFill"
+                     options:Freeze="True"
+                     Color="#DEDEDE" />
+    <SolidColorBrush x:Key="TopMenuItemPressedStroke"
+                     options:Freeze="True"
+                     Color="#E0717070" />
+    <SolidColorBrush x:Key="TopMenuItemSelectionStroke"
+                     options:Freeze="True"
+                     Color="#90717070" />
+
+    <!--  original #FF9A9A9A"  -->
+    <SolidColorBrush x:Key="DisabledMenuItemForeground"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray2}" />
+    <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel"
+                     options:Freeze="True"
+                     Color="#848589" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}"
+                     options:Freeze="True"
+                     Color="{StaticResource BlackColor}" />
+
+    <Color x:Key="MenuShadowColor">#FF000000</Color>
+
+    <!--  DataGrid brushes  -->
+    <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush"
+                     options:Freeze="True"
+                     Color="{StaticResource Gray7}" />
+
+    <!--  Orcus Special  -->
+    <SolidColorBrush x:Key="PropertiesBorderBrush" Color="#FFDEDEDE" />
+    <SolidColorBrush x:Key="PropertiesSecondCellBrush" Color="#FFFBFBFB" />
+    <Color x:Key="CommandsItemFocusColor">#FFF7F7F7</Color>
+    <SolidColorBrush x:Key="CommandsItemFocusBrush" Color="{StaticResource CommandsItemFocusColor}" />
+    <SolidColorBrush x:Key="MessageBoxBottomBrush" Color="#FFF5F5F5" />
+
+    <Color x:Key="HightLightBrushColor1">#FFEDEDED</Color>
+    <Color x:Key="HightLightBrushColor2">#FFE8E8E8</Color>
+    <Color x:Key="ControlBrushColor1">#FFF8F8F8</Color>
+    <Color x:Key="ControlBrushColor2">#FFE5E5E5</Color>
+    <Color x:Key="MouseOverBrushColor1">#FFFAFBFD</Color>
+    <Color x:Key="MouseOverBrushColor2">#FFEBF3FD</Color>
+    <SolidColorBrush x:Key="MouseOverBrush" Color="#FFEAEAEA" />
+
+    <Color x:Key="BorderColor">#acacac</Color>
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="ExceptionDialogTop" Color="#FFFBFBFB" />
+    <SolidColorBrush x:Key="CodeBackgroundBrush" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="TabItemBorderBrush" Color="#FFACACAC" />
+    <SolidColorBrush x:Key="TabItemMouseOverBorderBrush" Color="#7eb4ea" />
+    <SolidColorBrush x:Key="TabItemSelectedBackgroundBrush" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="TabItemBackgroundBrush" Color="#EDEDED" />
+    <SolidColorBrush x:Key="TabItemMouseOverBackgroundBrush" Color="#E3EFF7" />
+
+    <SolidColorBrush x:Key="CpuChartCrossBrush" Color="#d9eaf4" />
+    <SolidColorBrush x:Key="CpuChartFill" Color="#11117DBB" />
+    <SolidColorBrush x:Key="MemoryChartCrossBrush" Color="#FFECDEF0" />
+    <SolidColorBrush x:Key="MemoryChartFill" Color="#119528B4" />
+    <SolidColorBrush x:Key="EthernetChartCrossBrush" Color="#FFEEDECF" />
+    <SolidColorBrush x:Key="EthernetChartFill" Color="#11FFAB1F" />
+
+    <SolidColorBrush x:Key="ConsoleBackgroundBrush" Color="#FF2F2F2F" />
+
+    <Color x:Key="DialogBottomColor">#fdfdfd</Color>
+    <SolidColorBrush x:Key="DialogBottomBrush" Color="{StaticResource DialogBottomColor}" />
+    <Color x:Key="WindowButtonColor">#E5E5E5</Color>
+
+    <!--  Visual Studio Icons  -->
+    <SolidColorBrush x:Key="HaloBrush" Color="#FFF6F6F6" />
+    <SolidColorBrush x:Key="LightBrush1" Color="#FFF0EFF1" />
+    <SolidColorBrush x:Key="LightBrush2" Color="#FFEFEFF0" />
+    <SolidColorBrush x:Key="DarkBrush1" Color="#FF424242" />
+    <SolidColorBrush x:Key="DarkBrush2" Color="#FF414141" />
+    <SolidColorBrush x:Key="IconBlueBrush1" Color="#FF00529C" />
+    <SolidColorBrush x:Key="IconBlueBrush2" Color="#00539c" />
+</ResourceDictionary>

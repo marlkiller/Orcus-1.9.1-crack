@@ -1,0 +1,30 @@
+﻿<controls1:MetroWindow x:Class="Orcus.Administration.Views.ComputerInformationWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:controls="clr-namespace:Orcus.Administration.Controls"
+                       xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                       Title=""
+                       Width="800"
+                       Height="500"
+                       MinWidth="600"
+                       MinHeight="350"
+                       d:DataContext="{d:DesignInstance viewModels:ComputerInformationViewModel}"
+                       extensions:WindowService.EscapeClosesWindow="True"
+                       Icon="/Resources/Images/VisualStudio/ComputerSystem.ico"
+                       ShowInTaskbar="True"
+                       Style="{StaticResource NormalWindow}"
+                       WindowStartupLocation="CenterOwner"
+                       mc:Ignorable="d">
+    <controls1:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource ComputerSystemIcon}" />
+        </DataTemplate>
+    </controls1:MetroWindow.IconTemplate>
+    <ScrollViewer>
+        <controls:ComputerInformationViewerControl ComputerInformation="{Binding ComputerInformation}" />
+    </ScrollViewer>
+</controls1:MetroWindow>

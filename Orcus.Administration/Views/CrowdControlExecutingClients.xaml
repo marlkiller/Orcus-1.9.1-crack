@@ -1,0 +1,71 @@
+﻿<controls:MetroWindow
+    x:Class="Orcus.Administration.Views.CrowdControlExecutingClients"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="clr-namespace:Orcus.Administration.Core.ClientManagement;assembly=Orcus.Administration.Core"
+    xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+    Title="{Binding Title}"
+    Width="540"
+    Height="360"
+    d:DataContext="{d:DesignInstance viewModels:CrowdControlExecutingClientsViewModel}"
+    Icon="/Resources/Images/VisualStudio/StartWeb_16x.png"
+    Style="{StaticResource NormalWindow}"
+    mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource StartWebIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <ListView listViewLayoutManager:ListViewLayoutManager.Enabled="True" ItemsSource="{Binding CollectionView}">
+        <ListView.Resources>
+            <ContextMenu x:Key="ItemContextMenu">
+                <MenuItem
+                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.StopExectionCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItems}"
+                    Header="{DynamicResource StopActiveCommand}" />
+            </ContextMenu>
+        </ListView.Resources>
+        <ListView.View>
+            <GridView>
+                <GridViewColumn
+                    Width="60"
+                    listViewLayoutManager:FixedColumn.Width="60"
+                    Header="ID">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type data:ClientViewModel}">
+                            <TextBlock>
+                                <Run Text="CI-" /><Run Text="{Binding Id, Mode=OneWay}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn
+                    listViewLayoutManager:ProportionalColumn.Width="1"
+                    DisplayMemberBinding="{Binding UserName, FallbackValue=Unknown}"
+                    Header="{DynamicResource Username}" />
+                <GridViewColumn
+                    Width="100"
+                    listViewLayoutManager:FixedColumn.Width="100"
+                    DisplayMemberBinding="{Binding Group}"
+                    Header="{DynamicResource Group}" />
+                <GridViewColumn
+                    listViewLayoutManager:ProportionalColumn.Width="2"
+                    DisplayMemberBinding="{Binding OsName}"
+                    Header="{DynamicResource OperatingSystem}" />
+                <GridViewColumn
+                    listViewLayoutManager:ProportionalColumn.Width="1"
+                    DisplayMemberBinding="{Binding GeoLocationCountry, FallbackValue=Unknown}"
+                    Header="{DynamicResource Country}" />
+            </GridView>
+        </ListView.View>
+        <ListView.ItemContainerStyle>
+            <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="ListViewItem">
+                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+            </Style>
+        </ListView.ItemContainerStyle>
+    </ListView>
+</controls:MetroWindow>

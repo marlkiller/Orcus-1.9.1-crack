@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="OrcusPluginStudio.Views.ManualTest.ClientPluginTest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:listViewLayoutManager="clr-namespace:Sorzus.Wpf.Toolkit.ListViewLayoutManager;assembly=Sorzus.Wpf.Toolkit"
+             xmlns:manualTests="clr-namespace:OrcusPluginStudio.Core.Test.ManualTests"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance manualTests:ClientPluginTest}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <ScrollViewer>
+        <StackPanel Margin="10">
+            <TextBlock Text="Basic Control" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Button Width="75"
+                        Command="{Binding StartCommand}"
+                        Content="Start">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsStarted}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="75"
+                        Margin="10,0,0,0"
+                        Command="{Binding ShutdownCommand}"
+                        Content="Shutdown"
+                        IsEnabled="{Binding IsStarted}" />
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="Installation" />
+            <TextBox x:Name="InstallationPathTextBox" Margin="0,2,0,0" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Button Width="75"
+                        Command="{Binding InstallCommand}"
+                        CommandParameter="{Binding ElementName=InstallationPathTextBox,
+                                                   Path=Text}"
+                        Content="Install">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInstalled}" Value="true">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="75"
+                        Margin="10,0,0,0"
+                        Command="{Binding UninstallCommand}"
+                        Content="Uninstall"
+                        IsEnabled="{Binding IsInstalled}" />
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="Protection" />
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <Button Width="120"
+                        Command="{Binding CanStartCommand}"
+                        Content="InfluenceStartup" />
+                <Button Width="120"
+                        Margin="10,0,0,0"
+                        Command="{Binding CanTryConnectCommand}"
+                        Content="CanTryConnect" />
+            </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Password Recovery" />
+                <Button Margin="10,0,0,0"
+                        Command="{Binding PasswordRecoveryCommand}"
+                        Content="Search Passwords..." />
+            </StackPanel>
+            <ListView Height="100"
+                      Margin="0,5,0,0"
+                      ItemsSource="{Binding RecoveredPasswords}"
+                      PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
+                      listViewLayoutManager:ListViewLayoutManager.Enabled="true">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Application}"
+                                        Header="Application"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn DisplayMemberBinding="{Binding UserName}"
+                                        Header="User Name"
+                                        listViewLayoutManager:ProportionalColumn.Width="2" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Password}"
+                                        Header="Password"
+                                        listViewLayoutManager:ProportionalColumn.Width="2" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Field1}"
+                                        Header="Field 1"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Field2}"
+                                        Header="Field 2"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn Width="75"
+                                        DisplayMemberBinding="{Binding PasswordType}"
+                                        Header="Type"
+                                        listViewLayoutManager:FixedColumn.Width="75" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Cookie Recovery" />
+                <Button Margin="10,0,0,0"
+                        Command="{Binding CookieRecoveryCommand}"
+                        Content="Search Cookies..." />
+            </StackPanel>
+            <ListView Height="100"
+                      Margin="0,5,0,0"
+                      ItemsSource="{Binding RecoveredCookies}"
+                      PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
+                      listViewLayoutManager:ListViewLayoutManager.Enabled="true">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding ApplicationName}"
+                                        Header="Application"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Host}"
+                                        Header="Host"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                        Header="Name"
+                                        listViewLayoutManager:ProportionalColumn.Width="1" />
+                        <GridViewColumn Width="75"
+                                        DisplayMemberBinding="{Binding Secure}"
+                                        Header="Secure"
+                                        listViewLayoutManager:FixedColumn.Width="75" />
+                        <GridViewColumn Width="75"
+                                        DisplayMemberBinding="{Binding ExpiresUtc}"
+                                        Header="Expires"
+                                        listViewLayoutManager:FixedColumn.Width="100" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Value}"
+                                        Header="Value"
+                                        listViewLayoutManager:ProportionalColumn.Width="2" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

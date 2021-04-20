@@ -1,0 +1,72 @@
+﻿<controls:MetroWindow x:Class="Orcus.Administration.Views.Dialogs.ProxySettingsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behavior="clr-namespace:Orcus.Administration.Behavior"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:core="clr-namespace:Orcus.Administration.Core;assembly=Orcus.Administration.Core"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+                      Title="{StaticResource Proxy}"
+                      Width="500"
+                      d:DataContext="{d:DesignInstance viewModels:ProxySettingsViewModel}"
+                      Icon="/Resources/Images/VisualStudio/HTTPConnection.ico"
+                      ResizeMode="NoResize"
+                      ShowInTaskbar="False"
+                      SizeToContent="Height"
+                      Style="{StaticResource NormalWindow}"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{StaticResource HTTPConnectionIcon}" />
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <StackPanel Margin="10">
+        <CheckBox x:Name="UseProxyCheckBox"
+                  Content="{StaticResource UseProxyToConnectToServer}"
+                  IsChecked="{Binding Settings.UseProxyToConnectToServer}" />
+        <StackPanel Margin="10,10,0,0" IsEnabled="{Binding ElementName=UseProxyCheckBox, Path=IsChecked}">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="SOCKS 4" IsChecked="{Binding Settings.ProxyType, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:ProxyType.Socks4}}" />
+                <RadioButton Margin="20,0"
+                             Content="SOCKS 4a"
+                             IsChecked="{Binding Settings.ProxyType,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static core:ProxyType.Socks4a}}" />
+                <RadioButton x:Name="Socks5RadioButton"
+                             Content="SOCKS 5"
+                             IsChecked="{Binding Settings.ProxyType,
+                                                 Converter={StaticResource EnumBooleanConverter},
+                                                 ConverterParameter={x:Static core:ProxyType.Socks5}}" />
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="{StaticResource IpAddress}" />
+            <TextBox Margin="0,2,0,0" Text="{Binding Settings.ProxyIpAddress}" />
+            <TextBlock Margin="0,10,0,0" Text="{StaticResource Port}" />
+            <controls:NumericUpDown x:Name="PortNumericUpDown"
+                                    Width="130"
+                                    Margin="0,2,0,0"
+                                    HorizontalAlignment="Left"
+                                    Maximum="65535"
+                                    Minimum="1"
+                                    Value="{Binding Settings.ProxyPort}" />
+            <StackPanel IsEnabled="{Binding ElementName=Socks5RadioButton, Path=IsChecked}">
+                <CheckBox x:Name="UseAuthenticationCheckBox"
+                          Margin="0,20,0,0"
+                          Content="{StaticResource Authentication}"
+                          IsChecked="{Binding Settings.ProxyAuthenticate}" />
+                <StackPanel Margin="10,0,0,0" IsEnabled="{Binding ElementName=UseAuthenticationCheckBox, Path=IsChecked}">
+                    <TextBlock Margin="0,10,0,0" Text="{StaticResource Username}" />
+                    <TextBox Margin="0,2,0,0" Text="{Binding Settings.ProxyUsername}" />
+                    <TextBlock Margin="0,10,0,0" Text="{StaticResource Password}" />
+                    <PasswordBox>
+                        <i:Interaction.Behaviors>
+                            <behavior:PasswordBoxBehavior GetPasswordFunction="{Binding GetPasswordFunc, Mode=OneWayToSource}" SetPasswordAction="{Binding SetPasswordAction, Mode=OneWayToSource}" />
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</controls:MetroWindow>

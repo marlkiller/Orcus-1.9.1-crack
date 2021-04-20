@@ -1,0 +1,36 @@
+﻿<buildPlugin:BuilderPropertyViewUserControl x:Class="Orcus.Administration.Views.BuilderViews.InstallationLocationBuilderPropertyView"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:buildPlugin="clr-namespace:Orcus.Administration.Plugins.BuildPlugin;assembly=Orcus.Administration.Plugins"
+                                            xmlns:builderSettings="clr-namespace:Orcus.Shared.Settings;assembly=Orcus.Shared"
+                                            xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            d:DataContext="{d:DesignInstance builderSettings:InstallationLocationBuilderProperty}"
+                                            d:DesignHeight="300"
+                                            d:DesignWidth="300"
+                                            x:TypeArguments="builderSettings:InstallationLocationBuilderProperty"
+                                            mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Text="{StaticResource LocationWithFilename}" />
+        <TextBox Margin="0,2,0,0"
+                 controls:TextBoxHelper.Watermark="{StaticResource SystemVariablesAreSupported}"
+                 Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                Path=InstallationPath,
+                                UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Margin="0,2,0,0"
+                   FontStyle="Italic"
+                   TextWrapping="Wrap">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=PreviewInstallationFolder}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=InstallationPath, Converter={StaticResource IsStringEmptyConverter}}" Value="true">
+                            <Setter Property="Text" Value="..." />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </StackPanel>
+</buildPlugin:BuilderPropertyViewUserControl>

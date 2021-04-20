@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Orcus.Administration.Controls.NetFrameworkOperatingSystemAvailabilityControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="{DynamicResource AccentColorBrush}"
+             d:DesignHeight="88.793"
+             d:DesignWidth="425.862"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="ColumnHeaderTextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ColumnHeaderTextBlock}"
+                   Text="Windows XP" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ColumnHeaderTextBlock}"
+                   Text="Windows Vista" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ColumnHeaderTextBlock}"
+                   Text="Windows 7" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="3"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ColumnHeaderTextBlock}"
+                   Text="Windows 8/8.1" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="4"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ColumnHeaderTextBlock}"
+                   Text="Windows 10" />
+        <Grid x:Name="WinXpGrid"
+              Grid.Row="1"
+              Grid.Column="0">
+            <TextBlock x:Name="WinXpText"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="WinVistaGrid"
+              Grid.Row="1"
+              Grid.Column="1">
+            <TextBlock x:Name="WinVistaText"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="Win7Grid"
+              Grid.Row="1"
+              Grid.Column="2">
+            <TextBlock x:Name="Win7Text"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="Win8Grid"
+              Grid.Row="1"
+              Grid.Column="3">
+            <TextBlock x:Name="Win8Text"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="Win10Grid"
+              Grid.Row="1"
+              Grid.Column="4">
+            <TextBlock x:Name="Win10Text"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+</UserControl>

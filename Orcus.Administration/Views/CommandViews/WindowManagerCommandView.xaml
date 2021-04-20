@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandViews.WindowManagerCommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commandViewModels="clr-namespace:Orcus.Administration.ViewModels.CommandViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls1="clr-namespace:Orcus.Administration.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance commandViewModels:WindowManagerViewModel}"
+             d:DesignHeight="420"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="VisibleWindowColor" Color="#323498DB" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Margin="5,5,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox controls:TextBoxHelper.Watermark="{DynamicResource Search}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Column="2"
+                      Content="{DynamicResource OnlyShowVisible}"
+                      IsChecked="{Binding OnlyShowVisibleWindows}" />
+        </Grid>
+        <controls1:TreeListView Grid.Row="1"
+                                ChildrenPropertyName="ViewChildWindows"
+                                ItemsSource="{Binding Windows}"
+                                ScrollViewer.CanContentScroll="True"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <controls1:TreeListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem MinWidth="200"
+                              Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.MinimizeWindowCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Minimize}"
+                              Icon="{StaticResource MinimizeIcon}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.MaximizeWindowCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Maximize}"
+                              Icon="{StaticResource ExpandArrowIcon}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.RestoreWindowCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Restore}"
+                              Icon="{StaticResource NewWindowIcon}" />
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.BringWindowToFrontCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource BringToFront}"
+                              Icon="{StaticResource BringtoFrontIcon}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.MakeWindowTopmostCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Topmost}"
+                              Icon="{StaticResource ModalPopupIcon}" />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.MakeWindowLoseTopmostCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource LoseTopmost}"
+                              Icon="{StaticResource ApplicationGroupIcon}" />
+                    <Separator />
+                    <MenuItem Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView},
+                                                Path=DataContext.CloseWindowCommand}"
+                              CommandParameter="{Binding}"
+                              Header="{DynamicResource Close}"
+                              Icon="{StaticResource CloseSolutionIcon}" />
+                </ContextMenu>
+                <Style BasedOn="{StaticResource MetroTreeListViewItem}" TargetType="controls1:TreeListViewItem">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsVisible}" Value="false">
+                            <Setter Property="Opacity" Value=".8" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsVisible}" Value="true">
+                            <Setter Property="Background" Value="{StaticResource VisibleWindowColor}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls1:TreeListView.Resources>
+            <controls1:TreeListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Width="200"
+                                        DisplayMemberBinding="{Binding Caption}"
+                                        Header="{DynamicResource Caption}" />
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding Handle}"
+                                        Header="{DynamicResource Handle}" />
+                        <GridViewColumn Width="250"
+                                        DisplayMemberBinding="{Binding ClassName}"
+                                        Header="{DynamicResource ClassName}" />
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding ProcessName}"
+                                        Header="{DynamicResource Process}" />
+                    </GridView.Columns>
+                </GridView>
+            </controls1:TreeListView.View>
+        </controls1:TreeListView>
+        <Grid Grid.Row="2" Background="{StaticResource GrayBrush10}">
+            <Button MinWidth="65"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Command="{Binding RefreshWindowsCommand}"
+                    Content="{DynamicResource Refresh}" />
+        </Grid>
+    </Grid>
+</UserControl>

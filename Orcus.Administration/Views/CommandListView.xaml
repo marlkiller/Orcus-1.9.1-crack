@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Orcus.Administration.Views.CommandListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extensions="clr-namespace:Orcus.Administration.Extensions"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Orcus.Administration.ViewModels;assembly=Orcus.Administration.ViewModels"
+             xmlns:views="clr-namespace:Orcus.Administration.Views"
+             d:DataContext="{d:DesignInstance viewModels:ControllerViewModel}"
+             d:DesignHeight="457"
+             d:DesignWidth="775"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <views:ViewManager x:Key="ViewManager" />
+    </UserControl.Resources>
+    <Grid Margin="-5,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"
+                              MinWidth="180"
+                              MaxWidth="250" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--  CommandListControl is added by code  -->
+        <ScrollViewer x:Name="BaseScrollViewer" />
+        <GridSplitter Grid.Row="0"
+                      Grid.RowSpan="2"
+                      Grid.Column="1"
+                      Margin="-3,0"
+                      HorizontalAlignment="Stretch"
+                      Background="{StaticResource GridSplitterBrush}"
+                      BorderBrush="Transparent"
+                      BorderThickness="3,0"
+                      Canvas.ZIndex="100" />
+        <ContentControl Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Content="{Binding SelectedCommandView,
+                                          Converter={StaticResource ViewManager}}">
+            <extensions:ContentControlExtensions.ContentChangedAnimation>
+                <Storyboard>
+                    <ThicknessAnimation Duration="0:0:0.5"
+                                        From="30,0,-30,0"
+                                        Storyboard.TargetProperty="Margin"
+                                        To="0">
+                        <ThicknessAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut" />
+                        </ThicknessAnimation.EasingFunction>
+                    </ThicknessAnimation>
+                </Storyboard>
+            </extensions:ContentControlExtensions.ContentChangedAnimation>
+        </ContentControl>
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              Background="{DynamicResource AccentColorBrush}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding UnsupportedCommandViews.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <iconPacks:PackIconMaterial Width="16"
+                                        Height="16"
+                                        Margin="5"
+                                        Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                        Kind="InformationOutline" />
+            <TextBlock Grid.Column="1"
+                       Margin="0,5,5,5"
+                       FontSize="10"
+                       Foreground="{DynamicResource IdealForegroundColorBrush}"
+                       TextWrapping="Wrap">
+                <Run Text="{Binding UnsupportedCommandViews.Count, Mode=OneWay}" />
+                <Run>
+                    <Run.Style>
+                        <Style TargetType="Run">
+                            <Setter Property="Text" Value="{DynamicResource CommandsAreDisabled}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding UnsupportedCommandViews.Count}" Value="1">
+                                    <Setter Property="Text" Value="{DynamicResource CommandIsDisabled}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Run.Style>
+                </Run>
+            </TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>
