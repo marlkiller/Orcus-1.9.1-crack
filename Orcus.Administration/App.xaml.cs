@@ -94,7 +94,7 @@ namespace Orcus.Administration
             Current.Resources.MergedDictionaries.RemoveAt(Current.Resources.MergedDictionaries.Count - 4);
 
 
-            MessageBox.Show("voidm.com");
+            // MessageBox.Show("voidm.com");
 
             var licenseFile = new FileInfo(CommandLineArgs.Current.LicenseFilePath ?? "license.orcus");
             if (!licenseFile.Exists)
@@ -132,6 +132,7 @@ namespace Orcus.Administration
             Logger.Log(LogLevel.Logo, DateTime.Now.Month == 12 && DateTime.Now.Day >= 24 && DateTime.Now.Day <= 27 ? christmasString : welcomeString);
             Logger.Log(LogLevel.Logo,
                 $"\n<<<<<<< {(string) Current.Resources["Version"]}: {Assembly.GetExecutingAssembly().GetName().Version} || {(string) Current.Resources["Developer"]}: Sorzus (Orcus Technologies) >>>>>>>");
+            Logger.Log(LogLevel.Logo, "Cracked By voidm.com");
             PluginManager.Current.Initialize();
             CrowdControlPresets.Current.Load("shortcuts");
 
