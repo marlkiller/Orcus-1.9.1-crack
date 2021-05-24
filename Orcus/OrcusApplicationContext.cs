@@ -99,6 +99,7 @@ namespace Orcus
             {
                 Icon = Properties.Resources.ConnectEnvironment,
                 Text = "Orcus Client",
+                // FIXME show notifyicon
                 Visible = true
             };
             Form window = null;
