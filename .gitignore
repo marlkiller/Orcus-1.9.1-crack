@@ -201,4 +201,4 @@ Orcus.Administration.App/packages/*
 !References/*.dll
 
 #Signing batch files
-signApp.bat
+#signApp.bat
